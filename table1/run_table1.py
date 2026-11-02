@@ -129,12 +129,14 @@ def predict_all(raw,weighted,config):
     rng=random.Random(config['random_seed'])
     majority=(raw>=0).sum(axis=(1,2))>=raw.shape[1]*raw.shape[2]/2
     predictions=[
+        # Random
         np.asarray([1 if rng.choice(sample.ravel().tolist())>=0 else -1 for sample in raw],dtype=np.int8),
         np.where(raw.mean(axis=(1,2))>=0,1,-1).astype(np.int8),
         np.where(majority,1,-1).astype(np.int8),
         np.where(propagate(weighted)[:,-1,-1]>=0,1,-1).astype(np.int8),
         np.where(propagate(raw)[:,-1,-1]>=0,1,-1).astype(np.int8),
         np.where(propagate(weighted,quadratic=True)[:,-1,-1]>=0,1,-1).astype(np.int8)
+
     ]
     return dict(zip(config['methods'],predictions))
 
