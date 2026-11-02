@@ -90,17 +90,37 @@ def load_input(path, tokens, config):
     raw = np.asarray(raw, dtype=np.float64)
     return raw, raw*np.asarray(weights)[:, :, None], np.asarray(answers, dtype=np.int8), query_hashes, noncanonical
 
-def propagate(initial,quadratic=False):
+def propagate(initial, quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
-    n,tokens,layers=initial.shape
-    final=np.zeros_like(initial)
+    num_records, tokens, layers = initial.shape
+    final = np.zeros_like(initial)
+
     for layer in range(layers):
         for token in range(tokens):
-            energy=np.zeros(n,dtype=np.float64)
-            if quadratic:energy+=final[:,:token,layer].sum(axis=1)
-            elif token:energy+=final[:,token-1,layer]
-            if token==tokens-1 and layer:energy+=final[:,token,layer-1]
-            final[:,token,layer]=np.tanh(energy)+(1-np.tanh(np.abs(energy)))*initial[:,token,layer]
+            # Initialise the energy for the token (at a given layer)
+            energy = np.zeros(num_records, dtype=np.float64)
+
+            # ------------------------------------------
+            # Aggregation step
+            # ------------------------------------------
+            # Assuming quadratic structure, aggregate from all preceding tokens (on the same layer)
+            if quadratic:
+                energy += final[:, :token, layer].sum(axis=1)
+
+            # Assuming linear structure, aggregate from the token at the previous position (on the same layer)
+            elif token:
+                energy += final[:, token - 1, layer]
+
+            # Last position tokens (on the last column) receive input from the last position token on the row below
+            if token == tokens-1 and layer:
+                energy += final[:, token, layer-1]
+            
+            # ------------------------------------------
+            # Influence step
+            # ------------------------------------------
+            # Calculate final strength 
+            final[:, token, layer] = np.tanh(energy) + (1-np.tanh(np.abs(energy)))*initial[:, token, layer]
+
     return final
 
 def predict_all(raw,weighted,config):
