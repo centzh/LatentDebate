@@ -25,29 +25,70 @@ def protocol_hash(config):return hashlib.sha256(json.dumps(config,sort_keys=True
 def percentage(count,n):return Decimal(count)*100/Decimal(n)
 def display(value,places):return format(Decimal(value).quantize(Decimal(1).scaleb(-places),rounding=ROUND_HALF_UP),'f')
 
-def load_input(path,tokens,config):
-    records=[json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
-    if len(records)!=config['samples_per_dataset']:raise ValueError(f'{path.name}: expected 500 records, found {len(records)}')
-    raw=[];weights=[];answers=[];query_hashes=[];noncanonical=[]
+def load_input(path, tokens, config):
+    # Read records
+    records = [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+    if len(records) != config['samples_per_dataset']:
+        raise ValueError(f'{path.name}: expected 500 records, found {len(records)}')
+
+    raw = []
+    weights = []
+    answers = []
+    query_hashes =[]
+    noncanonical=[]
+
     for index,record in enumerate(records):
-        query=record['result']['query'];p=np.asarray(query['query_probs'],dtype=np.float64)
+
+        # ----------------------------------------------------------------------------------------------------
+        # Retrieve and normalise token probabilities (i.e. initial strengths for the QBAF)
+        # ----------------------------------------------------------------------------------------------------
+        # Retrieve metadata about the query (includes query string, tokenized query, token probabilities across tokens and all LLM layers, token weights (token_score))
+        query = record['result']['query']
+        
+        # Retrieve token probabilities 
+        p = np.asarray(query['query_probs'], dtype=np.float64)
+
         layers=config['selected_layers']
-        if p.ndim!=2 or not np.isfinite(p).all() or np.any((p<0)|(p>1)):raise ValueError(f'Invalid probability array: {path.name}, row {index}')
-        selected=2*(p[-tokens:,-layers-1:-1]-.5)
-        scores=np.asarray([score for _,score in query['token_score']][-tokens:],dtype=np.float64)
-        if selected.shape!=(tokens,layers) or scores.shape!=(tokens,) or not np.isfinite(scores).all():
+        if p.ndim!=2 or not np.isfinite(p).all() or np.any((p<0)|(p>1)):
+            raise ValueError(f'Invalid probability array: {path.name}, row {index}')
+
+        # Retrieve the token probabilities for the last few tokens in the question (and from Layer 0 onwards to, but not including, the output layer)
+        selected = p[-tokens:,-layers-1:-1]
+        
+        # Normalise the probabilities to the range [-1, 1]
+        selected = 2*(selected-.5)
+
+        # ----------------------------------------------------------------------------------------------------
+        # Retrieve token-wise weights (i.e. from token scores, and applying a softmax to get the weights)
+        # ----------------------------------------------------------------------------------------------------
+        scores = np.asarray([score for token, score in query['token_score']][-tokens:], dtype=np.float64)
+        if selected.shape!=(tokens, layers) or scores.shape!=(tokens, ) or not np.isfinite(scores).all():
             raise ValueError(f'Invalid token/layer shape: {path.name}, row {index}; tokens={tokens}, layers={layers}')
-        weight=np.r_[softmax(scores[:-1]/config['token_weight_temperature']),1.0]
+
+        # Apply a softmax over the scores to get token weights
+        scores_softmax = softmax(scores[:-1]/config['token_weight_temperature'])
+
+        # Flatten and add 1.0 to the end of the weights vector
+        weight=np.r_[scores_softmax,1.0]
+
+        # ----------------------------------------------------------------------------------------------------
+        # Retrieve the answer
+        # ----------------------------------------------------------------------------------------------------
         answer=record['result']['answer']['answer'].strip()
         # Preserve the exact original Table 1 target mapping, including nonstandard
         # generated answers. Do not silently replace the already-finalized protocol.
-        label=1 if answer.startswith('T') else -1
+        label = 1 if answer.startswith('T') else -1
         if not (answer.startswith('True') or answer.startswith('False')):
             noncanonical.append({'input_file':path.name,'index':index,'original_answer':answer,'mapped_llm_prediction':label})
-        raw.append(selected);weights.append(weight);answers.append(label)
+
+        raw.append(selected)
+        weights.append(weight)
+        answers.append(label)
+
         query_hashes.append(hashlib.sha256(query['query'].encode('utf-8')).hexdigest())
-    raw=np.asarray(raw,dtype=np.float64)
-    return raw,raw*np.asarray(weights)[:,:,None],np.asarray(answers,dtype=np.int8),query_hashes,noncanonical
+
+    raw = np.asarray(raw, dtype=np.float64)
+    return raw, raw*np.asarray(weights)[:, :, None], np.asarray(answers, dtype=np.int8), query_hashes, noncanonical
 
 def propagate(initial,quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
