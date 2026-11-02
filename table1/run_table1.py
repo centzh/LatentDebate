@@ -40,7 +40,7 @@ def load_input(path, tokens, config):
     for index,record in enumerate(records):
 
         # ----------------------------------------------------------------------------------------------------
-        # Retrieve and normalise token probabilities (i.e. initial strengths for the QBAF)
+        # Retrieve and normalise raw token probabilities (i.e. initial strengths for the QBAF)
         # ----------------------------------------------------------------------------------------------------
         # Retrieve metadata about the query (includes query string, tokenized query, token probabilities across tokens and all LLM layers, token weights (token_score))
         query = record['result']['query']
@@ -69,12 +69,12 @@ def load_input(path, tokens, config):
         scores_softmax = softmax(scores[:-1]/config['token_weight_temperature'])
 
         # Flatten and add 1.0 to the end of the weights vector
-        weight=np.r_[scores_softmax,1.0]
+        weight = np.r_[scores_softmax,1.0]
 
         # ----------------------------------------------------------------------------------------------------
         # Retrieve the answer
         # ----------------------------------------------------------------------------------------------------
-        answer=record['result']['answer']['answer'].strip()
+        answer = record['result']['answer']['answer'].strip()
         # Preserve the exact original Table 1 target mapping, including nonstandard
         # generated answers. Do not silently replace the already-finalized protocol.
         label = 1 if answer.startswith('T') else -1
@@ -88,7 +88,9 @@ def load_input(path, tokens, config):
         query_hashes.append(hashlib.sha256(query['query'].encode('utf-8')).hexdigest())
 
     raw = np.asarray(raw, dtype=np.float64)
-    return raw, raw*np.asarray(weights)[:, :, None], np.asarray(answers, dtype=np.int8), query_hashes, noncanonical
+    weighted = raw*np.asarray(weights)[:, :, None]
+    answers = np.asarray(answers, dtype=np.int8)
+    return raw, weighted, answers, query_hashes, noncanonical
 
 def propagate(initial, quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
