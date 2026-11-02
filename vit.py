@@ -21,21 +21,24 @@ dog_class = 'golden retriever'
 cat_idx = model.config.label2id[cat_class]
 dog_idx = model.config.label2id[dog_class]
 
-# Inspect hidden state value for a specific layer and token position
-layer = 5
-token = 0 
+num_tokens = outputs.hidden_states[0].shape[1]
 
+initial_strengths = torch.zeros(num_tokens, len(model.vit.layers))
 # Note: This does not include dropout layer, only ViT layers
-for layer in range(len(model.vit.layers)):
-    # Number of tokens is 197 (CLS + number of patches, given by HW/P^2 where P is patch size)
-    token_activations = outputs.hidden_states[layer][0][token] # (768 dim vector, where embedding_dim = 768)
-    interpreted_activations = model.classifier(token_activations) # Apply unembedding matrix (classifier head), mapping 768 dim vector to 1000 dim vector, representing 1000 classes in ImageNet
+for token in range(num_tokens):
+    for layer in range(len(model.vit.layers)):
+        # Number of tokens is 197 (CLS + number of patches, given by HW/P^2 where P is patch size)
+        token_activations = outputs.hidden_states[layer][0][token] # (768 dim vector, where embedding_dim = 768)
+        interpreted_activations = model.classifier(token_activations) # Apply unembedding matrix (classifier head), mapping 768 dim vector to 1000 dim vector, representing 1000 classes in ImageNet
 
-    cat_raw = interpreted_activations[cat_idx].unsqueeze(0)
-    dog_raw = interpreted_activations[dog_idx].unsqueeze(0)
-    cat_dog_raw = torch.cat((cat_raw, dog_raw))
-    softmax_probs = torch.softmax(cat_dog_raw, dim=0)
-    print(softmax_probs)
+        cat_raw = interpreted_activations[cat_idx].unsqueeze(0)
+        dog_raw = interpreted_activations[dog_idx].unsqueeze(0)
+        cat_dog_raw = torch.cat((cat_raw, dog_raw))
+        softmax_probs = torch.softmax(cat_dog_raw, dim=0)
+        if torch.argmax(softmax_probs) == 0:
+            initial_strength = torch.max(softmax_probs)
+        else:
+            initial_strength = -torch.max(softmax_probs)
+        initial_strengths[token][layer] = initial_strength
 
-
-#  outputs.hidden_states[0].shape
+    print(f"Finished token: {token}")
