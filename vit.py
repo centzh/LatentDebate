@@ -35,10 +35,8 @@ for token in range(num_tokens):
         dog_raw = interpreted_activations[dog_idx].unsqueeze(0)
         cat_dog_raw = torch.cat((cat_raw, dog_raw))
         softmax_probs = torch.softmax(cat_dog_raw, dim=0)
-        if torch.argmax(softmax_probs) == 0:
-            initial_strength = torch.max(softmax_probs)
-        else:
-            initial_strength = -torch.max(softmax_probs)
+
+        initial_strength = 2*(softmax_probs[0]-0.5)
         initial_strengths[token][layer] = initial_strength
 
     print(f"Finished token: {token}")
