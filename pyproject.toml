@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "accelerate>=1.15.0",
     "ipython>=9.18.1",
     "numpy==2.4.4",
     "pillow>=13.0.0",
