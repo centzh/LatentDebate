@@ -71,7 +71,7 @@ def load_input(path, tokens, config, calculate_weights=True):
         if line.strip()
     ]
     if len(records) != config['samples_per_dataset']:
-        raise ValueError(f'{path.name}: expected 500 records, found {len(records)}')
+        raise ValueError(f'{path.name}: expected {config['samples_per_dataset']} records, found {len(records)}')
 
     raw = []
     weights = []
