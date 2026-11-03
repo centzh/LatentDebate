@@ -54,12 +54,12 @@ data = {
             },
             "answer": {
                 "answer": predicted_class,
-                "tokenized_answer":predicted_class
+                "tokenized_answer": predicted_class
             }
         }
     }
 
-file = "data/cat_dog/cat_dog_vit_base_patch_16_224.jsonl"
+file = "data/cat_dog/vit_prob.jsonl"
 output_path = Path(file)
 output_path.parent.mkdir(parents=True, exist_ok=True)
 with output_path.open("w", encoding="utf-8") as f:

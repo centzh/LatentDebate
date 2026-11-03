@@ -64,7 +64,7 @@ def display(value, places):
     return format(quantized, 'f')
 
 
-def load_input(path, tokens, config, calculate_weights=True):
+def load_input(path, tokens, config, calculate_weights=True, skip_checks=False):
     records = [
         json.loads(line)
         for line in path.read_text(encoding='utf-8').splitlines()
@@ -114,7 +114,7 @@ def load_input(path, tokens, config, calculate_weights=True):
         # Preserve the exact original Table 1 target mapping, including nonstandard
         # generated answers. Do not silently replace the already-finalized protocol.
         label = 1 if answer.startswith('T') else -1
-        if not (answer.startswith('True') or answer.startswith('False')):
+        if not skip_checks and not (answer.startswith('True') or answer.startswith('False')):
             noncanonical.append({
                 'input_file': path.name,
                 'index': index,
@@ -268,11 +268,23 @@ def make_latex(table, config):
     ])
     return '\n'.join(lines) + '\n'
 
+def str_to_bool(value):
+    if value.lower() in ("true", "1", "yes"):
+        return True
+    elif value.lower() in ("false", "0", "no"):
+        return False
+    raise argparse.ArgumentTypeError("Expected True or False")
 
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data-dir', type=Path, default=HERE.parent / 'data' / 'probability')
+    parser.add_argument('--data-dir', type=Path, default=HERE.parent / 'data')
+    parser.add_argument('--data-subdir', type=str, default='probability')
     parser.add_argument('--output-dir', type=Path, default=HERE / 'results')
+    parser.add_argument('--config-file', type=str, default='config.json')
+    parser.add_argument('--manifest-file', type=str, default='input_manifest.json')
+    parser.add_argument('--expected-results-file', type=str, default='expected_results.json')
+    parser.add_argument('--calculate-weights', type=str_to_bool, default=True)
+    parser.add_argument('--skip-checks', type=str_to_bool, default=False)
     return parser.parse_args()
 
 
@@ -280,14 +292,16 @@ def main():
     args = parse_args()
     start = time.time()
 
-    config = read_json(HERE / 'config.json')
-    manifest = read_json(HERE / 'input_manifest.json')
-    expected = read_json(HERE / 'expected_results.json')
-    if protocol_hash(config) != expected['protocol_sha256']:
+    config = read_json(HERE / args.config_file)
+    manifest = read_json(HERE / args.manifest_file)
+    expected = read_json(HERE / args.expected_results_file)
+
+    if not args.skip_checks and protocol_hash(config) != expected['protocol_sha256']:
         raise ValueError('Configuration differs from the finalized Table 1 protocol')
 
-    expected_cells = {(r['model'], r['dataset'], r['method']): r for r in expected['cells']}
-    expected_predictions = np.load(HERE / 'expected_predictions.npz', allow_pickle=False)
+    if not args.skip_checks:
+        expected_cells = {(r['model'], r['dataset'], r['method']): r for r in expected['cells']}
+        expected_predictions = np.load(HERE / 'expected_predictions.npz', allow_pickle=False)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -295,21 +309,23 @@ def main():
     input_checks = []
     answer_diagnostics = []
 
+    data_dir = args.data_dir / args.data_subdir
+
     for model in config['models']:
         for dataset, file in zip(config['datasets'], model['files']):
-            path = args.data_dir / file
+            path = data_dir / file
             if not path.is_file():
                 raise FileNotFoundError(f'Missing Table 1 input: {path}')
 
             digest = sha(path)
-            if digest != manifest['files'][file]['sha256']:
+            if not args.skip_checks and digest != manifest['files'][file]['sha256']:
                 raise ValueError(
                     f'Input fingerprint mismatch: {file}; '
                     'keep the released bytes and sample order unchanged'
                 )
 
             raw, weighted, llm, query_hashes, noncanonical = load_input(
-                path, dataset['tokens'], config
+                path, dataset['tokens'], config, args.calculate_weights, args.skip_checks
             )
             answer_diagnostics.extend(
                 {'model': model['name'], 'dataset': dataset['name'], **r}
@@ -321,29 +337,32 @@ def main():
             all_predictions = np.column_stack(
                 [llm] + [predictions[m] for m in config['methods']]
             )
-            reference = expected_predictions[key]
-            if not np.array_equal(all_predictions, reference):
+            if not args.skip_checks and not np.array_equal(all_predictions, reference):
+                reference = expected_predictions[key]
                 bad = np.argwhere(all_predictions != reference)
                 raise AssertionError(
                     f'Prediction mismatch for {key}: first mismatch={bad[0].tolist()}'
                 )
 
-            prediction_checks += len(llm) * len(config['methods'])
-            sample_rows = []
-            for i in range(len(llm)):
-                sample_rows.append({
-                    'index': i,
-                    'query_sha256': query_hashes[i],
-                    'llm_prediction': int(llm[i]),
-                    **{method: int(values[i]) for method, values in predictions.items()},
-                })
-            write_csv(args.output_dir / 'predictions' / (key + '.csv'), sample_rows)
+            if not args.skip_checks:
+
+                prediction_checks += len(llm) * len(config['methods'])
+                sample_rows = []
+                for i in range(len(llm)):
+                    sample_rows.append({
+                        'index': i,
+                        'query_sha256': query_hashes[i],
+                        'llm_prediction': int(llm[i]),
+                        **{method: int(values[i]) for method, values in predictions.items()},
+                    })
+                write_csv(args.output_dir / 'predictions' / (key + '.csv'), sample_rows)
 
             for method, values in predictions.items():
                 count = int((values == llm).sum())
-                reference_cell = expected_cells[(model['name'], dataset['name'], method)]
-                if count != reference_cell['consistent'] or len(llm) != reference_cell['n']:
-                    raise AssertionError(f'Cell mismatch: {key}, {method}')
+                if not args.skip_checks:
+                    reference_cell = expected_cells[(model['name'], dataset['name'], method)]
+                    if count != reference_cell['consistent'] or len(llm) != reference_cell['n']:
+                        raise AssertionError(f'Cell mismatch: {key}, {method}')
                 rows.append({
                     'model': model['name'],
                     'dataset': dataset['name'],
@@ -368,14 +387,14 @@ def main():
                 'file': file,
                 'sha256': digest,
             })
-            print(
-                f'{model["name"]} / {dataset["name"]}: n={len(llm)}, '
-                f'tokens={dataset["tokens"]}, all 6 methods verified',
-                flush=True,
-            )
+    print(
+        f'{model["name"]} / {dataset["name"]}: n={len(llm)}, '
+        f'tokens={dataset["tokens"]}, all 6 methods verified',
+        flush=True,
+    )
 
     table = make_table(rows, config)
-    if table != expected['table_display']:
+    if not args.skip_checks and table != expected['table_display']:
         raise AssertionError('Displayed table or row averages differ from the finalized Table 1')
 
     write_csv(args.output_dir / 'table1.csv', table)
