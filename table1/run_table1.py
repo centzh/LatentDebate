@@ -64,7 +64,7 @@ def display(value, places):
     return format(quantized, 'f')
 
 
-def load_input(path, tokens, config):
+def load_input(path, tokens, config, calculate_weights=True):
     records = [
         json.loads(line)
         for line in path.read_text(encoding='utf-8').splitlines()
@@ -92,22 +92,23 @@ def load_input(path, tokens, config):
         selected = p[-tokens:, -layers - 1:-1]
         selected = 2 * (selected - .5)
 
-        scores = np.asarray(
-            [score for token, score in query['token_score']][-tokens:],
-            dtype=np.float64,
-        )
-        if (
-            selected.shape != (tokens, layers)
-            or scores.shape != (tokens,)
-            or not np.isfinite(scores).all()
-        ):
-            raise ValueError(
-                f'Invalid token/layer shape: {path.name}, row {index}; '
-                f'tokens={tokens}, layers={layers}'
+        if calculate_weights:
+            scores = np.asarray(
+                [score for token, score in query['token_score']][-tokens:],
+                dtype=np.float64,
             )
+            if (
+                selected.shape != (tokens, layers)
+                or scores.shape != (tokens,)
+                or not np.isfinite(scores).all()
+            ):
+                raise ValueError(
+                    f'Invalid token/layer shape: {path.name}, row {index}; '
+                    f'tokens={tokens}, layers={layers}'
+                )
 
-        scores_softmax = softmax(scores[:-1] / config['token_weight_temperature'])
-        weight = np.r_[scores_softmax, 1.0]
+            scores_softmax = softmax(scores[:-1] / config['token_weight_temperature'])
+            weight = np.r_[scores_softmax, 1.0]
 
         answer = record['result']['answer']['answer'].strip()
         # Preserve the exact original Table 1 target mapping, including nonstandard
@@ -122,15 +123,18 @@ def load_input(path, tokens, config):
             })
 
         raw.append(selected)
-        weights.append(weight)
+        if calculate_weights:
+            weights.append(weight)
         answers.append(label)
         query_hashes.append(hashlib.sha256(query['query'].encode('utf-8')).hexdigest())
 
     raw = np.asarray(raw, dtype=np.float64)
-    weighted = raw * np.asarray(weights)[:, :, None]
     answers = np.asarray(answers, dtype=np.int8)
-    return raw, weighted, answers, query_hashes, noncanonical
-
+    if calculate_weights:
+        weighted = raw * np.asarray(weights)[:, :, None]
+        return raw, weighted, answers, query_hashes, noncanonical
+    else:
+        return raw, raw, answers, query_hashes, noncanonical
 
 def propagate(initial, quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
