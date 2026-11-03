@@ -64,7 +64,7 @@ def display(value, places):
     return format(quantized, 'f')
 
 
-def load_input(path, tokens, config, calculate_weights=True, skip_checks=False):
+def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, vision=False):
     records = [
         json.loads(line)
         for line in path.read_text(encoding='utf-8').splitlines()
@@ -89,7 +89,6 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False):
             raise ValueError(f'Invalid probability array: {path.name}, row {index}')
 
         # Last prompt tokens, from layer 0 up to (not including) the output layer.
-        selected = p[-tokens:, -layers - 1:-1]
         selected = 2 * (selected - .5)
 
         if calculate_weights:
@@ -113,7 +112,7 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False):
         answer = record['result']['answer']['answer'].strip()
         # Preserve the exact original Table 1 target mapping, including nonstandard
         # generated answers. Do not silently replace the already-finalized protocol.
-        label = 1 if answer.startswith('T') else -1
+        label = 1 if answer.startswith('Cat') else -1
         if not skip_checks and not (answer.startswith('True') or answer.startswith('False')):
             noncanonical.append({
                 'input_file': path.name,
@@ -285,6 +284,7 @@ def parse_args():
     parser.add_argument('--expected-results-file', type=str, default='expected_results.json')
     parser.add_argument('--calculate-weights', type=str_to_bool, default=True)
     parser.add_argument('--skip-checks', type=str_to_bool, default=False)
+    parser.add_argument('--vision', type=str_to_bool, default=False)
     return parser.parse_args()
 
 
@@ -325,7 +325,7 @@ def main():
                 )
 
             raw, weighted, llm, query_hashes, noncanonical = load_input(
-                path, dataset['tokens'], config, args.calculate_weights, args.skip_checks
+                path, dataset['tokens'], config, args.calculate_weights, args.skip_checks, args.vision
             )
             answer_diagnostics.extend(
                 {'model': model['name'], 'dataset': dataset['name'], **r}
