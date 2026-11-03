@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from transformers import ViTImageProcessor, ViTForImageClassification
 from PIL import Image
 import requests
 import torch
+import json
 
 url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
 image = Image.open(requests.get(url, stream=True).raw)
@@ -14,7 +17,8 @@ outputs = model(**inputs, output_hidden_states=True)
 logits = outputs.logits
 # model predicts one of the 1000 ImageNet classes
 predicted_class_idx = logits.argmax(-1).item()
-print("Predicted class:", model.config.id2label[predicted_class_idx])
+predicted_class = model.config.id2label[predicted_class_idx]
+print("Predicted class:", predicted_class)
 
 cat_class = 'tiger cat'
 dog_class = 'golden retriever'
@@ -40,3 +44,25 @@ for token in range(num_tokens):
         initial_strengths[token][layer] = initial_strength
 
     print(f"Finished token: {token}")
+
+data = {
+        "label": 1, 
+        "result": {
+            "query": {
+                "query":url, 
+                "query_probs":initial_strengths.detach().cpu().tolist(),
+                "token_score":0
+            },
+            "answer": {
+                "answer": predicted_class,
+                "tokenized_answer":predicted_class
+            }
+        }
+    }
+
+file = "data/cat_dog/cat_dog_vit_base_patch_16_224.jsonl"
+output_path = Path(file)
+output_path.parent.mkdir(parents=True, exist_ok=True)
+with output_path.open("w", encoding="utf-8") as f:
+    f.write(json.dumps(data) + "\n")
+print(f"Completed writing initial strengths to {file}.")
