@@ -185,6 +185,76 @@ def predict_all(raw, weighted, config, vision=False):
             1,
             -1,
         ).astype(np.int8)
+
+        propagated_weighted = propagate(weighted, vision)
+
+        # Split into cat and dog arrays based on the sign of [0, -1]
+        cat_mask = propagated_weighted[:, 0, -1] > 0
+        dog_mask = propagated_weighted[:, 0, -1] < 0
+
+        propagate_weighted_cat = propagated_weighted[cat_mask]
+        propagate_weighted_dog = propagated_weighted[dog_mask]
+
+        # Calculate element-wise mean and standard deviation across samples
+        cat_mean = propagate_weighted_cat.mean(axis=0)
+        cat_std = propagate_weighted_cat.std(axis=0)
+
+        dog_mean = propagate_weighted_dog.mean(axis=0)
+        dog_std = propagate_weighted_dog.std(axis=0)
+
+        import matplotlib.pyplot as plt
+
+        fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+
+        vmin, vmax = -1, 1
+
+        # Cat mean heatmap (transposed)
+        im = axes[0].imshow(
+            cat_mean.T,
+            cmap='coolwarm',
+            vmin=vmin,
+            vmax=vmax,
+            aspect='auto'
+        )
+        axes[0].set_title('Cat Mean')
+        axes[0].set_xlabel('Token')
+        axes[0].set_ylabel('Layer')
+
+        # Dog mean heatmap (transposed)
+        axes[1].imshow(
+            dog_mean.T,
+            cmap='coolwarm',
+            vmin=vmin,
+            vmax=vmax,
+            aspect='auto'
+        )
+
+        # Reflect both plots about the x-axis
+        axes[0].invert_yaxis()
+        axes[1].invert_yaxis()
+
+        axes[1].set_title('Dog Mean')
+        axes[1].set_xlabel('Token')
+        axes[1].set_ylabel('Layer')
+
+        # Shared colour bar
+        fig.colorbar(
+            im,
+            ax=axes,
+            label='Mean Propagation Value',
+            shrink=0.8
+        )
+
+        plt.tight_layout()
+
+        plt.savefig(
+            'cat_dog_mean_heatmaps.png',
+            dpi=300,
+            bbox_inches='tight'
+        )
+
+        plt.show()
+
     else:
         latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
         unweighted = np.where(propagate(raw)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
