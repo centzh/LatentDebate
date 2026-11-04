@@ -89,6 +89,10 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
             raise ValueError(f'Invalid probability array: {path.name}, row {index}')
 
         # Last prompt tokens, from layer 0 up to (not including) the output layer.
+        if vision:
+            selected = p
+        else:
+            selected = p[-tokens:, -layers - 1:-1]
         selected = 2 * (selected - .5)
 
         if calculate_weights:
@@ -135,13 +139,13 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
     else:
         return raw, raw, answers, query_hashes, noncanonical
 
-def propagate(initial, quadratic=False):
+def propagate(initial, vision=False, quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
 
     for layer in range(layers):
-        for token in range(tokens):
+        for token in range(tokens-1):
             energy = np.zeros(num_records, dtype=np.float64)
 
             if quadratic:
@@ -149,10 +153,12 @@ def propagate(initial, quadratic=False):
                 energy += final[:, :token, layer].sum(axis=1)
             elif token:
                 # Linear topology: previous token on the same layer.
-                energy += final[:, token - 1, layer]
+                energy += final[:, token + 1, layer]
+                # energy += final[:, token:, layer].sum(axis=1)
 
             # Last-position tokens also receive the last-position node from the layer below.
             if token == tokens - 1 and layer:
+            if token == 0 and layer:
                 energy += final[:, token, layer - 1]
 
             influence = 1 - np.tanh(np.abs(energy))
@@ -161,7 +167,7 @@ def propagate(initial, quadratic=False):
     return final
 
 
-def predict_all(raw, weighted, config):
+def predict_all(raw, weighted, config, vision=False):
     rng = random.Random(config['random_seed'])
     n_tokens, n_layers = raw.shape[1], raw.shape[2]
     majority = (raw >= 0).sum(axis=(1, 2)) >= n_tokens * n_layers / 2
@@ -172,13 +178,22 @@ def predict_all(raw, weighted, config):
     )
     average_pred = np.where(raw.mean(axis=(1, 2)) >= 0, 1, -1).astype(np.int8)
     majority_pred = np.where(majority, 1, -1).astype(np.int8)
-    latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
-    unweighted = np.where(propagate(raw)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
-    quadratic = np.where(
-        propagate(weighted, quadratic=True)[:, -1, -1] >= 0,
-        1,
-        -1,
-    ).astype(np.int8)
+    if vision:
+        latent_debate = np.where(propagate(weighted, vision)[:, 0, -1] >= 0, 1, -1).astype(np.int8)
+        unweighted = np.where(propagate(raw, vision)[:, 0, -1] >= 0, 1, -1).astype(np.int8)
+        quadratic = np.where(
+            propagate(weighted, vision, quadratic=True)[:, 0, -1] >= 0,
+            1,
+            -1,
+        ).astype(np.int8)
+    else:
+        latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
+        unweighted = np.where(propagate(raw)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
+        quadratic = np.where(
+            propagate(weighted, vision, quadratic=True)[:, -1, -1] >= 0,
+            1,
+            -1,
+        ).astype(np.int8)
 
     predictions = [
         random_pred,
@@ -331,7 +346,7 @@ def main():
                 {'model': model['name'], 'dataset': dataset['name'], **r}
                 for r in noncanonical
             )
-            predictions = predict_all(raw, weighted, config)
+            predictions = predict_all(raw, weighted, config, args.vision)
 
             key = model['name'].replace('-', '_') + '__' + dataset['name']
             all_predictions = np.column_stack(
