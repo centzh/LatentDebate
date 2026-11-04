@@ -230,7 +230,7 @@ def propagate(initial, vision=False, quadratic=False):
     final = np.zeros_like(initial)
 
     for layer in range(0, layers):
-        for token in range(tokens-1):
+        for token in range(tokens-2, -1, -1):
             energy = np.zeros(num_records, dtype=np.float64)
 
             if quadratic:
@@ -246,11 +246,12 @@ def propagate(initial, vision=False, quadratic=False):
                 energy += final[:, token, layer - 1]
 
             influence = 1 - np.tanh(np.abs(energy))
+            
             final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
 
-            if token == 0 and layer == layers - 1:
-                from IPython import embed
-                embed()
+            # if token == 0 and layer == layers - 1:
+            #     from IPython import embed
+            #     embed()
 
     return final
 
@@ -347,7 +348,7 @@ def predict_all(raw, weighted, config, vision=False):
     
         latent_debate = np.select(
             [
-                propagate(weighted, vision)[:, 0, -1] > 1,
+                propagate(weighted, vision)[:, 0, -1] > 0.1,
                 propagate(weighted, vision)[:, 0, -1] < -0.1
             ],
             [1, -1],
