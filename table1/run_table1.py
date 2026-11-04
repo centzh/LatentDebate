@@ -157,7 +157,6 @@ def propagate(initial, vision=False, quadratic=False):
                 # energy += final[:, token:, layer].sum(axis=1)
 
             # Last-position tokens also receive the last-position node from the layer below.
-            if token == tokens - 1 and layer:
             if token == 0 and layer:
                 energy += final[:, token, layer - 1]
 
@@ -373,20 +372,20 @@ def main():
                 write_csv(args.output_dir / 'predictions' / (key + '.csv'), sample_rows)
 
             for method, values in predictions.items():
-                count = int((values == llm).sum())
+                num_consistent = int((values == llm).sum())
                 if not args.skip_checks:
                     reference_cell = expected_cells[(model['name'], dataset['name'], method)]
-                    if count != reference_cell['consistent'] or len(llm) != reference_cell['n']:
+                    if num_consistent != reference_cell['consistent'] or len(llm) != reference_cell['n']:
                         raise AssertionError(f'Cell mismatch: {key}, {method}')
                 rows.append({
                     'model': model['name'],
                     'dataset': dataset['name'],
                     'method': method,
                     'n': len(llm),
-                    'consistent': count,
-                    'consistency_percent': float(percentage(count, len(llm))),
+                    'consistent': num_consistent,
+                    'consistency_percent': float(percentage(num_consistent, len(llm))),
                     'display_percent': display(
-                        percentage(count, len(llm)),
+                        percentage(num_consistent, len(llm)),
                         config['decimal_places'],
                     ),
                     'tokens': dataset['tokens'],
