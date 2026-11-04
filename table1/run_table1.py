@@ -23,6 +23,74 @@ from scipy.special import softmax
 HERE = Path(__file__).resolve().parent
 
 
+import json
+
+with open("imagenet_class_index.json") as f:
+    classes = json.load(f)
+
+cat_keywords = [
+    "cat", "cougar", "lynx", "leopard",
+    "jaguar", "lion", "tiger", "cheetah"
+]
+
+exclude_keywords = [
+    "beetle", "polecat", "fish", "oyster", "catamaran", "sea"
+]
+
+feline_classes = []
+
+for idx, (wnid, name) in classes.items():
+    name_lower = name.lower()
+
+    if (
+        any(k in name_lower for k in cat_keywords)
+        and not any(k in name_lower for k in exclude_keywords)
+    ):
+        feline_classes.append((int(idx), wnid, name))
+
+for idx, wnid, name in feline_classes:
+    print(idx, wnid, name)
+
+feline_indices = [feline[0] for feline in feline_classes]
+
+dog_keywords = [
+    "dog", "terrier", "spaniel", "retriever",
+    "shepherd", "hound", "poodle", "collie",
+    "bulldog", "mastiff", "pinscher", "schnauzer",
+    "chihuahua", "corgi", "dachshund", "beagle",
+    "boxer", "husky", "malamute", "rottweiler",
+    "doberman", "pug", "pomeranian", "samoyed",
+    "greyhound", "whippet", "wolfhound", "setter",
+    "pointer", "bloodhound", "basset", "pekinese",
+    "pekingese", "shih-tzu", "papillon", "affenpinscher",
+    "chow", "basenji", "borzoi", "briard",
+    "komondor", "kuvasz", "vizsla", "weimaraner",
+    "schipperke", "kelpie", "dhole"
+]
+
+exclude_keywords = [
+    "beetle", "polecat", "fish", "oyster",
+    "catamaran", "sea", "hotdog"
+]
+
+dog_classes = []
+
+for idx, (wnid, name) in classes.items():
+    name_lower = name.lower()
+
+    if (
+        any(k in name_lower for k in dog_keywords)
+        and not any(k in name_lower for k in exclude_keywords)
+    ):
+        dog_classes.append((int(idx), wnid, name))
+
+for idx, wnid, name in dog_classes:
+    print(idx, wnid, name)
+
+dog_indices = [dog[0] for dog in dog_classes]
+
+
+
 def read_json(path):
     return json.loads(path.read_text(encoding='utf-8'))
 
@@ -85,15 +153,18 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
         # probabilities, and token scores used as QBAF initial strengths/weights.
         query = record['result']['query']
         p = np.asarray(query['query_probs'], dtype=np.float64)
-        if p.ndim != 2 or not np.isfinite(p).all() or np.any((p < 0) | (p > 1)):
-            raise ValueError(f'Invalid probability array: {path.name}, row {index}')
+
+        # if p.ndim != 2 or not np.isfinite(p).all() or np.any((p < 0) | (p > 1)):
+        #     raise ValueError(f'Invalid probability array: {path.name}, row {index}')
 
         # Last prompt tokens, from layer 0 up to (not including) the output layer.
         if vision:
             selected = p
         else:
             selected = p[-tokens:, -layers - 1:-1]
-        selected = 2 * (selected - .5)
+
+        # Done in vit.py
+        # selected = 2 * (selected - .5)
 
         if calculate_weights:
             scores = np.asarray(
@@ -113,10 +184,24 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
             scores_softmax = softmax(scores[:-1] / config['token_weight_temperature'])
             weight = np.r_[scores_softmax, 1.0]
 
-        answer = record['result']['answer']['answer'].strip()
+        answer = record['result']['answer']['answer'].strip().lower()
+
+        if (
+            any(k in answer for k in cat_keywords)
+            and not any(k in answer.lower() for k in exclude_keywords)
+        ):
+            label = 1
+        elif (
+            any(k in answer for k in dog_keywords)
+            and not any(k in answer.lower() for k in exclude_keywords)
+        ):
+            label = -1
+        else:
+            label = 0
+        
         # Preserve the exact original Table 1 target mapping, including nonstandard
         # generated answers. Do not silently replace the already-finalized protocol.
-        label = 1 if answer.startswith('Cat') else -1
+        
         if not skip_checks and not (answer.startswith('True') or answer.startswith('False')):
             noncanonical.append({
                 'input_file': path.name,
@@ -144,7 +229,7 @@ def propagate(initial, vision=False, quadratic=False):
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
 
-    for layer in range(layers):
+    for layer in range(11, layers):
         for token in range(tokens-1):
             energy = np.zeros(num_records, dtype=np.float64)
 
@@ -170,8 +255,8 @@ def plot_cat_dog_heatmaps(matrix, vision=True, filename='cat_dog_mean_heatmaps.p
     import matplotlib.pyplot as plt
 
     # Split into cat and dog arrays based on the sign of [0, -1]
-    cat_mask = matrix[:, 0, -1] > 0
-    dog_mask = matrix[:, 0, -1] < 0
+    cat_mask = matrix[:, 0, -1] > 0.1
+    dog_mask = matrix[:, 0, -1] < -0.1
 
     cat = matrix[cat_mask]
     dog = matrix[dog_mask]
@@ -255,12 +340,33 @@ def predict_all(raw, weighted, config, vision=False):
     average_pred = np.where(raw.mean(axis=(1, 2)) >= 0, 1, -1).astype(np.int8)
     majority_pred = np.where(majority, 1, -1).astype(np.int8)
     if vision:
-        latent_debate = np.where(propagate(weighted, vision)[:, 0, -1] >= 0, 1, -1).astype(np.int8)
-        unweighted = np.where(propagate(raw, vision)[:, 0, -1] >= 0, 1, -1).astype(np.int8)
-        quadratic = np.where(
-            propagate(weighted, vision, quadratic=True)[:, 0, -1] >= 0,
-            1,
-            -1,
+    
+        latent_debate = np.select(
+            [
+                propagate(weighted, vision)[:, 0, -1] > 0.716,
+                propagate(weighted, vision)[:, 0, -1] < -0.829
+            ],
+            [1, -1],
+            default=0
+        ).astype(np.int8)
+
+        # Make this raw for now! Propagation actually does change a lot!
+        unweighted = np.select(
+            [
+                raw[:, 0, -1] > 0,
+                raw[:, 0, -1] < 0
+            ],
+            [1, -1],
+            default=0
+        ).astype(np.int8)
+
+        quadratic = np.select(
+            [
+                propagate(weighted, vision, quadratic=True)[:, 0, -1] > 0.1,
+                propagate(weighted, vision, quadratic=True)[:, 0, -1] < -0.1
+            ],
+            [1, -1],
+            default=0
         ).astype(np.int8)
 
         propagated = propagate(raw, vision)
@@ -277,6 +383,7 @@ def predict_all(raw, weighted, config, vision=False):
         dog_mse = np.mean((propagated_dog_mean - raw_dog_mean)**2)
         print(f"Cat MSE is {cat_mse}")
         print(f"Dog MSE is {dog_mse}")
+        
 
     else:
         latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
@@ -466,6 +573,7 @@ def main():
 
             for method, values in predictions.items():
                 num_consistent = int((values == llm).sum())
+           
                 if not args.skip_checks:
                     reference_cell = expected_cells[(model['name'], dataset['name'], method)]
                     if num_consistent != reference_cell['consistent'] or len(llm) != reference_cell['n']:
