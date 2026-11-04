@@ -239,7 +239,7 @@ def propagate(initial, vision=False, quadratic=False):
             elif token:
                 # Linear topology: previous token on the same layer.
                 energy += final[:, token + 1, layer]
-                energy += final[:, token + 1:, layer].sum(axis=1)
+                # energy += final[:, token + 1:, layer].sum(axis=1)
 
             # Last-position tokens also receive the last-position node from the layer below.
             if token == 0 and layer:
