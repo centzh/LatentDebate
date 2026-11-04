@@ -229,17 +229,17 @@ def propagate(initial, vision=False, quadratic=False):
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
 
-    for layer in range(11, layers):
+    for layer in range(0, layers):
         for token in range(tokens-1):
             energy = np.zeros(num_records, dtype=np.float64)
 
             if quadratic:
                 # Aggregate from all preceding tokens on the same layer.
-                energy += final[:, :token, layer].sum(axis=1)
+                energy += final[:, token:, layer].sum(axis=1)
             elif token:
                 # Linear topology: previous token on the same layer.
                 energy += final[:, token + 1, layer]
-                # energy += final[:, token:, layer].sum(axis=1)
+                energy += final[:, token + 1:, layer].sum(axis=1)
 
             # Last-position tokens also receive the last-position node from the layer below.
             if token == 0 and layer:
@@ -247,6 +247,10 @@ def propagate(initial, vision=False, quadratic=False):
 
             influence = 1 - np.tanh(np.abs(energy))
             final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
+
+            if token == 0 and layer == layers - 1:
+                from IPython import embed
+                embed()
 
     return final
 
@@ -343,8 +347,8 @@ def predict_all(raw, weighted, config, vision=False):
     
         latent_debate = np.select(
             [
-                propagate(weighted, vision)[:, 0, -1] > 0.716,
-                propagate(weighted, vision)[:, 0, -1] < -0.829
+                propagate(weighted, vision)[:, 0, -1] > 1,
+                propagate(weighted, vision)[:, 0, -1] < -0.1
             ],
             [1, -1],
             default=0
