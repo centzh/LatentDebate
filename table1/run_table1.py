@@ -165,6 +165,83 @@ def propagate(initial, vision=False, quadratic=False):
 
     return final
 
+def plot_cat_dog_heatmaps(matrix, vision=True, filename='cat_dog_mean_heatmaps.png'):
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # Split into cat and dog arrays based on the sign of [0, -1]
+    cat_mask = matrix[:, 0, -1] > 0
+    dog_mask = matrix[:, 0, -1] < 0
+
+    cat = matrix[cat_mask]
+    dog = matrix[dog_mask]
+
+    # Calculate element-wise mean and standard deviation
+    cat_mean = cat.mean(axis=0)
+    cat_std = cat.std(axis=0)
+
+    dog_mean = dog.mean(axis=0)
+    dog_std = dog.std(axis=0)
+
+    # Plot heatmaps
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+
+    vmin, vmax = -1, 1
+
+    # Cat mean heatmap
+    im = axes[0].imshow(
+        cat_mean.T,
+        cmap='coolwarm',
+        vmin=vmin,
+        vmax=vmax,
+        aspect='auto'
+    )
+    axes[0].set_title('Cat Mean')
+    axes[0].set_xlabel('Token')
+    axes[0].set_ylabel('Layer')
+
+    # Dog mean heatmap
+    axes[1].imshow(
+        dog_mean.T,
+        cmap='coolwarm',
+        vmin=vmin,
+        vmax=vmax,
+        aspect='auto'
+    )
+    axes[1].set_title('Dog Mean')
+    axes[1].set_xlabel('Token')
+    axes[1].set_ylabel('Layer')
+
+    # Reflect both plots about the x-axis
+    axes[0].invert_yaxis()
+    axes[1].invert_yaxis()
+
+    # Shared colour bar
+    fig.colorbar(
+        im,
+        ax=axes,
+        label='Final strength',
+        shrink=0.8
+    )
+
+    plt.tight_layout()
+
+    plt.savefig(
+        filename,
+        dpi=300,
+        bbox_inches='tight'
+    )
+
+    plt.show()
+
+    return {
+        'cat_mean': cat_mean,
+        'cat_std': cat_std,
+        'dog_mean': dog_mean,
+        'dog_std': dog_std,
+        'propagated_cat': cat,
+        'propagated_dog': dog
+    }
 
 def predict_all(raw, weighted, config, vision=False):
     rng = random.Random(config['random_seed'])
@@ -186,74 +263,20 @@ def predict_all(raw, weighted, config, vision=False):
             -1,
         ).astype(np.int8)
 
-        propagated_weighted = propagate(weighted, vision)
+        propagated = propagate(raw, vision)
+        propagated_stats = plot_cat_dog_heatmaps(propagated)
+        raw_stats = plot_cat_dog_heatmaps(raw)
 
-        # Split into cat and dog arrays based on the sign of [0, -1]
-        cat_mask = propagated_weighted[:, 0, -1] > 0
-        dog_mask = propagated_weighted[:, 0, -1] < 0
+        propagated_cat_mean = propagated_stats['cat_mean']
+        raw_cat_mean = raw_stats['cat_mean']
 
-        propagate_weighted_cat = propagated_weighted[cat_mask]
-        propagate_weighted_dog = propagated_weighted[dog_mask]
+        propagated_dog_mean = propagated_stats['dog_mean']
+        raw_dog_mean = raw_stats['dog_mean']
 
-        # Calculate element-wise mean and standard deviation across samples
-        cat_mean = propagate_weighted_cat.mean(axis=0)
-        cat_std = propagate_weighted_cat.std(axis=0)
-
-        dog_mean = propagate_weighted_dog.mean(axis=0)
-        dog_std = propagate_weighted_dog.std(axis=0)
-
-        import matplotlib.pyplot as plt
-
-        fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-        vmin, vmax = -1, 1
-
-        # Cat mean heatmap (transposed)
-        im = axes[0].imshow(
-            cat_mean.T,
-            cmap='coolwarm',
-            vmin=vmin,
-            vmax=vmax,
-            aspect='auto'
-        )
-        axes[0].set_title('Cat Mean')
-        axes[0].set_xlabel('Token')
-        axes[0].set_ylabel('Layer')
-
-        # Dog mean heatmap (transposed)
-        axes[1].imshow(
-            dog_mean.T,
-            cmap='coolwarm',
-            vmin=vmin,
-            vmax=vmax,
-            aspect='auto'
-        )
-
-        # Reflect both plots about the x-axis
-        axes[0].invert_yaxis()
-        axes[1].invert_yaxis()
-
-        axes[1].set_title('Dog Mean')
-        axes[1].set_xlabel('Token')
-        axes[1].set_ylabel('Layer')
-
-        # Shared colour bar
-        fig.colorbar(
-            im,
-            ax=axes,
-            label='Mean Propagation Value',
-            shrink=0.8
-        )
-
-        plt.tight_layout()
-
-        plt.savefig(
-            'cat_dog_mean_heatmaps.png',
-            dpi=300,
-            bbox_inches='tight'
-        )
-
-        plt.show()
+        cat_mse = np.mean((propagated_cat_mean - raw_cat_mean)**2)
+        dog_mse = np.mean((propagated_dog_mean - raw_dog_mean)**2)
+        print(f"Cat MSE is {cat_mse}")
+        print(f"Dog MSE is {dog_mse}")
 
     else:
         latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
