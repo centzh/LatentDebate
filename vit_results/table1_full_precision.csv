@@ -1,0 +1,7 @@
+model,dataset,method,n,consistent,consistency_percent,display_percent,tokens,layers,random_seed,input_file,input_sha256
+google/vit-base-patch16-224,vit,Random,499,237,47.49498997995992,47.5,6,12,0,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b
+google/vit-base-patch16-224,vit,Average,499,328,65.7314629258517,65.7,6,12,,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b
+google/vit-base-patch16-224,vit,Majority Voting,499,210,42.08416833667334,42.1,6,12,,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b
+google/vit-base-patch16-224,vit,Latent Debate,499,222,44.48897795591182,44.5,6,12,,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b
+google/vit-base-patch16-224,vit,Latent Debate -- w/o token weight,499,426,85.37074148296593,85.4,6,12,,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b
+google/vit-base-patch16-224,vit,Latent Debate -- with quadratic connection,499,400,80.16032064128257,80.2,6,12,,vit_prob.jsonl,fe2c27500e4fd5f70810c1505f716d7ebe4e64e267f53a370b5325cf449ad35b

@@ -1,0 +1,33 @@
+{
+  "protocol_version": "table1-finalized-2026-10-29",
+  "random_seed": 0,
+  "reset_random_seed_per_input_file": true,
+  "samples_per_dataset": 499,
+  "selected_layers": 12,
+  "token_weight_temperature": 0.05,
+  "decimal_places": 1,
+  "llm_answer_rule": "strip_then_startswith_capital_T_else_false",
+  "noncanonical_answer_handling": "preserve_legacy_mapping_and_report",
+  "methods": [
+    "Random",
+    "Average",
+    "Majority Voting",
+    "Latent Debate",
+    "Latent Debate -- w/o token weight",
+    "Latent Debate -- with quadratic connection"
+  ],
+  "datasets": [
+    {
+      "name": "vit",
+      "tokens": 6
+    }
+  ],
+  "models": [
+    {
+      "name": "google/vit-base-patch16-224",
+      "files": [
+        "vit_prob.jsonl"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "python": "3.13.2 | packaged by conda-forge | (main, Feb 17 2025, 13:52:56) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.4.4",
+    "scipy": "1.17.1"
+  }
+}
