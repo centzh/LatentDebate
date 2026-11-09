@@ -4,6 +4,7 @@ from transformers import AutoImageProcessor, AutoModelForImageClassification
 import numpy as np
 import json
 import torch
+from tqdm import tqdm
 from IPython import embed
 
 logging.basicConfig(level=logging.INFO)
@@ -33,6 +34,9 @@ logger.info(f"Loaded {len(test_cats)} cat instances")
 test_dogs = get_class_instances(test_dataset, 'dog')
 logger.info(f"Loaded {len(test_dogs)} dog instances")
 
+cat_label = get_label(test_cats, 'cat')
+dog_label = get_label(test_dogs, 'dog')
+
 processor = AutoImageProcessor.from_pretrained("nateraw/vit-base-patch16-224-cifar10")
 model = AutoModelForImageClassification.from_pretrained("nateraw/vit-base-patch16-224-cifar10", device_map="auto")
 model.eval()
@@ -41,20 +45,17 @@ num_layers = len(model.vit.layers)
 with open('test_cats.jsonl', 'w') as f:
     datasets = [test_cats, test_dogs]
     for dataset in datasets:
-        for image_number, instance in enumerate(dataset):
+       for image_number, instance in enumerate(tqdm(dataset, desc="Calculating initial strengths")):
             image_path = instance.get('img', None)
             label = instance.get('label', None)
-            logger.info(f"Processing image: {image_path} with label: {label}")
+            logger.info(f"Processing image {image_number}/{len(dataset)}")
 
             inputs = processor(images=image_path, return_tensors="pt")
             outputs = model(**inputs, output_hidden_states=True)
-            logger.info(f"Finished processing image: {image_path}")
 
             logits = outputs.logits
-            logger.info(f"Logits: {logits}")
             predicted_class = logits.argmax(-1).item()
             predicted_class_name = get_label_name(dataset, predicted_class)
-            logger.info(f"Predicted class: {predicted_class_name}")
 
             num_tokens = outputs.hidden_states[0].shape[1]
             initial_strengths = torch.zeros(num_tokens, num_layers)
@@ -69,37 +70,23 @@ with open('test_cats.jsonl', 'w') as f:
                     # Apply unembedding matrix
                     interpreted_activations = model.classifier(token_activations)
                     interpreted_softmaxes = torch.softmax(interpreted_activations, dim=0)
+                    cat_probs = interpreted_softmaxes[cat_label]
+                    initial_strengths[token][layer] = cat_probs
 
-                    cat_probs = interpreted_softmaxes[get_label(dataset, 'cat')].sum()
-                    dog_probs = interpreted_softmaxes[get_label(dataset, 'dog')].sum()
-
-                    cat_raw = cat_probs.unsqueeze(0)
-                    dog_raw = dog_probs.unsqueeze(0)
-
-                    cat_dog_raw = torch.cat((cat_raw, dog_raw))
-                    initial_strengths[token][layer] = cat_dog_raw[0] - cat_dog_raw[1]
-
-                logger.info(f"Finished token: {token}")
-
-        data = {
-            "label": label,
-            "result": {
-                "query": {
-                    "query": str(image_path),
-                    "query_probs": initial_strengths.detach().cpu().tolist(),
-                    "token_score": 0
-                },
-                "answer": {
-                    "answer": predicted_class_name,
+            data = {
+                "label": label,
+                "result": {
+                    "query": {
+                        "query": str(image_path),
+                        "query_probs": initial_strengths.detach().cpu().tolist(),
+                        "token_score": 0
+                    },
+                    "answer": {
+                        "answer": predicted_class_name,
+                    }
                 }
             }
-        }
-
-        f.write(json.dumps(data) + "\n")
-
-        logger.info(
-            f"Finished image {image_number}/{len(dataset)}: {image_path}"
-        )
+            f.write(json.dumps(data) + "\n")
 
 logger.info(f"Completed writing initial strengths to file.")
 
