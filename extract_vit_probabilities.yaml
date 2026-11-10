@@ -1,0 +1,22 @@
+# Configuration for extract_vit_probabilities.py
+# Usage: uv run extract_vit_probabilities.py --config cat_dog_cifar10.yaml
+
+dataset:
+  hub_id: uoft-cs/cifar10
+  split: test
+  # If set, keep only these class names (one combined dataset). Omit or null for the full split.
+  include_classes:
+    - cat
+    - dog
+
+model:
+  pretrained: nateraw/vit-base-patch16-224-cifar10
+  # Use "cpu" when not on GPU; "auto" lets transformers pick CUDA/MPS when available
+  device_map: cpu
+
+# Softmax column used for per-token, per-layer "initial strengths"
+strength:
+  positive_class: cat
+
+output:
+  path: data/cat_dog/cifar10.jsonl
