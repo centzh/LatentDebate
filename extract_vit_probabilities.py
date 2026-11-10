@@ -80,7 +80,6 @@ def main():
                             "query": {
                                 "query": str(image_path),
                                 "query_probs": initial_strengths.tolist(),
-                                "token_score": 0
                             },
                             "answer": {
                                 "answer": pred_label_name,
