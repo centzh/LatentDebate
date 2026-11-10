@@ -1,0 +1,7 @@
+model,dataset,method,n,consistent,consistency_percent,display_percent,tokens,layers,random_seed,input_file,input_sha256
+google/vit-base-patch16-224,imagenet_1k,Random,2000,1236,61.8,61.8,6,12,0,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+google/vit-base-patch16-224,imagenet_1k,Average,2000,996,49.8,49.8,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,996,49.8,49.8,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1978,98.9,98.9,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1984,99.2,99.2,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1983,99.15,99.2,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1

@@ -169,85 +169,72 @@ def propagate(initial, vision=False, quadratic=False):
 
     return final
 
-def plot_cat_dog_heatmaps(matrix, vision=True, filename='cat_dog_mean_heatmaps.png'):
-    import numpy as np
+def plot_positive_negative_heatmaps(
+    matrix,
+    positive_label: str,
+    negative_label: str,
+    output_path: Path,
+):
     import matplotlib.pyplot as plt
 
-    # Split into cat and dog arrays based on the sign of [0, -1]
-    cat_mask = matrix[:, 0, -1] >= 0
-    dog_mask = matrix[:, 0, -1] < 0
+    # Split by CLS token strength at the deepest layer (token 0, last layer).
+    positive_mask = matrix[:, 0, -1] >= 0
+    negative_mask = matrix[:, 0, -1] < 0
 
-    cat = matrix[cat_mask]
-    dog = matrix[dog_mask]
+    positive = matrix[positive_mask]
+    negative = matrix[negative_mask]
 
-    # Calculate element-wise mean and standard deviation
-    cat_mean = cat.mean(axis=0)
-    cat_std = cat.std(axis=0)
+    positive_mean = positive.mean(axis=0)
+    positive_std = positive.std(axis=0)
+    negative_mean = negative.mean(axis=0)
+    negative_std = negative.std(axis=0)
 
-    dog_mean = dog.mean(axis=0)
-    dog_std = dog.std(axis=0)
-
-    # Plot heatmaps
     fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
     vmin, vmax = -1, 1
 
-    # Cat mean heatmap
     im = axes[0].imshow(
-        cat_mean.T,
+        positive_mean.T,
         cmap='coolwarm',
         vmin=vmin,
         vmax=vmax,
-        aspect='auto'
+        aspect='auto',
     )
-    axes[0].set_title('Cat Mean')
+    axes[0].set_title(f'{positive_label} mean')
     axes[0].set_xlabel('Token')
     axes[0].set_ylabel('Layer')
 
-    # Dog mean heatmap
     axes[1].imshow(
-        dog_mean.T,
+        negative_mean.T,
         cmap='coolwarm',
         vmin=vmin,
         vmax=vmax,
-        aspect='auto'
+        aspect='auto',
     )
-    axes[1].set_title('Dog Mean')
+    axes[1].set_title(f'{negative_label} mean')
     axes[1].set_xlabel('Token')
     axes[1].set_ylabel('Layer')
 
-    # Reflect both plots about the x-axis
     axes[0].invert_yaxis()
     axes[1].invert_yaxis()
 
-    # Shared colour bar
-    fig.colorbar(
-        im,
-        ax=axes,
-        label='Final strength',
-        shrink=0.8
-    )
-
+    fig.colorbar(im, ax=axes, label='Strength', shrink=0.8)
     plt.tight_layout()
 
-    plt.savefig(
-        filename,
-        dpi=300,
-        bbox_inches='tight'
-    )
-
-    plt.show()
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close(fig)
 
     return {
-        'cat_mean': cat_mean,
-        'cat_std': cat_std,
-        'dog_mean': dog_mean,
-        'dog_std': dog_std,
-        'propagated_cat': cat,
-        'propagated_dog': dog
+        'positive_mean': positive_mean,
+        'positive_std': positive_std,
+        'negative_mean': negative_mean,
+        'negative_std': negative_std,
+        'positive_samples': positive,
+        'negative_samples': negative,
     }
 
-def predict_all(raw, weighted, config, vision=False):
+def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = None):
     rng = random.Random(config['random_seed'])
     n_tokens, n_layers = raw.shape[1], raw.shape[2]
     majority = (raw >= 0).sum(axis=(1, 2)) >= n_tokens * n_layers / 2
@@ -290,22 +277,26 @@ def predict_all(raw, weighted, config, vision=False):
 
         propagated = propagate(raw, vision)
         propagated_quadratic = propagate(raw, vision, quadratic=True)
-        raw_stats = plot_cat_dog_heatmaps(raw)
-        propagated_stats = plot_cat_dog_heatmaps(propagated)
-        propagated_quad_stats = plot_cat_dog_heatmaps(propagated_quadratic)
 
-        propagated_cat_mean = propagated_stats['cat_mean']
-        raw_cat_mean = raw_stats['cat_mean']
-
-        propagated_dog_mean = propagated_stats['dog_mean']
-        raw_dog_mean = raw_stats['dog_mean']
-
-        cat_mse = np.mean((propagated_cat_mean - raw_cat_mean)**2)
-        dog_mse = np.mean((propagated_dog_mean - raw_dog_mean)**2)
-        print(f"Cat MSE is {cat_mse}")
-        print(f"Dog MSE is {dog_mse}")
+        positive_label = str(config['positive_class'])
+        negative_label = str(config['negative_class'])
+        if output_dir is not None:
+            raw_stats = plot_positive_negative_heatmaps(
+                raw, positive_label, negative_label, output_dir / 'raw_mean_heatmaps.png'
+            )
+            propagated_stats = plot_positive_negative_heatmaps(
+                propagated,
+                positive_label,
+                negative_label,
+                output_dir / 'propagated_mean_heatmaps.png',
+            )
+            plot_positive_negative_heatmaps(
+                propagated_quadratic,
+                positive_label,
+                negative_label,
+                output_dir / 'propagated_quadratic_mean_heatmaps.png',
+            )
         
-
     else:
         latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
         unweighted = np.where(propagate(raw)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
@@ -466,7 +457,9 @@ def main():
                 {'model': model['name'], 'dataset': dataset['name'], **r}
                 for r in noncanonical
             )
-            predictions = predict_all(raw, weighted, config, args.vision)
+            predictions = predict_all(
+                raw, weighted, config, args.vision, args.output_dir
+            )
 
             key = model['name'].replace('-', '_') + '__' + dataset['name']
             all_predictions = np.column_stack(

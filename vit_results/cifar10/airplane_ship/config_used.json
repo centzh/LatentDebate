@@ -1,4 +1,6 @@
 {
+  "positive_class": "airplane",
+  "negative_class": "ship",
   "protocol_version": "table1-finalized-2026-10-29",
   "random_seed": 0,
   "reset_random_seed_per_input_file": true,
@@ -17,12 +19,17 @@
     "Quadratic"
   ],
   "datasets": [
-    {"name": "imagenet_1k", "tokens": 6}
+    {
+      "name": "imagenet_1k",
+      "tokens": 6
+    }
   ],
   "models": [
     {
       "name": "google/vit-base-patch16-224",
-      "files": ["cifar10.jsonl"]
+      "files": [
+        "airplane_ship.jsonl"
+      ]
     }
   ]
 }

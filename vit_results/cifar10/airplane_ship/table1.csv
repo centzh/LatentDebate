@@ -1,0 +1,7 @@
+model,method,imagenet_1k,Avg
+google/vit-base-patch16-224,Random,61.8,61.8
+google/vit-base-patch16-224,Average,49.8,49.8
+google/vit-base-patch16-224,Majority Voting,49.8,49.8
+google/vit-base-patch16-224,Latent Debate -- w/o token weight,98.9,98.9
+google/vit-base-patch16-224,Unweighted,99.2,99.2
+google/vit-base-patch16-224,Quadratic,99.2,99.2
