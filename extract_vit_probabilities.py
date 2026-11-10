@@ -42,7 +42,7 @@ def parse_args():
     parser.add_argument(
         "--config",
         type=Path,
-        default=HERE / "extract_vit_probabilities.yaml",
+        default=HERE / "config" / "cifar10" / "cat_dog.yaml",
         help="YAML configuration file",
     )
     return parser.parse_args()

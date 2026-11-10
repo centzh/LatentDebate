@@ -1,0 +1,23 @@
+# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_airplane.yaml
+
+dataset:
+  hub_id: uoft-cs/cifar10
+  split: test
+  include_classes:
+    - cat
+    - airplane
+
+model:
+  pretrained: nateraw/vit-base-patch16-224-cifar10
+  device_map: cpu
+
+strength:
+  positive_class: cat
+
+output:
+  path: data/cifar10/cat_airplane.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false
