@@ -1,0 +1,92 @@
+{
+  "positive_class": "cat",
+  "negative_class": "dog",
+  "count": 17,
+  "instances": [
+    {
+      "index": 277,
+      "answer_class": "horse",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_00277_horse.png"
+    },
+    {
+      "index": 470,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_00470_frog.png"
+    },
+    {
+      "index": 607,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_00607_frog.png"
+    },
+    {
+      "index": 974,
+      "answer_class": "horse",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_00974_horse.png"
+    },
+    {
+      "index": 975,
+      "answer_class": "deer",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_00975_deer.png"
+    },
+    {
+      "index": 1071,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01071_frog.png"
+    },
+    {
+      "index": 1086,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01086_frog.png"
+    },
+    {
+      "index": 1123,
+      "answer_class": "deer",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01123_deer.png"
+    },
+    {
+      "index": 1261,
+      "answer_class": "deer",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01261_deer.png"
+    },
+    {
+      "index": 1329,
+      "answer_class": "deer",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01329_deer.png"
+    },
+    {
+      "index": 1362,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01362_truck.png"
+    },
+    {
+      "index": 1372,
+      "answer_class": "automobile",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01372_automobile.png"
+    },
+    {
+      "index": 1450,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01450_frog.png"
+    },
+    {
+      "index": 1520,
+      "answer_class": "ship",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01520_ship.png"
+    },
+    {
+      "index": 1803,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01803_frog.png"
+    },
+    {
+      "index": 1964,
+      "answer_class": "ship",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01964_ship.png"
+    },
+    {
+      "index": 1981,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\cat_dog\\label_zero_instances\\instance_01981_frog.png"
+    }
+  ]
+}

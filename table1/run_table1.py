@@ -12,6 +12,7 @@ import importlib.metadata
 import json
 import platform
 import random
+import re
 import sys
 import time
 from decimal import Decimal, ROUND_HALF_UP
@@ -88,6 +89,7 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
     raw = []
     weights = []
     answers = []
+    answer_texts = []
     query_hashes = []
     noncanonical = []
     layers = config['selected_layers']
@@ -134,15 +136,16 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
         if calculate_weights:
             weights.append(weight)
         answers.append(label)
+        answer_texts.append(answer_raw.strip())
         query_hashes.append(hashlib.sha256(query['query'].encode('utf-8')).hexdigest())
 
     raw = np.asarray(raw, dtype=np.float64)
     answers = np.asarray(answers, dtype=np.int8)
     if calculate_weights:
         weighted = raw * np.asarray(weights)[:, :, None]
-        return raw, weighted, answers, query_hashes, noncanonical
+        return raw, weighted, answers, query_hashes, noncanonical, answer_texts
     else:
-        return raw, raw, answers, query_hashes, noncanonical
+        return raw, raw, answers, query_hashes, noncanonical, answer_texts
 
 def propagate(initial, vision=False, quadratic=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
@@ -233,6 +236,81 @@ def plot_positive_negative_heatmaps(
         'positive_samples': positive,
         'negative_samples': negative,
     }
+
+
+def plot_label_zero_instances(
+    raw: np.ndarray,
+    labels: np.ndarray,
+    answer_texts: list[str],
+    config: dict,
+    output_dir: Path,
+):
+    """One figure per instance where map_answer_to_label is 0 (neither positive nor negative class)."""
+    import matplotlib.pyplot as plt
+
+    zero_indices = np.flatnonzero(labels == 0)
+    if zero_indices.size == 0:
+        return []
+
+    positive_label = str(config['positive_class'])
+    negative_label = str(config['negative_class'])
+    plot_dir = Path(output_dir) / 'label_zero_instances'
+    plot_dir.mkdir(parents=True, exist_ok=True)
+
+    latent = propagate(raw, vision=True)
+    quadratic = propagate(raw, vision=True, quadratic=True)
+    panels = [
+        ('Latent Debate', latent),
+        ('Unweighted', raw),
+        ('Quadratic', quadratic),
+    ]
+
+    written = []
+    vmin, vmax = -1, 1
+    for idx in zero_indices:
+        answer_class = answer_texts[idx]
+        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+        last_im = None
+        for ax, (title, tensor) in zip(axes, panels):
+            last_im = ax.imshow(
+                tensor[idx].T,
+                cmap='coolwarm',
+                vmin=vmin,
+                vmax=vmax,
+                aspect='auto',
+            )
+            ax.set_title(title)
+            ax.set_xlabel('Token')
+            ax.set_ylabel('Layer')
+            ax.invert_yaxis()
+
+        fig.suptitle(
+            f'Instance {idx} | model answer: "{answer_class}" '
+            f'(not {positive_label} or {negative_label})',
+            fontsize=12,
+        )
+        fig.colorbar(last_im, ax=axes, label='Strength', shrink=0.85)
+        plt.tight_layout()
+
+        safe_answer = re.sub(r'[^\w\-.]+', '_', answer_class.lower()).strip('_') or 'unknown'
+        out_path = plot_dir / f'instance_{idx:05d}_{safe_answer}.png'
+        plt.savefig(out_path, dpi=200, bbox_inches='tight')
+        plt.close(fig)
+        written.append({
+            'index': int(idx),
+            'answer_class': answer_class,
+            'path': str(out_path),
+        })
+
+    summary_path = Path(output_dir) / 'label_zero_instances.json'
+    write_json(summary_path, {
+        'positive_class': positive_label,
+        'negative_class': negative_label,
+        'count': len(written),
+        'instances': written,
+    })
+    return written
+
 
 def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = None):
     rng = random.Random(config['random_seed'])
@@ -450,13 +528,17 @@ def main():
                     'keep the released bytes and sample order unchanged'
                 )
 
-            raw, weighted, llm, query_hashes, noncanonical = load_input(
+            raw, weighted, llm, query_hashes, noncanonical, answer_texts = load_input(
                 path, dataset['tokens'], config, args.calculate_weights, args.skip_checks, args.vision
             )
             answer_diagnostics.extend(
                 {'model': model['name'], 'dataset': dataset['name'], **r}
                 for r in noncanonical
             )
+            if args.vision:
+                plot_label_zero_instances(
+                    raw, llm, answer_texts, config, args.output_dir
+                )
             predictions = predict_all(
                 raw, weighted, config, args.vision, args.output_dir
             )
