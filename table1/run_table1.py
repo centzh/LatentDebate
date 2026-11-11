@@ -393,7 +393,7 @@ def plot_prediction_disagreements(
     vision: bool,
     vision_images=None,
 ) -> dict[str, list[dict]]:
-    """One figure per disagreement: input image, LLM (raw) heatmap, method heatmap."""
+    """One figure per disagreement: input image, ViT (raw) heatmap, method heatmap."""
     import matplotlib.pyplot as plt
 
     root = Path(output_dir) / 'prediction_disagreements'
@@ -458,7 +458,7 @@ def plot_prediction_disagreements(
                 vmax=vmax,
                 aspect='auto',
             )
-            axes[1].set_title(f'LLM: {answer_class} ({llm_ref})')
+            axes[1].set_title(f'ViT: {answer_class} ({llm_ref})')
             axes[1].set_xlabel('Token')
             axes[1].set_ylabel('Layer')
             axes[1].invert_yaxis()
