@@ -13,6 +13,7 @@ model:
 
 strength:
   positive_class: cat
+  negative_class: airplane
 
 output:
   path: data/cifar10/cat_airplane.jsonl

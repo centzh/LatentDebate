@@ -13,6 +13,7 @@ model:
 
 strength:
   positive_class: automobile
+  negative_class: truck
 
 output:
   path: data/cifar10/automobile_truck.jsonl
