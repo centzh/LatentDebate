@@ -69,7 +69,9 @@ def main():
     )
 
     positive_class = cfg["strength"]["positive_class"]
+    negative_class = cfg["strength"]["negative_class"]
     positive_label = get_label(full_dataset, positive_class)
+    negative_label = get_label(full_dataset, negative_class)
 
     processor = AutoImageProcessor.from_pretrained(cfg["model"]["pretrained"])
     model = AutoModelForImageClassification.from_pretrained(
@@ -98,8 +100,9 @@ def main():
             hidden_states = torch.from_numpy(np.squeeze(np.asarray(hidden_states)))
 
             interpreted_activations = model.classifier(hidden_states)
-            interpreted_softmaxes = torch.softmax(interpreted_activations, dim=-1)
-            initial_strengths = interpreted_softmaxes[:, :, positive_label]
+            pair_logits = interpreted_activations[..., [positive_label, negative_label]]
+            pair_probs = torch.softmax(pair_logits, dim=-1)
+            initial_strengths = pair_probs[..., 0]
 
             data = {
                 "label": label,
