@@ -161,6 +161,10 @@ def main():
             pred_label_name = get_label_name(full_dataset, pred_label)
 
             hidden_states = torch.stack(outputs.hidden_states).squeeze()
+            # hidden_states[0] refers to activations after embeddings (before first encoder block)
+            # so take hidden_states[1:] to get activations after first encoder block
+            hidden_states = hidden_states[1:, :, :]
+         
             interpreted_activations = model.classifier(hidden_states)
             pair_logits = interpreted_activations[..., [positive_label, negative_label]]
             pair_probs = torch.softmax(pair_logits, dim=-1)
