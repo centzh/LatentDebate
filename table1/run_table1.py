@@ -20,8 +20,36 @@ from pathlib import Path
 
 import numpy as np
 from scipy.special import softmax
+from tqdm import tqdm
 
 HERE = Path(__file__).resolve().parent
+_VISION_DATASET_CACHE: dict[tuple, object] = {}
+
+
+def load_vision_image_dataset(config: dict):
+    """HF rows aligned with JSONL line index (same filter order as extract_vit_probabilities)."""
+    from datasets import load_dataset
+
+    vd = config.get('vision_dataset', {})
+    hub_id = vd.get('hub_id', 'uoft-cs/cifar10')
+    split = vd.get('split', 'test')
+    include_classes = vd.get('include_classes') or [
+        config['positive_class'],
+        config['negative_class'],
+    ]
+    cache_key = (hub_id, split, tuple(include_classes))
+    if cache_key in _VISION_DATASET_CACHE:
+        return _VISION_DATASET_CACHE[cache_key]
+
+    full_dataset = load_dataset(hub_id, split=split)
+    allowed = {
+        full_dataset.features['label'].str2int(name) for name in include_classes
+    }
+    labels = np.asarray(full_dataset['label'])
+    indices = np.nonzero(np.isin(labels, list(allowed)))[0]
+    dataset = full_dataset.select(indices)
+    _VISION_DATASET_CACHE[cache_key] = dataset
+    return dataset
 
 def read_json(path):
     return json.loads(path.read_text(encoding='utf-8'))
@@ -172,6 +200,21 @@ def propagate(initial, vision=False, quadratic=False):
 
     return final
 
+def add_strength_colorbar(
+    fig,
+    mappable,
+    *,
+    right: float = 0.89,
+    bottom: float = 0.12,
+    height: float = 0.76,
+    layout_top: float = 0.96,
+):
+    """Place the strength colorbar in a dedicated axis on the right."""
+    fig.tight_layout(rect=[0, 0, right - 0.03, layout_top])
+    cax = fig.add_axes([right, bottom, 0.02, height])
+    fig.colorbar(mappable, cax=cax, label='Strength')
+
+
 def plot_positive_negative_heatmaps(
     matrix,
     positive_label: str,
@@ -220,8 +263,7 @@ def plot_positive_negative_heatmaps(
     axes[0].invert_yaxis()
     axes[1].invert_yaxis()
 
-    fig.colorbar(im, ax=axes, label='Strength', shrink=0.8)
-    plt.tight_layout()
+    add_strength_colorbar(fig, im)
 
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -267,7 +309,7 @@ def plot_label_zero_instances(
 
     written = []
     vmin, vmax = -1, 1
-    for idx in zero_indices:
+    for idx in tqdm(zero_indices, desc='Plot label-zero instances', unit='img'):
         answer_class = answer_texts[idx]
         fig, axes = plt.subplots(1, 3, figsize=(18, 6))
         last_im = None
@@ -289,8 +331,7 @@ def plot_label_zero_instances(
             f'(not {positive_label} or {negative_label})',
             fontsize=12,
         )
-        fig.colorbar(last_im, ax=axes, label='Strength', shrink=0.85)
-        plt.tight_layout()
+        add_strength_colorbar(fig, last_im, bottom=0.15, height=0.7, layout_top=0.88)
 
         safe_answer = re.sub(r'[^\w\-.]+', '_', answer_class.lower()).strip('_') or 'unknown'
         out_path = plot_dir / f'instance_{idx:05d}_{safe_answer}.png'
@@ -310,6 +351,158 @@ def plot_label_zero_instances(
         'instances': written,
     })
     return written
+
+
+def label_to_class_name(label: int, config: dict) -> str:
+    if label == 1:
+        return str(config.get('positive_class', 'positive'))
+    if label == -1:
+        return str(config.get('negative_class', 'negative'))
+    if label == 0:
+        return 'other'
+    return f'label_{label}'
+
+
+def matrix_for_method(method: str, raw: np.ndarray, weighted: np.ndarray, vision: bool) -> np.ndarray:
+    name = method.lower()
+    if vision:
+        if 'quadratic' in name:
+            return propagate(raw, vision=True, quadratic=True)
+        if 'unweighted' in name:
+            return raw
+        if 'latent' in name or 'debate' in name:
+            return propagate(raw, vision=True)
+        return raw
+    if 'quadratic' in name:
+        return propagate(weighted, vision=False, quadratic=True)
+    if 'unweighted' in name:
+        return propagate(raw, vision=False)
+    if 'latent' in name or 'debate' in name:
+        return propagate(weighted, vision=False)
+    return raw
+
+
+def plot_prediction_disagreements(
+    raw: np.ndarray,
+    weighted: np.ndarray,
+    llm: np.ndarray,
+    predictions: dict[str, np.ndarray],
+    answer_texts: list[str],
+    config: dict,
+    output_dir: Path,
+    vision: bool,
+    vision_images=None,
+) -> dict[str, list[dict]]:
+    """One figure per disagreement: input image, LLM (raw) heatmap, method heatmap."""
+    import matplotlib.pyplot as plt
+
+    root = Path(output_dir) / 'prediction_disagreements'
+    root.mkdir(parents=True, exist_ok=True)
+    vmin, vmax = -1, 1
+    summary: dict[str, list[dict]] = {}
+    skip_methods = {'random', 'average', 'majority voting'}
+    if vision_images is not None and len(vision_images) != len(raw):
+        raise ValueError(
+            f'Vision image count ({len(vision_images)}) != JSONL rows ({len(raw)}); '
+            're-extract jsonl or fix vision_dataset in config'
+        )
+
+    for method, values in tqdm(
+        predictions.items(),
+        desc='Plot prediction disagreements',
+        unit='method',
+    ):
+        if method.strip().lower() in skip_methods:
+            continue
+        disagree_idx = np.flatnonzero(values != llm)
+        if disagree_idx.size == 0:
+            summary[method] = []
+            continue
+
+        safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
+        tensor = matrix_for_method(method, raw, weighted, vision)
+        written: list[dict] = []
+
+        for idx in tqdm(
+            disagree_idx,
+            desc=f'  {method}',
+            unit='img',
+            leave=False,
+        ):
+            answer_class = answer_texts[idx]
+            pred_name = label_to_class_name(int(values[idx]), config)
+            llm_ref = int(llm[idx])
+            bucket = 'reference_zero' if llm_ref == 0 else 'reference_nonzero'
+            method_dir = root / bucket / safe_method
+            method_dir.mkdir(parents=True, exist_ok=True)
+
+            fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+            if vision_images is not None:
+                axes[0].imshow(np.asarray(vision_images[idx]['img']))
+            else:
+                axes[0].text(
+                    0.5,
+                    0.5,
+                    f'Instance {idx}\n(no image)',
+                    ha='center',
+                    va='center',
+                )
+            axes[0].set_title('Input image')
+            axes[0].axis('off')
+
+            llm_im = axes[1].imshow(
+                raw[idx].T,
+                cmap='coolwarm',
+                vmin=vmin,
+                vmax=vmax,
+                aspect='auto',
+            )
+            axes[1].set_title(f'LLM: {answer_class} ({llm_ref})')
+            axes[1].set_xlabel('Token')
+            axes[1].set_ylabel('Layer')
+            axes[1].invert_yaxis()
+
+            method_im = axes[2].imshow(
+                tensor[idx].T,
+                cmap='coolwarm',
+                vmin=vmin,
+                vmax=vmax,
+                aspect='auto',
+            )
+            axes[2].set_title(f'{method}: {pred_name} ({int(values[idx])})')
+            axes[2].set_xlabel('Token')
+            axes[2].set_ylabel('Layer')
+            axes[2].invert_yaxis()
+
+            fig.suptitle(f'Instance {idx} — prediction disagreement', fontsize=11)
+            add_strength_colorbar(
+                fig, method_im, bottom=0.18, height=0.65, layout_top=0.90
+            )
+
+            safe_answer = re.sub(r'[^\w\-.]+', '_', answer_class.lower()).strip('_') or 'unknown'
+            out_path = method_dir / f'instance_{idx:05d}_{safe_answer}.png'
+            plt.savefig(out_path, dpi=200, bbox_inches='tight')
+            plt.close(fig)
+            written.append({
+                'index': int(idx),
+                'answer_class': answer_class,
+                'llm_label': llm_ref,
+                'llm_bucket': bucket,
+                'method_label': int(values[idx]),
+                'path': str(out_path),
+            })
+
+        summary[method] = written
+
+    write_json(root / 'summary.json', {
+        'vision': vision,
+        'methods': {
+            method: {'count': len(items), 'instances': items}
+            for method, items in summary.items()
+        },
+    })
+    return summary
 
 
 def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = None):
@@ -416,6 +609,17 @@ def make_table(rows, config):
                 for r in cells
             })
             row['Avg'] = display(mean, config['decimal_places'])
+            total_n = sum(int(c['n']) for c in cells)
+            disagree_zero = sum(int(c.get('disagree_llm_zero', 0)) for c in cells)
+            disagree_nonzero = sum(int(c.get('disagree_llm_nonzero', 0)) for c in cells)
+            row['disagree_pct_llm_0'] = display(
+                percentage(disagree_zero, total_n),
+                config['decimal_places'],
+            )
+            row['disagree_pct_otherwise'] = display(
+                percentage(disagree_nonzero, total_n),
+                config['decimal_places'],
+            )
             table.append(row)
     return table
 
@@ -489,6 +693,12 @@ def parse_args():
     parser.add_argument('--calculate-weights', type=str_to_bool, default=True)
     parser.add_argument('--skip-checks', type=str_to_bool, default=False)
     parser.add_argument('--vision', type=str_to_bool, default=False)
+    parser.add_argument(
+        '--plot',
+        type=str_to_bool,
+        default=False,
+        help='Write vision diagnostic heatmaps (mean, label-zero, disagreements)',
+    )
     return parser.parse_args()
 
 
@@ -535,13 +745,28 @@ def main():
                 {'model': model['name'], 'dataset': dataset['name'], **r}
                 for r in noncanonical
             )
-            if args.vision:
+            plot_output = args.output_dir if args.vision and args.plot else None
+            vision_images = None
+            if plot_output is not None:
+                vision_images = load_vision_image_dataset(config)
                 plot_label_zero_instances(
-                    raw, llm, answer_texts, config, args.output_dir
+                    raw, llm, answer_texts, config, plot_output
                 )
             predictions = predict_all(
-                raw, weighted, config, args.vision, args.output_dir
+                raw, weighted, config, args.vision, plot_output
             )
+            if plot_output is not None:
+                plot_prediction_disagreements(
+                    raw,
+                    weighted,
+                    llm,
+                    predictions,
+                    answer_texts,
+                    config,
+                    plot_output,
+                    args.vision,
+                    vision_images,
+                )
 
             key = model['name'].replace('-', '_') + '__' + dataset['name']
             all_predictions = np.column_stack(
@@ -569,28 +794,41 @@ def main():
 
             for method, values in predictions.items():
                 num_consistent = int((values == llm).sum())
-           
+                disagree = values != llm
+                disagree_llm_zero = int((disagree & (llm == 0)).sum())
+                disagree_llm_nonzero = int((disagree & (llm != 0)).sum())
+                n_samples = len(llm)
+
                 if not args.skip_checks:
                     reference_cell = expected_cells[(model['name'], dataset['name'], method)]
                     if num_consistent != reference_cell['consistent'] or len(llm) != reference_cell['n']:
                         raise AssertionError(f'Cell mismatch: {key}, {method}')
-                rows.append({
+                row_data = {
                     'model': model['name'],
                     'dataset': dataset['name'],
                     'method': method,
-                    'n': len(llm),
+                    'n': n_samples,
                     'consistent': num_consistent,
                     'consistency_percent': float(percentage(num_consistent, len(llm))),
                     'display_percent': display(
                         percentage(num_consistent, len(llm)),
                         config['decimal_places'],
                     ),
+                    'disagree_llm_zero': disagree_llm_zero,
+                    'disagree_llm_nonzero': disagree_llm_nonzero,
                     'tokens': dataset['tokens'],
                     'layers': config['selected_layers'],
                     'random_seed': config['random_seed'] if method == 'Random' else '',
                     'input_file': file,
                     'input_sha256': digest,
-                })
+                }
+                row_data['disagree_pct_llm_0'] = float(
+                    percentage(disagree_llm_zero, n_samples)
+                )
+                row_data['disagree_pct_otherwise'] = float(
+                    percentage(disagree_llm_nonzero, n_samples)
+                )
+                rows.append(row_data)
 
             input_checks.append({
                 'model': model['name'],

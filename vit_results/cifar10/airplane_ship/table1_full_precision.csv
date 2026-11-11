@@ -1,7 +1,7 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,tokens,layers,random_seed,input_file,input_sha256
-google/vit-base-patch16-224,imagenet_1k,Random,2000,1236,61.8,61.8,6,12,0,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
-google/vit-base-patch16-224,imagenet_1k,Average,2000,996,49.8,49.8,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
-google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,996,49.8,49.8,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
-google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1978,98.9,98.9,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
-google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1984,99.2,99.2,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
-google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1983,99.15,99.2,6,12,,airplane_ship.jsonl,19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1
+model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,imagenet_1k,Random,2000,1317,65.85,65.9,16,667,6,12,0,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,33.35
+google/vit-base-patch16-224,imagenet_1k,Average,2000,1848,92.4,92.4,16,136,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,6.8
+google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,1615,80.75,80.8,16,369,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,18.45
+google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1981,99.05,99.1,16,3,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.15
+google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1984,99.2,99.2,16,0,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.0
+google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1983,99.15,99.2,16,1,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.05

@@ -12,13 +12,13 @@
   "llm_answer_rule": "strip_then_startswith_capital_T_else_false",
   "noncanonical_answer_prefixes": 0,
   "mean_rounding": "arithmetic mean of six unrounded scores, then ROUND_HALF_UP to one decimal",
-  "elapsed_seconds": 24.17102837562561,
+  "elapsed_seconds": 114.55869197845459,
   "input_files": [
     {
       "model": "google/vit-base-patch16-224",
       "dataset": "imagenet_1k",
       "file": "airplane_ship.jsonl",
-      "sha256": "19c522f2dcabc782617edef48e8262d8197829f21243f62464d042b92ab236e1"
+      "sha256": "fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814"
     }
   ]
 }

@@ -1,0 +1,87 @@
+{
+  "positive_class": "airplane",
+  "negative_class": "ship",
+  "count": 16,
+  "instances": [
+    {
+      "index": 76,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00076_bird.png"
+    },
+    {
+      "index": 174,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00174_bird.png"
+    },
+    {
+      "index": 471,
+      "answer_class": "automobile",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00471_automobile.png"
+    },
+    {
+      "index": 523,
+      "answer_class": "automobile",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00523_automobile.png"
+    },
+    {
+      "index": 545,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00545_bird.png"
+    },
+    {
+      "index": 658,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00658_truck.png"
+    },
+    {
+      "index": 701,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00701_bird.png"
+    },
+    {
+      "index": 839,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00839_truck.png"
+    },
+    {
+      "index": 904,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00904_truck.png"
+    },
+    {
+      "index": 930,
+      "answer_class": "automobile",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_00930_automobile.png"
+    },
+    {
+      "index": 1046,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01046_truck.png"
+    },
+    {
+      "index": 1204,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01204_truck.png"
+    },
+    {
+      "index": 1295,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01295_cat.png"
+    },
+    {
+      "index": 1574,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01574_cat.png"
+    },
+    {
+      "index": 1664,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01664_bird.png"
+    },
+    {
+      "index": 1776,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\airplane_ship\\label_zero_instances\\instance_01776_cat.png"
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,tokens,layers,random_seed,input_file,input_sha256
-google/vit-base-patch16-224,imagenet_1k,Random,2000,1165,58.25,58.3,6,12,0,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484
-google/vit-base-patch16-224,imagenet_1k,Average,2000,1012,50.6,50.6,6,12,,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484
-google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,1012,50.6,50.6,6,12,,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484
-google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1763,88.15,88.2,6,12,,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484
-google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1980,99.0,99.0,6,12,,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484
-google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1943,97.15,97.2,6,12,,cat_dog.jsonl,77832b0e23e9867a17e043386353e445e6dd5d075ae035f57245496f1fcb0484

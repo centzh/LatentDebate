@@ -4,3 +4,5 @@ __pycache__/
 results/
 Cat_250/
 Dog_250/
+*.png
+*.tex

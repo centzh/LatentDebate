@@ -1,7 +1,7 @@
-model,method,imagenet_1k,Avg
-google/vit-base-patch16-224,Random,61.8,61.8
-google/vit-base-patch16-224,Average,49.8,49.8
-google/vit-base-patch16-224,Majority Voting,49.8,49.8
-google/vit-base-patch16-224,Latent Debate -- w/o token weight,98.9,98.9
-google/vit-base-patch16-224,Unweighted,99.2,99.2
-google/vit-base-patch16-224,Quadratic,99.2,99.2
+model,method,imagenet_1k,Avg,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,Random,65.9,65.9,0.8,33.4
+google/vit-base-patch16-224,Average,92.4,92.4,0.8,6.8
+google/vit-base-patch16-224,Majority Voting,80.8,80.8,0.8,18.5
+google/vit-base-patch16-224,Latent Debate -- w/o token weight,99.1,99.1,0.8,0.2
+google/vit-base-patch16-224,Unweighted,99.2,99.2,0.8,0.0
+google/vit-base-patch16-224,Quadratic,99.2,99.2,0.8,0.1

@@ -1,7 +1,0 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,tokens,layers,random_seed,input_file,input_sha256
-google/vit-base-patch16-224,imagenet_1k,Random,2000,1222,61.1,61.1,6,12,0,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
-google/vit-base-patch16-224,imagenet_1k,Average,2000,989,49.45,49.5,6,12,,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
-google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,989,49.45,49.5,6,12,,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
-google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1996,99.8,99.8,6,12,,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
-google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1998,99.9,99.9,6,12,,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
-google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1991,99.55,99.6,6,12,,automobile_truck.jsonl,ff4dabfb056b67753fe88da7300340e242d8b30098af3ecbec881857bd7f6dac
