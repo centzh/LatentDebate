@@ -1,0 +1,7 @@
+model,method,mean_percent,display_mean
+google/vit-base-patch16-224,Random,63.6,63.6
+google/vit-base-patch16-224,Average,97.85,97.9
+google/vit-base-patch16-224,Majority Voting,82.65,82.7
+google/vit-base-patch16-224,Latent Debate -- w/o token weight,99.6,99.6
+google/vit-base-patch16-224,Unweighted,99.9,99.9
+google/vit-base-patch16-224,Quadratic,99.55,99.6

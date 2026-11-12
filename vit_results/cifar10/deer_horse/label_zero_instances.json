@@ -1,0 +1,87 @@
+{
+  "positive_class": "deer",
+  "negative_class": "horse",
+  "count": 16,
+  "instances": [
+    {
+      "index": 195,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00195_bird.png"
+    },
+    {
+      "index": 257,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00257_dog.png"
+    },
+    {
+      "index": 394,
+      "answer_class": "frog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00394_frog.png"
+    },
+    {
+      "index": 649,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00649_dog.png"
+    },
+    {
+      "index": 685,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00685_bird.png"
+    },
+    {
+      "index": 734,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00734_dog.png"
+    },
+    {
+      "index": 964,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_00964_bird.png"
+    },
+    {
+      "index": 1268,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01268_cat.png"
+    },
+    {
+      "index": 1278,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01278_dog.png"
+    },
+    {
+      "index": 1382,
+      "answer_class": "truck",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01382_truck.png"
+    },
+    {
+      "index": 1435,
+      "answer_class": "bird",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01435_bird.png"
+    },
+    {
+      "index": 1678,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01678_cat.png"
+    },
+    {
+      "index": 1862,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01862_dog.png"
+    },
+    {
+      "index": 1911,
+      "answer_class": "cat",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01911_cat.png"
+    },
+    {
+      "index": 1917,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01917_dog.png"
+    },
+    {
+      "index": 1956,
+      "answer_class": "dog",
+      "path": "vit_results\\cifar10\\deer_horse\\label_zero_instances\\instance_01956_dog.png"
+    }
+  ]
+}

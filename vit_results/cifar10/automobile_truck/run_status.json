@@ -1,0 +1,24 @@
+{
+  "verification": "PASSED",
+  "protocol_version": "table1-finalized-2026-10-29",
+  "models": 3,
+  "datasets_per_model": 6,
+  "samples_per_input": 500,
+  "input_files_verified": 1,
+  "dataset_cells_verified": 6,
+  "row_averages_verified": 6,
+  "per_sample_method_predictions_verified": 0,
+  "random_seed": 0,
+  "llm_answer_rule": "strip_then_startswith_capital_T_else_false",
+  "noncanonical_answer_prefixes": 0,
+  "mean_rounding": "arithmetic mean of six unrounded scores, then ROUND_HALF_UP to one decimal",
+  "elapsed_seconds": 99.27699899673462,
+  "input_files": [
+    {
+      "model": "google/vit-base-patch16-224",
+      "dataset": "imagenet_1k",
+      "file": "automobile_truck.jsonl",
+      "sha256": "a6fd8bf69409828a4811c5e99e766b4a7768b95de65a5860e96b1cfa29aeca27"
+    }
+  ]
+}

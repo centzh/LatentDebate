@@ -1,0 +1,17 @@
+{
+  "positive_class": "automobile",
+  "negative_class": "truck",
+  "count": 2,
+  "instances": [
+    {
+      "index": 338,
+      "answer_class": "ship",
+      "path": "vit_results\\cifar10\\automobile_truck\\label_zero_instances\\instance_00338_ship.png"
+    },
+    {
+      "index": 1927,
+      "answer_class": "ship",
+      "path": "vit_results\\cifar10\\automobile_truck\\label_zero_instances\\instance_01927_ship.png"
+    }
+  ]
+}

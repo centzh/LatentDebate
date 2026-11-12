@@ -1,0 +1,262 @@
+{
+  "vision": true,
+  "agreement": true,
+  "max_examples": 10,
+  "methods": {
+    "Latent Debate -- w/o token weight": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00000_horse.png"
+        },
+        {
+          "index": 222,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00222_deer.png"
+        },
+        {
+          "index": 445,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00445_horse.png"
+        },
+        {
+          "index": 666,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00666_deer.png"
+        },
+        {
+          "index": 888,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00888_horse.png"
+        },
+        {
+          "index": 1110,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01110_horse.png"
+        },
+        {
+          "index": 1332,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01332_horse.png"
+        },
+        {
+          "index": 1554,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01554_horse.png"
+        },
+        {
+          "index": 1775,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01775_horse.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01999_horse.png"
+        }
+      ]
+    },
+    "Unweighted": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00000_horse.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00221_horse.png"
+        },
+        {
+          "index": 443,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00443_horse.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00665_deer.png"
+        },
+        {
+          "index": 887,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00887_deer.png"
+        },
+        {
+          "index": 1108,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01108_horse.png"
+        },
+        {
+          "index": 1331,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01331_horse.png"
+        },
+        {
+          "index": 1553,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01553_deer.png"
+        },
+        {
+          "index": 1774,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01774_deer.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01999_horse.png"
+        }
+      ]
+    },
+    "Quadratic": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00000_horse.png"
+        },
+        {
+          "index": 222,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00222_deer.png"
+        },
+        {
+          "index": 444,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00444_horse.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00665_deer.png"
+        },
+        {
+          "index": 887,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00887_deer.png"
+        },
+        {
+          "index": 1109,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01109_horse.png"
+        },
+        {
+          "index": 1331,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01331_horse.png"
+        },
+        {
+          "index": 1553,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01553_deer.png"
+        },
+        {
+          "index": 1774,
+          "answer_class": "deer",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01774_deer.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "horse",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\deer_horse\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01999_horse.png"
+        }
+      ]
+    }
+  }
+}

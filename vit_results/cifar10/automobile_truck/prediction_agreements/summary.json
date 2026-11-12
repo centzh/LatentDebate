@@ -1,0 +1,262 @@
+{
+  "vision": true,
+  "agreement": true,
+  "max_examples": 10,
+  "methods": {
+    "Latent Debate -- w/o token weight": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00000_automobile.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00221_truck.png"
+        },
+        {
+          "index": 444,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00444_automobile.png"
+        },
+        {
+          "index": 666,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00666_automobile.png"
+        },
+        {
+          "index": 887,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00887_automobile.png"
+        },
+        {
+          "index": 1109,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01109_automobile.png"
+        },
+        {
+          "index": 1330,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01330_truck.png"
+        },
+        {
+          "index": 1553,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01553_automobile.png"
+        },
+        {
+          "index": 1776,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01776_truck.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01999_automobile.png"
+        }
+      ]
+    },
+    "Unweighted": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00000_automobile.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00221_truck.png"
+        },
+        {
+          "index": 444,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00444_automobile.png"
+        },
+        {
+          "index": 666,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00666_automobile.png"
+        },
+        {
+          "index": 888,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00888_automobile.png"
+        },
+        {
+          "index": 1110,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01110_truck.png"
+        },
+        {
+          "index": 1332,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01332_automobile.png"
+        },
+        {
+          "index": 1554,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01554_automobile.png"
+        },
+        {
+          "index": 1776,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01776_truck.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01999_automobile.png"
+        }
+      ]
+    },
+    "Quadratic": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00000_automobile.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00221_truck.png"
+        },
+        {
+          "index": 446,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00446_truck.png"
+        },
+        {
+          "index": 667,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00667_truck.png"
+        },
+        {
+          "index": 888,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00888_automobile.png"
+        },
+        {
+          "index": 1110,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01110_truck.png"
+        },
+        {
+          "index": 1331,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01331_truck.png"
+        },
+        {
+          "index": 1553,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01553_automobile.png"
+        },
+        {
+          "index": 1775,
+          "answer_class": "truck",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01775_truck.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "automobile",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\automobile_truck\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01999_automobile.png"
+        }
+      ]
+    }
+  }
+}

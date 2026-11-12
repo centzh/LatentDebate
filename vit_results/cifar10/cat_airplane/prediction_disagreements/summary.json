@@ -1,0 +1,1454 @@
+{
+  "vision": true,
+  "disagreement": true,
+  "max_examples": null,
+  "methods": {
+    "Latent Debate -- w/o token weight": {
+      "count": 61,
+      "instances": [
+        {
+          "index": 10,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00010_dog.png"
+        },
+        {
+          "index": 54,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00054_dog.png"
+        },
+        {
+          "index": 66,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00066_bird.png"
+        },
+        {
+          "index": 143,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00143_dog.png"
+        },
+        {
+          "index": 158,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00158_dog.png"
+        },
+        {
+          "index": 169,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00169_bird.png"
+        },
+        {
+          "index": 246,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00246_dog.png"
+        },
+        {
+          "index": 260,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00260_dog.png"
+        },
+        {
+          "index": 263,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00263_dog.png"
+        },
+        {
+          "index": 351,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00351_dog.png"
+        },
+        {
+          "index": 477,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00477_frog.png"
+        },
+        {
+          "index": 497,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00497_automobile.png"
+        },
+        {
+          "index": 514,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00514_bird.png"
+        },
+        {
+          "index": 552,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00552_dog.png"
+        },
+        {
+          "index": 563,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00563_dog.png"
+        },
+        {
+          "index": 576,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00576_dog.png"
+        },
+        {
+          "index": 602,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00602_dog.png"
+        },
+        {
+          "index": 617,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00617_frog.png"
+        },
+        {
+          "index": 635,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00635_truck.png"
+        },
+        {
+          "index": 680,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00680_bird.png"
+        },
+        {
+          "index": 818,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00818_truck.png"
+        },
+        {
+          "index": 877,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00877_truck.png"
+        },
+        {
+          "index": 882,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00882_dog.png"
+        },
+        {
+          "index": 890,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00890_dog.png"
+        },
+        {
+          "index": 909,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00909_dog.png"
+        },
+        {
+          "index": 928,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00928_dog.png"
+        },
+        {
+          "index": 939,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00939_ship.png"
+        },
+        {
+          "index": 977,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_00977_deer.png"
+        },
+        {
+          "index": 1045,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01045_truck.png"
+        },
+        {
+          "index": 1081,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01081_frog.png"
+        },
+        {
+          "index": 1093,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01093_frog.png"
+        },
+        {
+          "index": 1171,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01171_dog.png"
+        },
+        {
+          "index": 1185,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01185_dog.png"
+        },
+        {
+          "index": 1227,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01227_truck.png"
+        },
+        {
+          "index": 1238,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01238_dog.png"
+        },
+        {
+          "index": 1278,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01278_dog.png"
+        },
+        {
+          "index": 1284,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01284_ship.png"
+        },
+        {
+          "index": 1357,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01357_truck.png"
+        },
+        {
+          "index": 1373,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01373_automobile.png"
+        },
+        {
+          "index": 1385,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01385_dog.png"
+        },
+        {
+          "index": 1388,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01388_airplane.png"
+        },
+        {
+          "index": 1393,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01393_ship.png"
+        },
+        {
+          "index": 1402,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01402_dog.png"
+        },
+        {
+          "index": 1420,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01420_dog.png"
+        },
+        {
+          "index": 1448,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01448_dog.png"
+        },
+        {
+          "index": 1451,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01451_frog.png"
+        },
+        {
+          "index": 1487,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01487_dog.png"
+        },
+        {
+          "index": 1502,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01502_dog.png"
+        },
+        {
+          "index": 1507,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01507_ship.png"
+        },
+        {
+          "index": 1511,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01511_dog.png"
+        },
+        {
+          "index": 1525,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01525_dog.png"
+        },
+        {
+          "index": 1564,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01564_dog.png"
+        },
+        {
+          "index": 1568,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01568_dog.png"
+        },
+        {
+          "index": 1616,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01616_dog.png"
+        },
+        {
+          "index": 1691,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01691_bird.png"
+        },
+        {
+          "index": 1766,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01766_dog.png"
+        },
+        {
+          "index": 1793,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01793_cat.png"
+        },
+        {
+          "index": 1798,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01798_frog.png"
+        },
+        {
+          "index": 1915,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01915_dog.png"
+        },
+        {
+          "index": 1956,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01956_ship.png"
+        },
+        {
+          "index": 1978,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Latent_Debate_--_w_o_token_weight\\instance_01978_frog.png"
+        }
+      ]
+    },
+    "Unweighted": {
+      "count": 59,
+      "instances": [
+        {
+          "index": 10,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00010_dog.png"
+        },
+        {
+          "index": 54,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00054_dog.png"
+        },
+        {
+          "index": 66,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00066_bird.png"
+        },
+        {
+          "index": 143,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00143_dog.png"
+        },
+        {
+          "index": 158,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00158_dog.png"
+        },
+        {
+          "index": 169,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00169_bird.png"
+        },
+        {
+          "index": 246,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00246_dog.png"
+        },
+        {
+          "index": 260,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00260_dog.png"
+        },
+        {
+          "index": 263,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00263_dog.png"
+        },
+        {
+          "index": 351,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00351_dog.png"
+        },
+        {
+          "index": 477,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00477_frog.png"
+        },
+        {
+          "index": 497,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00497_automobile.png"
+        },
+        {
+          "index": 514,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00514_bird.png"
+        },
+        {
+          "index": 552,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00552_dog.png"
+        },
+        {
+          "index": 563,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00563_dog.png"
+        },
+        {
+          "index": 576,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00576_dog.png"
+        },
+        {
+          "index": 602,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00602_dog.png"
+        },
+        {
+          "index": 617,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00617_frog.png"
+        },
+        {
+          "index": 635,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00635_truck.png"
+        },
+        {
+          "index": 680,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00680_bird.png"
+        },
+        {
+          "index": 818,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00818_truck.png"
+        },
+        {
+          "index": 877,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00877_truck.png"
+        },
+        {
+          "index": 882,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00882_dog.png"
+        },
+        {
+          "index": 890,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00890_dog.png"
+        },
+        {
+          "index": 909,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00909_dog.png"
+        },
+        {
+          "index": 928,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00928_dog.png"
+        },
+        {
+          "index": 939,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00939_ship.png"
+        },
+        {
+          "index": 977,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_00977_deer.png"
+        },
+        {
+          "index": 1045,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01045_truck.png"
+        },
+        {
+          "index": 1081,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01081_frog.png"
+        },
+        {
+          "index": 1093,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01093_frog.png"
+        },
+        {
+          "index": 1171,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01171_dog.png"
+        },
+        {
+          "index": 1185,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01185_dog.png"
+        },
+        {
+          "index": 1227,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01227_truck.png"
+        },
+        {
+          "index": 1238,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01238_dog.png"
+        },
+        {
+          "index": 1278,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01278_dog.png"
+        },
+        {
+          "index": 1284,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01284_ship.png"
+        },
+        {
+          "index": 1357,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01357_truck.png"
+        },
+        {
+          "index": 1373,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01373_automobile.png"
+        },
+        {
+          "index": 1385,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01385_dog.png"
+        },
+        {
+          "index": 1393,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01393_ship.png"
+        },
+        {
+          "index": 1402,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01402_dog.png"
+        },
+        {
+          "index": 1420,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01420_dog.png"
+        },
+        {
+          "index": 1448,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01448_dog.png"
+        },
+        {
+          "index": 1451,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01451_frog.png"
+        },
+        {
+          "index": 1487,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01487_dog.png"
+        },
+        {
+          "index": 1502,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01502_dog.png"
+        },
+        {
+          "index": 1507,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01507_ship.png"
+        },
+        {
+          "index": 1511,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01511_dog.png"
+        },
+        {
+          "index": 1525,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01525_dog.png"
+        },
+        {
+          "index": 1564,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01564_dog.png"
+        },
+        {
+          "index": 1568,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01568_dog.png"
+        },
+        {
+          "index": 1616,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01616_dog.png"
+        },
+        {
+          "index": 1691,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01691_bird.png"
+        },
+        {
+          "index": 1766,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01766_dog.png"
+        },
+        {
+          "index": 1798,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01798_frog.png"
+        },
+        {
+          "index": 1915,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01915_dog.png"
+        },
+        {
+          "index": 1956,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01956_ship.png"
+        },
+        {
+          "index": 1978,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Unweighted\\instance_01978_frog.png"
+        }
+      ]
+    },
+    "Quadratic": {
+      "count": 59,
+      "instances": [
+        {
+          "index": 10,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00010_dog.png"
+        },
+        {
+          "index": 54,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00054_dog.png"
+        },
+        {
+          "index": 66,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00066_bird.png"
+        },
+        {
+          "index": 143,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00143_dog.png"
+        },
+        {
+          "index": 158,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00158_dog.png"
+        },
+        {
+          "index": 169,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00169_bird.png"
+        },
+        {
+          "index": 246,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00246_dog.png"
+        },
+        {
+          "index": 260,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00260_dog.png"
+        },
+        {
+          "index": 263,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00263_dog.png"
+        },
+        {
+          "index": 351,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00351_dog.png"
+        },
+        {
+          "index": 477,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00477_frog.png"
+        },
+        {
+          "index": 497,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00497_automobile.png"
+        },
+        {
+          "index": 514,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00514_bird.png"
+        },
+        {
+          "index": 552,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00552_dog.png"
+        },
+        {
+          "index": 563,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00563_dog.png"
+        },
+        {
+          "index": 576,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00576_dog.png"
+        },
+        {
+          "index": 602,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00602_dog.png"
+        },
+        {
+          "index": 617,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00617_frog.png"
+        },
+        {
+          "index": 635,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00635_truck.png"
+        },
+        {
+          "index": 680,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00680_bird.png"
+        },
+        {
+          "index": 818,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00818_truck.png"
+        },
+        {
+          "index": 877,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00877_truck.png"
+        },
+        {
+          "index": 882,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00882_dog.png"
+        },
+        {
+          "index": 890,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00890_dog.png"
+        },
+        {
+          "index": 909,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00909_dog.png"
+        },
+        {
+          "index": 928,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00928_dog.png"
+        },
+        {
+          "index": 939,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00939_ship.png"
+        },
+        {
+          "index": 977,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_00977_deer.png"
+        },
+        {
+          "index": 1045,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01045_truck.png"
+        },
+        {
+          "index": 1081,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01081_frog.png"
+        },
+        {
+          "index": 1093,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01093_frog.png"
+        },
+        {
+          "index": 1171,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01171_dog.png"
+        },
+        {
+          "index": 1185,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01185_dog.png"
+        },
+        {
+          "index": 1227,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01227_truck.png"
+        },
+        {
+          "index": 1238,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01238_dog.png"
+        },
+        {
+          "index": 1278,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01278_dog.png"
+        },
+        {
+          "index": 1284,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01284_ship.png"
+        },
+        {
+          "index": 1357,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01357_truck.png"
+        },
+        {
+          "index": 1373,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01373_automobile.png"
+        },
+        {
+          "index": 1385,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01385_dog.png"
+        },
+        {
+          "index": 1393,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01393_ship.png"
+        },
+        {
+          "index": 1402,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01402_dog.png"
+        },
+        {
+          "index": 1420,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01420_dog.png"
+        },
+        {
+          "index": 1448,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01448_dog.png"
+        },
+        {
+          "index": 1451,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01451_frog.png"
+        },
+        {
+          "index": 1487,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01487_dog.png"
+        },
+        {
+          "index": 1502,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01502_dog.png"
+        },
+        {
+          "index": 1507,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01507_ship.png"
+        },
+        {
+          "index": 1511,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01511_dog.png"
+        },
+        {
+          "index": 1525,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01525_dog.png"
+        },
+        {
+          "index": 1564,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01564_dog.png"
+        },
+        {
+          "index": 1568,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01568_dog.png"
+        },
+        {
+          "index": 1616,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01616_dog.png"
+        },
+        {
+          "index": 1691,
+          "answer_class": "bird",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01691_bird.png"
+        },
+        {
+          "index": 1766,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01766_dog.png"
+        },
+        {
+          "index": 1798,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01798_frog.png"
+        },
+        {
+          "index": 1915,
+          "answer_class": "dog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01915_dog.png"
+        },
+        {
+          "index": 1956,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01956_ship.png"
+        },
+        {
+          "index": 1978,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_disagreements\\reference_zero\\Quadratic\\instance_01978_frog.png"
+        }
+      ]
+    }
+  }
+}

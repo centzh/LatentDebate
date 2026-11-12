@@ -24,6 +24,8 @@ from tqdm import tqdm
 
 HERE = Path(__file__).resolve().parent
 _VISION_DATASET_CACHE: dict[tuple, object] = {}
+VISION_AGREEMENT_PLOT_MAX = 10
+_SKIP_BASELINE_METHODS = frozenset({'random', 'average', 'majority voting'})
 
 
 def load_vision_image_dataset(config: dict):
@@ -175,7 +177,7 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
     else:
         return raw, raw, answers, query_hashes, noncanonical, answer_texts
 
-def propagate(initial, vision=False, quadratic=False):
+def propagate(initial, vision=False, quadratic=False, cls_only=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
@@ -187,6 +189,11 @@ def propagate(initial, vision=False, quadratic=False):
             if quadratic:
                 # Aggregate from all preceding tokens on the same layer.
                 energy += final[:, token+1:, layer].sum(axis=1)
+
+            elif cls_only:
+                if token == 0:
+                    energy += final[:, token+1:, layer].sum(axis=1)
+
             elif token:
                 # Linear topology: previous token on the same layer.
                 energy += final[:, token + 1, layer]
@@ -197,7 +204,7 @@ def propagate(initial, vision=False, quadratic=False):
 
             influence = 1 - np.tanh(np.abs(energy))
             final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
-
+    
     return final
 
 def add_strength_colorbar(
@@ -363,11 +370,79 @@ def label_to_class_name(label: int, config: dict) -> str:
     return f'label_{label}'
 
 
+def _subsample_indices(indices: np.ndarray, max_count: int) -> np.ndarray:
+    indices = np.asarray(indices, dtype=np.int64)
+    if indices.size <= max_count:
+        return indices
+    positions = np.linspace(0, indices.size - 1, max_count, dtype=int)
+    return indices[positions]
+
+
+def _plot_method_vs_vit_comparison(
+    idx: int,
+    *,
+    method: str,
+    method_tensor: np.ndarray,
+    raw: np.ndarray,
+    llm_label: int,
+    method_label: int,
+    answer_class: str,
+    pred_name: str,
+    vision_images,
+    out_path: Path,
+    suptitle: str,
+) -> None:
+    import matplotlib.pyplot as plt
+
+    vmin, vmax = -1, 1
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    if vision_images is not None:
+        axes[0].imshow(np.asarray(vision_images[idx]['img']))
+    else:
+        axes[0].text(0.5, 0.5, f'Instance {idx}\n(no image)', ha='center', va='center')
+    axes[0].set_title('Input image')
+    axes[0].axis('off')
+
+    axes[1].imshow(
+        raw[idx].T,
+        cmap='coolwarm',
+        vmin=vmin,
+        vmax=vmax,
+        aspect='auto',
+    )
+    axes[1].set_title(f'ViT: {answer_class} ({llm_label})')
+    axes[1].set_xlabel('Token')
+    axes[1].set_ylabel('Layer')
+    axes[1].invert_yaxis()
+
+    method_im = axes[2].imshow(
+        method_tensor[idx].T,
+        cmap='coolwarm',
+        vmin=vmin,
+        vmax=vmax,
+        aspect='auto',
+    )
+    axes[2].set_title(f'{method}: {pred_name} ({method_label})')
+    axes[2].set_xlabel('Token')
+    axes[2].set_ylabel('Layer')
+    axes[2].invert_yaxis()
+
+    fig.suptitle(suptitle, fontsize=11)
+    add_strength_colorbar(fig, method_im, bottom=0.18, height=0.65, layout_top=0.90)
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path, dpi=200, bbox_inches='tight')
+    plt.close(fig)
+
+
 def matrix_for_method(method: str, raw: np.ndarray, weighted: np.ndarray, vision: bool) -> np.ndarray:
     name = method.lower()
     if vision:
         if 'quadratic' in name:
             return propagate(raw, vision=True, quadratic=True)
+        if 'cls_only' in name:
+            return propagate(raw, vision=True, cls_only=True)
         if 'unweighted' in name:
             return raw
         if 'latent' in name or 'debate' in name:
@@ -382,7 +457,7 @@ def matrix_for_method(method: str, raw: np.ndarray, weighted: np.ndarray, vision
     return raw
 
 
-def plot_prediction_disagreements(
+def _plot_prediction_comparisons(
     raw: np.ndarray,
     weighted: np.ndarray,
     llm: np.ndarray,
@@ -391,99 +466,66 @@ def plot_prediction_disagreements(
     config: dict,
     output_dir: Path,
     vision: bool,
-    vision_images=None,
+    vision_images,
+    *,
+    agree: bool,
+    max_examples: int | None,
+    root_name: str,
+    progress_desc: str,
+    suptitle: str,
 ) -> dict[str, list[dict]]:
-    """One figure per disagreement: input image, ViT (raw) heatmap, method heatmap."""
-    import matplotlib.pyplot as plt
-
-    root = Path(output_dir) / 'prediction_disagreements'
+    root = Path(output_dir) / root_name
     root.mkdir(parents=True, exist_ok=True)
-    vmin, vmax = -1, 1
     summary: dict[str, list[dict]] = {}
-    skip_methods = {'random', 'average', 'majority voting'}
     if vision_images is not None and len(vision_images) != len(raw):
         raise ValueError(
             f'Vision image count ({len(vision_images)}) != JSONL rows ({len(raw)}); '
             're-extract jsonl or fix vision_dataset in config'
         )
 
-    for method, values in tqdm(
-        predictions.items(),
-        desc='Plot prediction disagreements',
-        unit='method',
-    ):
-        if method.strip().lower() in skip_methods:
+    for method, values in tqdm(predictions.items(), desc=progress_desc, unit='method'):
+        if method.strip().lower() in _SKIP_BASELINE_METHODS:
             continue
-        disagree_idx = np.flatnonzero(values != llm)
-        if disagree_idx.size == 0:
-            summary[method] = []
-            continue
+        if agree:
+            match_idx = np.flatnonzero(values == llm)
+            if match_idx.size == 0:
+                summary[method] = []
+                continue
+            plot_idx = (
+                _subsample_indices(match_idx, max_examples)
+                if max_examples is not None
+                else match_idx
+            )
+        else:
+            plot_idx = np.flatnonzero(values != llm)
+            if plot_idx.size == 0:
+                summary[method] = []
+                continue
 
         safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
         tensor = matrix_for_method(method, raw, weighted, vision)
         written: list[dict] = []
 
-        for idx in tqdm(
-            disagree_idx,
-            desc=f'  {method}',
-            unit='img',
-            leave=False,
-        ):
+        for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
             answer_class = answer_texts[idx]
             pred_name = label_to_class_name(int(values[idx]), config)
             llm_ref = int(llm[idx])
             bucket = 'reference_zero' if llm_ref == 0 else 'reference_nonzero'
-            method_dir = root / bucket / safe_method
-            method_dir.mkdir(parents=True, exist_ok=True)
-
-            fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-            if vision_images is not None:
-                axes[0].imshow(np.asarray(vision_images[idx]['img']))
-            else:
-                axes[0].text(
-                    0.5,
-                    0.5,
-                    f'Instance {idx}\n(no image)',
-                    ha='center',
-                    va='center',
-                )
-            axes[0].set_title('Input image')
-            axes[0].axis('off')
-
-            llm_im = axes[1].imshow(
-                raw[idx].T,
-                cmap='coolwarm',
-                vmin=vmin,
-                vmax=vmax,
-                aspect='auto',
-            )
-            axes[1].set_title(f'ViT: {answer_class} ({llm_ref})')
-            axes[1].set_xlabel('Token')
-            axes[1].set_ylabel('Layer')
-            axes[1].invert_yaxis()
-
-            method_im = axes[2].imshow(
-                tensor[idx].T,
-                cmap='coolwarm',
-                vmin=vmin,
-                vmax=vmax,
-                aspect='auto',
-            )
-            axes[2].set_title(f'{method}: {pred_name} ({int(values[idx])})')
-            axes[2].set_xlabel('Token')
-            axes[2].set_ylabel('Layer')
-            axes[2].invert_yaxis()
-
-            fig.suptitle(f'Instance {idx} — prediction disagreement', fontsize=11)
-            add_strength_colorbar(
-                fig, method_im, bottom=0.18, height=0.65, layout_top=0.90
-            )
-
             safe_answer = re.sub(r'[^\w\-.]+', '_', answer_class.lower()).strip('_') or 'unknown'
-            out_path = method_dir / f'instance_{idx:05d}_{safe_answer}.png'
-            plt.savefig(out_path, dpi=200, bbox_inches='tight')
-            plt.close(fig)
+            out_path = root / bucket / safe_method / f'instance_{idx:05d}_{safe_answer}.png'
+            _plot_method_vs_vit_comparison(
+                int(idx),
+                method=method,
+                method_tensor=tensor,
+                raw=raw,
+                llm_label=llm_ref,
+                method_label=int(values[idx]),
+                answer_class=answer_class,
+                pred_name=pred_name,
+                vision_images=vision_images,
+                out_path=out_path,
+                suptitle=f'Instance {idx} — {suptitle}',
+            )
             written.append({
                 'index': int(idx),
                 'answer_class': answer_class,
@@ -497,12 +539,75 @@ def plot_prediction_disagreements(
 
     write_json(root / 'summary.json', {
         'vision': vision,
+        'agreement' if agree else 'disagreement': True,
+        'max_examples': max_examples,
         'methods': {
             method: {'count': len(items), 'instances': items}
             for method, items in summary.items()
         },
     })
     return summary
+
+
+def plot_prediction_disagreements(
+    raw: np.ndarray,
+    weighted: np.ndarray,
+    llm: np.ndarray,
+    predictions: dict[str, np.ndarray],
+    answer_texts: list[str],
+    config: dict,
+    output_dir: Path,
+    vision: bool,
+    vision_images=None,
+) -> dict[str, list[dict]]:
+    """One figure per disagreement: input image, ViT (raw) heatmap, method heatmap."""
+    return _plot_prediction_comparisons(
+        raw,
+        weighted,
+        llm,
+        predictions,
+        answer_texts,
+        config,
+        output_dir,
+        vision,
+        vision_images,
+        agree=False,
+        max_examples=None,
+        root_name='prediction_disagreements',
+        progress_desc='Plot prediction disagreements',
+        suptitle='prediction disagreement',
+    )
+
+
+def plot_prediction_agreements(
+    raw: np.ndarray,
+    weighted: np.ndarray,
+    llm: np.ndarray,
+    predictions: dict[str, np.ndarray],
+    answer_texts: list[str],
+    config: dict,
+    output_dir: Path,
+    vision: bool,
+    vision_images=None,
+    max_examples: int = VISION_AGREEMENT_PLOT_MAX,
+) -> dict[str, list[dict]]:
+    """Sample figures where ViT and method predictions match (same layout as disagreements)."""
+    return _plot_prediction_comparisons(
+        raw,
+        weighted,
+        llm,
+        predictions,
+        answer_texts,
+        config,
+        output_dir,
+        vision,
+        vision_images,
+        agree=True,
+        max_examples=max_examples,
+        root_name='prediction_agreements',
+        progress_desc='Plot prediction agreements',
+        suptitle='prediction agreement',
+    )
 
 
 def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = None):
@@ -697,7 +802,7 @@ def parse_args():
         '--plot',
         type=str_to_bool,
         default=False,
-        help='Write vision diagnostic heatmaps (mean, label-zero, disagreements)',
+        help='Write vision diagnostic heatmaps (mean, label-zero, agreements, disagreements)',
     )
     return parser.parse_args()
 
@@ -756,6 +861,17 @@ def main():
                 raw, weighted, config, args.vision, plot_output
             )
             if plot_output is not None:
+                plot_prediction_agreements(
+                    raw,
+                    weighted,
+                    llm,
+                    predictions,
+                    answer_texts,
+                    config,
+                    plot_output,
+                    args.vision,
+                    vision_images,
+                )
                 plot_prediction_disagreements(
                     raw,
                     weighted,

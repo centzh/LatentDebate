@@ -1,0 +1,262 @@
+{
+  "vision": true,
+  "agreement": true,
+  "max_examples": 10,
+  "methods": {
+    "Latent Debate -- w/o token weight": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00000_cat.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00221_cat.png"
+        },
+        {
+          "index": 440,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00440_airplane.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00665_cat.png"
+        },
+        {
+          "index": 884,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00884_cat.png"
+        },
+        {
+          "index": 1107,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01107_airplane.png"
+        },
+        {
+          "index": 1329,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01329_airplane.png"
+        },
+        {
+          "index": 1558,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01558_cat.png"
+        },
+        {
+          "index": 1778,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01778_airplane.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01999_cat.png"
+        }
+      ]
+    },
+    "Unweighted": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00000_cat.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00221_cat.png"
+        },
+        {
+          "index": 441,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00441_cat.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00665_cat.png"
+        },
+        {
+          "index": 885,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00885_airplane.png"
+        },
+        {
+          "index": 1108,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01108_airplane.png"
+        },
+        {
+          "index": 1330,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01330_cat.png"
+        },
+        {
+          "index": 1558,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01558_cat.png"
+        },
+        {
+          "index": 1779,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01779_airplane.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01999_cat.png"
+        }
+      ]
+    },
+    "Quadratic": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00000_cat.png"
+        },
+        {
+          "index": 221,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00221_cat.png"
+        },
+        {
+          "index": 441,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00441_cat.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00665_cat.png"
+        },
+        {
+          "index": 885,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00885_airplane.png"
+        },
+        {
+          "index": 1108,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01108_airplane.png"
+        },
+        {
+          "index": 1330,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01330_cat.png"
+        },
+        {
+          "index": 1558,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01558_cat.png"
+        },
+        {
+          "index": 1779,
+          "answer_class": "airplane",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01779_airplane.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_airplane\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01999_cat.png"
+        }
+      ]
+    }
+  }
+}

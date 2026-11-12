@@ -1,0 +1,7 @@
+model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,imagenet_1k,Random,2000,1228,61.4,61.4,16,756,6,12,0,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,37.8
+google/vit-base-patch16-224,imagenet_1k,Average,2000,1894,94.7,94.7,16,90,6,12,,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,4.5
+google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,1687,84.35,84.4,16,297,6,12,,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,14.85
+google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1981,99.05,99.1,16,3,6,12,,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,0.15
+google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1984,99.2,99.2,16,0,6,12,,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,0.0
+google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1983,99.15,99.2,16,1,6,12,,deer_horse.jsonl,836ca77da03a9612bb18f44fa78ff5387d69d2317b042873ae54d2afad173ecd,0.8,0.05
