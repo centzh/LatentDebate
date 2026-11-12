@@ -76,10 +76,6 @@ def weigh_initial_strengths(
         patch_weights = (patch_weights - patch_weights.min()) / (patch_weights.max() - patch_weights.min())
         weight_rows.append(patch_weights)
 
-    weight_rows.append(
-        torch.ones(num_tokens-1, device=initial_strengths.device, dtype=initial_strengths.dtype)
-    )
-
     weights = torch.stack(weight_rows, dim=0)
     cls_column = torch.ones(
         weights.shape[0],
