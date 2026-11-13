@@ -177,7 +177,7 @@ def load_input(path, tokens, config, calculate_weights=True, skip_checks=False, 
     else:
         return raw, raw, answers, query_hashes, noncanonical, answer_texts
 
-def propagate(initial, vision=False, quadratic=False, cls_only=False):
+def propagate(initial, vision=False, quadratic=False, cls_patch_only=False, cls_only=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
@@ -186,24 +186,31 @@ def propagate(initial, vision=False, quadratic=False, cls_only=False):
         for token in range(tokens-2, -1, -1):
             energy = np.zeros(num_records, dtype=np.float64)
 
-            if quadratic:
-                # Aggregate from all preceding tokens on the same layer.
-                energy += final[:, token+1:, layer].sum(axis=1)
-
-            elif cls_only:
+            if cls_only:
                 if token == 0:
-                    energy += final[:, token+1:, layer].sum(axis=1)
+                    energy += final[:, token, layer - 1]
+                    influence = 1 - np.tanh(np.abs(energy))
+                    final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
 
-            elif token:
-                # Linear topology: previous token on the same layer.
-                energy += final[:, token + 1, layer]
+            else:
+                if quadratic:
+                    # Aggregate from all preceding tokens on the same layer.
+                    energy += final[:, token+1:, layer].sum(axis=1)        
 
-            # Last-position tokens also receive the last-position node from the layer below.
-            if token == 0 and layer:
-                energy += final[:, token, layer - 1]
+                elif cls_patch_only:
+                    if token == 0:
+                        energy += final[:, token+1:, layer].sum(axis=1)
 
-            influence = 1 - np.tanh(np.abs(energy))
-            final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
+                elif token:
+                    # Linear topology: previous token on the same layer.
+                    energy += final[:, token + 1, layer]
+
+                # Last-position tokens also receive the last-position node from the layer below.
+                if token == 0 and layer:
+                    energy += final[:, token, layer - 1]
+
+                influence = 1 - np.tanh(np.abs(energy))
+                final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
     
     return final
 
@@ -441,7 +448,9 @@ def matrix_for_method(method: str, raw: np.ndarray, weighted: np.ndarray, vision
     if vision:
         if 'quadratic' in name:
             return propagate(raw, vision=True, quadratic=True)
-        if 'cls_only' in name:
+        if 'patch only' in name and 'cls' in name:
+            return propagate(raw, vision=True, cls_patch_only=True)
+        if 'cls only' in name:
             return propagate(raw, vision=True, cls_only=True)
         if 'unweighted' in name:
             return raw
@@ -632,6 +641,24 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
             default=0
         ).astype(np.int8)
 
+        cls_patch_only_pred = np.select(
+            [
+                propagate(raw, vision, cls_patch_only=True)[:, 0, -1] >= 0,
+                propagate(raw, vision, cls_patch_only=True)[:, 0, -1] < 0,
+            ],
+            [1, -1],
+            default=0,
+        ).astype(np.int8)
+
+        cls_only_pred = np.select(
+            [
+                propagate(raw, vision, cls_only=True)[:, 0, -1] >= 0,
+                propagate(raw, vision, cls_only=True)[:, 0, -1] < 0,
+            ],
+            [1, -1],
+            default=0,
+        ).astype(np.int8)
+
         # Make this raw for now! Propagation actually does change a lot!
         unweighted = np.select(
             [
@@ -681,16 +708,25 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
             1,
             -1,
         ).astype(np.int8)
+        cls_patch_only_pred = None
+        cls_only_pred = None
 
-    predictions = [
-        random_pred,
-        average_pred,
-        majority_pred,
-        latent_debate,
-        unweighted,
-        quadratic,
-    ]
-    return dict(zip(config['methods'], predictions))
+    by_method = {
+        'Random': random_pred,
+        'Average': average_pred,
+        'Majority Voting': majority_pred,
+        'Latent Debate -- w/o token weight': latent_debate,
+        'Unweighted': unweighted,
+        'Quadratic': quadratic,
+    }
+    if vision:
+        by_method['CLS Patch only'] = cls_patch_only_pred
+        by_method['CLS only'] = cls_only_pred
+
+    unknown = [m for m in config['methods'] if m not in by_method]
+    if unknown:
+        raise ValueError(f'Unsupported methods in config: {unknown}')
+    return {m: by_method[m] for m in config['methods']}
 
 
 def make_table(rows, config):
@@ -954,7 +990,7 @@ def main():
             })
     print(
         f'{model["name"]} / {dataset["name"]}: n={len(llm)}, '
-        f'tokens={dataset["tokens"]}, all 6 methods verified',
+        f'tokens={dataset["tokens"]}, all {len(config["methods"])} methods verified',
         flush=True,
     )
 
