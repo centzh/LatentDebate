@@ -5,3 +5,5 @@ google/vit-base-patch16-224,Majority Voting,82.7,82.7,0.1,17.3
 google/vit-base-patch16-224,Latent Debate -- w/o token weight,99.6,99.6,0.1,0.3
 google/vit-base-patch16-224,Unweighted,99.9,99.9,0.1,0.0
 google/vit-base-patch16-224,Quadratic,99.6,99.6,0.1,0.4
+google/vit-base-patch16-224,CLS Patch only,99.7,99.7,0.1,0.2
+google/vit-base-patch16-224,CLS only,99.6,99.6,0.1,0.3

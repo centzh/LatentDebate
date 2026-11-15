@@ -14,6 +14,7 @@ model:
 strength:
   positive_class: airplane
   negative_class: ship
+  weight_by_cls_attention: false
 
 output:
   path: data/cifar10/airplane_ship.jsonl

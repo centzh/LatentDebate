@@ -658,6 +658,9 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
             [1, -1],
             default=0,
         ).astype(np.int8)
+        
+        from IPython import embed
+        embed()
 
         # Make this raw for now! Propagation actually does change a lot!
         unweighted = np.select(

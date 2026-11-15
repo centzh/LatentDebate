@@ -5,14 +5,14 @@
   "datasets_per_model": 6,
   "samples_per_input": 500,
   "input_files_verified": 1,
-  "dataset_cells_verified": 6,
-  "row_averages_verified": 6,
+  "dataset_cells_verified": 8,
+  "row_averages_verified": 8,
   "per_sample_method_predictions_verified": 0,
   "random_seed": 0,
   "llm_answer_rule": "strip_then_startswith_capital_T_else_false",
   "noncanonical_answer_prefixes": 0,
   "mean_rounding": "arithmetic mean of six unrounded scores, then ROUND_HALF_UP to one decimal",
-  "elapsed_seconds": 99.27699899673462,
+  "elapsed_seconds": 15.09173059463501,
   "input_files": [
     {
       "model": "google/vit-base-patch16-224",

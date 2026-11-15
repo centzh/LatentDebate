@@ -1,0 +1,262 @@
+{
+  "vision": true,
+  "agreement": true,
+  "max_examples": 10,
+  "methods": {
+    "Latent Debate -- w/o token weight": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00000_cat.png"
+        },
+        {
+          "index": 217,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00217_cat.png"
+        },
+        {
+          "index": 435,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00435_cat.png"
+        },
+        {
+          "index": 660,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00660_dog.png"
+        },
+        {
+          "index": 883,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_00883_dog.png"
+        },
+        {
+          "index": 1104,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01104_dog.png"
+        },
+        {
+          "index": 1326,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01326_dog.png"
+        },
+        {
+          "index": 1548,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01548_dog.png"
+        },
+        {
+          "index": 1774,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01774_cat.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Latent_Debate_--_w_o_token_weight\\instance_01999_dog.png"
+        }
+      ]
+    },
+    "Unweighted": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00000_cat.png"
+        },
+        {
+          "index": 219,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00219_cat.png"
+        },
+        {
+          "index": 440,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00440_cat.png"
+        },
+        {
+          "index": 663,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00663_dog.png"
+        },
+        {
+          "index": 883,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_00883_dog.png"
+        },
+        {
+          "index": 1107,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01107_cat.png"
+        },
+        {
+          "index": 1330,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01330_cat.png"
+        },
+        {
+          "index": 1554,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01554_cat.png"
+        },
+        {
+          "index": 1775,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01775_dog.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Unweighted\\instance_01999_dog.png"
+        }
+      ]
+    },
+    "Quadratic": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 2,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00002_dog.png"
+        },
+        {
+          "index": 237,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00237_dog.png"
+        },
+        {
+          "index": 445,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00445_dog.png"
+        },
+        {
+          "index": 660,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00660_dog.png"
+        },
+        {
+          "index": 884,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_00884_dog.png"
+        },
+        {
+          "index": 1124,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01124_dog.png"
+        },
+        {
+          "index": 1325,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01325_dog.png"
+        },
+        {
+          "index": 1535,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01535_dog.png"
+        },
+        {
+          "index": 1782,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01782_dog.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results\\cifar10\\cat_dog_weighted\\prediction_agreements\\reference_nonzero\\Quadratic\\instance_01999_dog.png"
+        }
+      ]
+    }
+  }
+}

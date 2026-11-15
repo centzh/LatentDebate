@@ -14,6 +14,7 @@ model:
 strength:
   positive_class: automobile
   negative_class: truck
+  weight_by_cls_attention: false
 
 output:
   path: data/cifar10/automobile_truck.jsonl

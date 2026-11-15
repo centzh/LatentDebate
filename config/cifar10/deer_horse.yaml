@@ -14,6 +14,7 @@ model:
 strength:
   positive_class: deer
   negative_class: horse
+  weight_by_cls_attention: false
 
 output:
   path: data/cifar10/deer_horse.jsonl

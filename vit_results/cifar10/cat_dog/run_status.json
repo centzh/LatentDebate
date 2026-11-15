@@ -1,0 +1,24 @@
+{
+  "verification": "PASSED",
+  "protocol_version": "table1-finalized-2026-10-29",
+  "models": 3,
+  "datasets_per_model": 6,
+  "samples_per_input": 500,
+  "input_files_verified": 1,
+  "dataset_cells_verified": 8,
+  "row_averages_verified": 8,
+  "per_sample_method_predictions_verified": 0,
+  "random_seed": 0,
+  "llm_answer_rule": "strip_then_startswith_capital_T_else_false",
+  "noncanonical_answer_prefixes": 0,
+  "mean_rounding": "arithmetic mean of six unrounded scores, then ROUND_HALF_UP to one decimal",
+  "elapsed_seconds": 154.39205884933472,
+  "input_files": [
+    {
+      "model": "google/vit-base-patch16-224",
+      "dataset": "imagenet_1k",
+      "file": "cat_dog.jsonl",
+      "sha256": "07b5d42f9fd0941f1be351ca87c9bb7c16c788b984a5d43d2f040e39cab404de"
+    }
+  ]
+}

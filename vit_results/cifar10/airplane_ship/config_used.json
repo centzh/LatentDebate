@@ -16,7 +16,9 @@
     "Majority Voting",
     "Latent Debate -- w/o token weight",
     "Unweighted",
-    "Quadratic"
+    "Quadratic",
+    "CLS Patch only",
+    "CLS only"
   ],
   "datasets": [
     {

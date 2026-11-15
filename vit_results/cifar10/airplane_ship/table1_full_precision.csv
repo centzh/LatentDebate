@@ -5,3 +5,5 @@ google/vit-base-patch16-224,imagenet_1k,Majority Voting,2000,1615,80.75,80.8,16,
 google/vit-base-patch16-224,imagenet_1k,Latent Debate -- w/o token weight,2000,1981,99.05,99.1,16,3,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.15
 google/vit-base-patch16-224,imagenet_1k,Unweighted,2000,1984,99.2,99.2,16,0,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.0
 google/vit-base-patch16-224,imagenet_1k,Quadratic,2000,1983,99.15,99.2,16,1,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.05
+google/vit-base-patch16-224,imagenet_1k,CLS Patch only,2000,1983,99.15,99.2,16,1,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.05
+google/vit-base-patch16-224,imagenet_1k,CLS only,2000,1981,99.05,99.1,16,3,6,12,,airplane_ship.jsonl,fef7277cb9c2444b8878fcd5ee2355663efff777403e47436ae0b463e3d9d814,0.8,0.15
