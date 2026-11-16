@@ -22,8 +22,8 @@
     "Random",
     "Average",
     "Majority Voting",
+    "Raw",
     "Latent Debate -- w/o token weight",
-    "Unweighted",
     "Quadratic",
     "CLS Patch only",
     "CLS only"
