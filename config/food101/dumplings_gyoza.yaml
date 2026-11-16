@@ -1,19 +1,19 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/food101/dumplings_gyoza.yaml
 
 dataset:
   hub_id: ethz/Food101
   split: validation
   include_classes:
-    - sushi
-    - sashimi
+    - dumplings
+    - gyoza
 
 model:
-  pretrained:  nateraw/vit-base-food101
+  pretrained: nateraw/vit-base-food101
   device_map: cpu
 
 strength:
-  positive_class: sushi
-  negative_class: sashimi
+  positive_class: dumplings
+  negative_class: gyoza
   weight_by_cls_attention: false
 
 output:

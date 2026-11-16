@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/food101/beef_carpaccio_beef_tartare.yaml
 
 dataset:
   hub_id: ethz/Food101
