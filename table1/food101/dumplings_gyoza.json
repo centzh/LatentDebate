@@ -5,8 +5,8 @@
     "hub_id": "ethz/Food101",
     "split": "validation",
     "include_classes": [
-      "sushi",
-      "sashimi"
+      "dumplings",
+      "gyoza"
     ]
   },
   "protocol_version": "table1-finalized-2026-10-29",

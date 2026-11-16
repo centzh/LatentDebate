@@ -34,7 +34,7 @@
   "models": [
     {
       "name": "google/vit-base-patch16-224",
-      "files": ["sushi_taco.jsonl"]
+      "files": ["sushi_tacos.jsonl"]
     }
   ]
 }
