@@ -114,7 +114,6 @@ def load_input(path, config):
     raw = []
     answers = []
     answer_texts = []
-    query_hashes = []
 
     for record in records:
         query = record['result']['query']
@@ -126,11 +125,10 @@ def load_input(path, config):
         raw.append(selected)
         answers.append(map_answer_to_label(answer_raw, config))
         answer_texts.append(answer_raw.strip())
-        query_hashes.append(hashlib.sha256(query['query'].encode('utf-8')).hexdigest())
 
     raw = np.asarray(raw, dtype=np.float64)
     answers = np.asarray(answers, dtype=np.int8)
-    return raw, answers, query_hashes, answer_texts
+    return raw, answers, answer_texts
 
 
 def _sign_from_cls(matrix: np.ndarray) -> np.ndarray:
@@ -258,7 +256,7 @@ def main():
 
             digest = sha(path)
 
-            raw, llm, query_hashes, answer_texts = load_input(path, config)
+            raw, llm, answer_texts = load_input(path, config)
             plot_output = args.output_dir if args.plot else None
             vision_images = None
             if plot_output is not None:
@@ -322,7 +320,6 @@ def main():
             for i in range(len(llm)):
                 sample_rows.append({
                     'index': i,
-                    'query_sha256': query_hashes[i],
                     'llm_prediction': int(llm[i]),
                     **{method: int(values[i]) for method, values in predictions.items()},
                 })
