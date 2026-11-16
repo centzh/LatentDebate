@@ -910,7 +910,9 @@ def main():
             )
 
             ablated_supporters = raw.copy()
-            ablated_supporters[ablated_supporters > 0] = 0
+            thr = np.percentile(ablated_supporters[ablated_supporters > 0], 10)
+            print(f"Threshold: {thr}")
+            ablated_supporters[ablated_supporters >= thr] = 0
             ablated_supporters_propagated = propagate(ablated_supporters, vision=args.vision)
 
             cls_patch_only_pred = np.select(
