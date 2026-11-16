@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog.yaml
+
+dataset:
+  hub_id: ethz/Food101
+  split: validation
+  include_classes:
+    - sushi
+    - sashimi
+
+model:
+  pretrained:  nateraw/vit-base-food101
+  device_map: cpu
+
+strength:
+  positive_class: sushi
+  negative_class: sashimi
+  weight_by_cls_attention: false
+
+output:
+  path: data/food101/sushi_sashimi.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false

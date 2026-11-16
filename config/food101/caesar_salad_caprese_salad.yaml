@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog.yaml
+
+dataset:
+  hub_id: ethz/Food101
+  split: validation
+  include_classes:
+    - caesar_salad
+    - caprese_salad
+
+model:
+  pretrained:  nateraw/vit-base-food101
+  device_map: cpu
+
+strength:
+  positive_class: caesar_salad
+  negative_class: caprese_salad
+  weight_by_cls_attention: false
+
+output:
+  path: data/food101/caesar_salad_caprese_salad.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false
