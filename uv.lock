@@ -977,6 +977,7 @@ source = { editable = "." }
 dependencies = [
     { name = "accelerate" },
     { name = "datasets" },
+    { name = "huggingface-hub" },
     { name = "ipython" },
     { name = "matplotlib" },
     { name = "numpy" },
@@ -995,6 +996,7 @@ dependencies = [
 requires-dist = [
     { name = "accelerate", specifier = ">=1.15.0" },
     { name = "datasets", specifier = ">=5.1.0" },
+    { name = "huggingface-hub", specifier = ">=2.4.0" },
     { name = "ipython", specifier = ">=9.18.1" },
     { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "numpy", specifier = "==2.4.4" },

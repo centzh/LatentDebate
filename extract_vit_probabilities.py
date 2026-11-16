@@ -13,6 +13,9 @@ from datasets import load_dataset
 from tqdm import tqdm
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
+from huggingface_hub import login
+login()
+
 HERE = Path(__file__).resolve().parent
 
 
@@ -145,7 +148,7 @@ def main():
         for image_number, instance in enumerate(tqdm(dataset, desc="Calculating initial strengths")):
             logger.info("Processing image %s/%s", image_number, len(dataset))
 
-            image_path = instance.get("img")
+            image_path = instance.get("img") or instance.get("image")
             label = instance.get("label")
 
             inputs = processor(images=image_path, return_tensors="pt")
