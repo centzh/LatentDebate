@@ -908,6 +908,34 @@ def main():
             predictions = predict_all(
                 raw, weighted, config, args.vision, plot_output
             )
+
+            ablated_supporters = raw.copy()
+            ablated_supporters[ablated_supporters > 0] = 0
+            ablated_supporters_propagated = propagate(ablated_supporters, vision=args.vision)
+
+            cls_patch_only_pred = np.select(
+                [
+                    propagate(raw, args.vision, cls_patch_only=True)[:, 0, -1] >= 0,
+                    propagate(raw, args.vision, cls_patch_only=True)[:, 0, -1] < 0,
+                ],
+                [1, -1],
+                default=0,
+            ).astype(np.int8)
+
+            ablated_supporters_pred = np.select(
+                [
+                    ablated_supporters_propagated[:, 0, -1] >= 0,
+                    ablated_supporters_propagated[:, 0, -1] < 0,
+                ],
+                [1, -1],
+                default=0,
+            ).astype(np.int8)
+
+            cls_patch_positives = cls_patch_only_pred[cls_patch_only_pred == 1]
+            ablated_supporters = ablated_supporters_pred[cls_patch_only_pred == 1]
+            flip_rate = 1 - sum(cls_patch_positives == ablated_supporters) / len(cls_patch_positives)
+            print(f"CLS patch only + ablated supporters flip rate: {flip_rate}")
+
             if plot_output is not None:
                 plot_prediction_agreements(
                     raw,
