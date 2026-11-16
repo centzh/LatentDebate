@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import importlib.metadata
 import json
 import platform
@@ -73,10 +72,6 @@ def write_csv(path, rows):
         writer = csv.DictWriter(f, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
-
-
-def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def percentage(count, n):
@@ -254,8 +249,6 @@ def main():
             if not path.is_file():
                 raise FileNotFoundError(f'Missing Table 1 input: {path}')
 
-            digest = sha(path)
-
             raw, llm, answer_texts = load_input(path, config)
             plot_output = args.output_dir if args.plot else None
             vision_images = None
@@ -349,7 +342,6 @@ def main():
                     'layers': config['selected_layers'],
                     'random_seed': config['random_seed'] if method == 'Random' else '',
                     'input_file': file,
-                    'input_sha256': digest,
                 }
                 row_data['disagree_pct_llm_0'] = float(
                     percentage(disagree_llm_zero, n_samples)
@@ -363,7 +355,6 @@ def main():
                 'model': model['name'],
                 'dataset': dataset['name'],
                 'file': file,
-                'sha256': digest,
             })
     print(
         f'{model["name"]} / {dataset["name"]}: n={len(llm)}, '
