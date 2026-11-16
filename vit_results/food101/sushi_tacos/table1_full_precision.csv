@@ -1,9 +1,0 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
-google/vit-base-patch16-224,food101,Random,500,291,58.2,58.2,49,160,6,12,0,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,32.0
-google/vit-base-patch16-224,food101,Average,500,451,90.2,90.2,49,0,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,0.0
-google/vit-base-patch16-224,food101,Majority Voting,500,445,89.0,89.0,49,6,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,1.2
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,298,59.6,59.6,49,153,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,30.6
-google/vit-base-patch16-224,food101,Unweighted,500,451,90.2,90.2,49,0,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,0.0
-google/vit-base-patch16-224,food101,Quadratic,500,451,90.2,90.2,49,0,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,0.0
-google/vit-base-patch16-224,food101,CLS Patch only,500,451,90.2,90.2,49,0,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,0.0
-google/vit-base-patch16-224,food101,CLS only,500,298,59.6,59.6,49,153,6,12,,sushi_taco.jsonl,10083c5cd778203719ef77d28e2808bb5ec03713ef7bfc766cac40f596f320b0,9.8,30.6

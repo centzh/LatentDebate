@@ -1,9 +1,9 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
-google/vit-base-patch16-224,food101,Random,500,2,0.4,0.4,498,0,6,12,0,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.0
-google/vit-base-patch16-224,food101,Average,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,Majority Voting,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,Unweighted,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,Quadratic,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,CLS Patch only,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
-google/vit-base-patch16-224,food101,CLS only,500,0,0.0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,2e37b2c7521c5f49319ad1e75f972c294a7e355c0e10a781ec3784cc5fe87e06,99.6,0.4
+model,dataset,method,n,consistent,consistency_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,food101,Random,500,2,0.4,498,0,6,12,0,dumplings_gyoza.jsonl,99.6,0.0
+google/vit-base-patch16-224,food101,Average,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,Majority Voting,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,Raw,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,Quadratic,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,CLS Patch only,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4
+google/vit-base-patch16-224,food101,CLS only,500,0,0.0,498,2,6,12,,dumplings_gyoza.jsonl,99.6,0.4

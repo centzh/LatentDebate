@@ -1,9 +1,9 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
-google/vit-base-patch16-224,food101,Random,500,297,59.4,59.4,36,167,6,12,0,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,33.4
-google/vit-base-patch16-224,food101,Average,500,457,91.4,91.4,36,7,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,1.4
-google/vit-base-patch16-224,food101,Majority Voting,500,450,90.0,90.0,36,14,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,2.8
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,458,91.6,91.6,36,6,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,1.2
-google/vit-base-patch16-224,food101,Unweighted,500,464,92.8,92.8,36,0,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,0.0
-google/vit-base-patch16-224,food101,Quadratic,500,461,92.2,92.2,36,3,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,0.6
-google/vit-base-patch16-224,food101,CLS Patch only,500,463,92.6,92.6,36,1,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,0.2
-google/vit-base-patch16-224,food101,CLS only,500,458,91.6,91.6,36,6,6,12,,donuts_beignets.jsonl,c70ecf6b8a7696aacad14fd6fb9c22321a69a4b0a8cf83855aeb67c241a5c381,7.2,1.2
+model,dataset,method,n,consistent,consistency_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,food101,Random,500,297,59.4,36,167,6,12,0,donuts_beignets.jsonl,7.2,33.4
+google/vit-base-patch16-224,food101,Average,500,457,91.4,36,7,6,12,,donuts_beignets.jsonl,7.2,1.4
+google/vit-base-patch16-224,food101,Majority Voting,500,450,90.0,36,14,6,12,,donuts_beignets.jsonl,7.2,2.8
+google/vit-base-patch16-224,food101,Raw,500,464,92.8,36,0,6,12,,donuts_beignets.jsonl,7.2,0.0
+google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,458,91.6,36,6,6,12,,donuts_beignets.jsonl,7.2,1.2
+google/vit-base-patch16-224,food101,Quadratic,500,461,92.2,36,3,6,12,,donuts_beignets.jsonl,7.2,0.6
+google/vit-base-patch16-224,food101,CLS Patch only,500,463,92.6,36,1,6,12,,donuts_beignets.jsonl,7.2,0.2
+google/vit-base-patch16-224,food101,CLS only,500,458,91.6,36,6,6,12,,donuts_beignets.jsonl,7.2,1.2

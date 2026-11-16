@@ -12,5 +12,5 @@ TriviaQA, MuSiQue and TruthfulQA use the last five. Random uses seed 0, reset fo
 each input cache. The other methods are deterministic. All displayed values,
 averages and per-sample predictions are checked against the bundled references.
 
-Configuration is in `config.json`; input hashes are in `input_manifest.json`.
+Configuration is in `config.json` (release Table 1). Per-dataset vision protocols live under `cifar10/` and `food101/` (e.g. `food101/cheesecake_chocolate_cake.json`). Pass one with `--config-file`. Input hashes for the release are in `input_manifest.json`.
 

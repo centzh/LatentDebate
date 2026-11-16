@@ -2,8 +2,8 @@ model,method,food101,Avg,disagree_pct_llm_0,disagree_pct_otherwise
 google/vit-base-patch16-224,Random,40.4,40.4,30.2,29.4
 google/vit-base-patch16-224,Average,64.4,64.4,30.2,5.4
 google/vit-base-patch16-224,Majority Voting,55.6,55.6,30.2,14.2
+google/vit-base-patch16-224,Raw,69.8,69.8,30.2,0.0
 google/vit-base-patch16-224,Latent Debate -- w/o token weight,36.8,36.8,30.2,33.0
-google/vit-base-patch16-224,Unweighted,69.8,69.8,30.2,0.0
 google/vit-base-patch16-224,Quadratic,67.2,67.2,30.2,2.6
 google/vit-base-patch16-224,CLS Patch only,69.4,69.4,30.2,0.4
 google/vit-base-patch16-224,CLS only,36.8,36.8,30.2,33.0

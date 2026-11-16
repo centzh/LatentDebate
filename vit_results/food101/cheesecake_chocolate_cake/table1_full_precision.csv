@@ -1,9 +1,9 @@
-model,dataset,method,n,consistent,consistency_percent,display_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,input_sha256,disagree_pct_llm_0,disagree_pct_otherwise
-google/vit-base-patch16-224,food101,Random,500,202,40.4,40.4,151,147,6,12,0,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,29.4
-google/vit-base-patch16-224,food101,Average,500,322,64.4,64.4,151,27,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,5.4
-google/vit-base-patch16-224,food101,Majority Voting,500,278,55.6,55.6,151,71,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,14.2
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,184,36.8,36.8,151,165,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,33.0
-google/vit-base-patch16-224,food101,Unweighted,500,349,69.8,69.8,151,0,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,0.0
-google/vit-base-patch16-224,food101,Quadratic,500,336,67.2,67.2,151,13,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,2.6
-google/vit-base-patch16-224,food101,CLS Patch only,500,347,69.4,69.4,151,2,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,0.4
-google/vit-base-patch16-224,food101,CLS only,500,184,36.8,36.8,151,165,6,12,,cheesecake_chocolate_cake.jsonl,cdd56cb45bf2b0bc6f5047744426f4f24c9080149a0e56160a676b75302fc6e3,30.2,33.0
+model,dataset,method,n,consistent,consistency_percent,disagree_llm_zero,disagree_llm_nonzero,tokens,layers,random_seed,input_file,disagree_pct_llm_0,disagree_pct_otherwise
+google/vit-base-patch16-224,food101,Random,500,202,40.4,151,147,6,12,0,cheesecake_chocolate_cake.jsonl,30.2,29.4
+google/vit-base-patch16-224,food101,Average,500,322,64.4,151,27,6,12,,cheesecake_chocolate_cake.jsonl,30.2,5.4
+google/vit-base-patch16-224,food101,Majority Voting,500,278,55.6,151,71,6,12,,cheesecake_chocolate_cake.jsonl,30.2,14.2
+google/vit-base-patch16-224,food101,Raw,500,349,69.8,151,0,6,12,,cheesecake_chocolate_cake.jsonl,30.2,0.0
+google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,184,36.8,151,165,6,12,,cheesecake_chocolate_cake.jsonl,30.2,33.0
+google/vit-base-patch16-224,food101,Quadratic,500,336,67.2,151,13,6,12,,cheesecake_chocolate_cake.jsonl,30.2,2.6
+google/vit-base-patch16-224,food101,CLS Patch only,500,347,69.4,151,2,6,12,,cheesecake_chocolate_cake.jsonl,30.2,0.4
+google/vit-base-patch16-224,food101,CLS only,500,184,36.8,151,165,6,12,,cheesecake_chocolate_cake.jsonl,30.2,33.0

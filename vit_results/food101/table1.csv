@@ -1,0 +1,9 @@
+method,beef_carpaccio_beef_tartare,caesar_salad_caprese_salad,cheesecake_chocolate_cake,donuts_beignets,dumplings_gyoza,sushi_sashimi
+Random,52.2,60.4,40.4,59.4,0.4,59.8
+Average,84.2,90.4,64.4,91.4,0.0,87.8
+Majority Voting,82.6,89.0,55.6,90.0,0.0,86.0
+Raw,92.2,90.8,69.8,92.8,0.0,96.0
+Latent Debate -- w/o token weight,88.0,71.2,36.8,91.6,0.0,93.4
+Quadratic,86.4,90.6,67.2,92.2,0.0,91.6
+CLS Patch only,87.4,90.8,69.4,92.6,0.0,92.6
+CLS only,88.0,71.2,36.8,91.6,0.0,93.4
