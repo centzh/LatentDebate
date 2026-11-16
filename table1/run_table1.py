@@ -315,17 +315,19 @@ def plot_label_zero_instances(
 
     latent = propagate(raw, vision=True)
     quadratic = propagate(raw, vision=True, quadratic=True)
+    cls_only = propagate(raw, vision=True, cls_only=True)
     panels = [
         ('Latent Debate', latent),
         ('Unweighted', raw),
         ('Quadratic', quadratic),
+        ('CLS only', cls_only),
     ]
 
     written = []
     vmin, vmax = -1, 1
     for idx in tqdm(zero_indices, desc='Plot label-zero instances', unit='img'):
         answer_class = answer_texts[idx]
-        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+        fig, axes = plt.subplots(1, len(panels), figsize=(6 * len(panels), 6))
         last_im = None
         for ax, (title, tensor) in zip(axes, panels):
             last_im = ax.imshow(
@@ -405,7 +407,9 @@ def _plot_method_vs_vit_comparison(
     fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
     if vision_images is not None:
-        axes[0].imshow(np.asarray(vision_images[idx]['img']))
+        row = vision_images[idx]
+        img = row.get('img') or row.get('image')
+        axes[0].imshow(np.asarray(img))
     else:
         axes[0].text(0.5, 0.5, f'Instance {idx}\n(no image)', ha='center', va='center')
     axes[0].set_title('Input image')
@@ -630,6 +634,7 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
     )
     average_pred = np.where(raw.mean(axis=(1, 2)) >= 0, 1, -1).astype(np.int8)
     majority_pred = np.where(majority, 1, -1).astype(np.int8)
+
     if vision:
     
         latent_debate = np.select(
@@ -658,9 +663,6 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
             [1, -1],
             default=0,
         ).astype(np.int8)
-        
-        from IPython import embed
-        embed()
 
         # Make this raw for now! Propagation actually does change a lot!
         unweighted = np.select(
@@ -702,7 +704,14 @@ def predict_all(raw, weighted, config, vision=False, output_dir: Path | None = N
                 negative_label,
                 output_dir / 'propagated_quadratic_mean_heatmaps.png',
             )
-        
+            cls_only_propagated = propagate(raw, vision=True, cls_only=True)
+            plot_positive_negative_heatmaps(
+                cls_only_propagated,
+                positive_label,
+                negative_label,
+                output_dir / 'cls_only_mean_heatmaps.png',
+            )
+
     else:
         latent_debate = np.where(propagate(weighted)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
         unweighted = np.where(propagate(raw)[:, -1, -1] >= 0, 1, -1).astype(np.int8)
