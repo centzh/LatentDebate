@@ -162,32 +162,7 @@ def predict_all(raw, config, output_dir: Path | None = None):
     # Raw is the unpropagated CLS token. Propagation changes a lot of these labels.
     unweighted = _sign_from_cls(raw)
     quadratic = _sign_from_cls(propagated_quadratic)
-
-    if output_dir is not None:
-        positive_label = str(config['positive_class'])
-        negative_label = str(config['negative_class'])
-        plot_positive_negative_heatmaps(
-            raw, positive_label, negative_label, output_dir / 'raw_mean_heatmaps.png'
-        )
-        plot_positive_negative_heatmaps(
-            propagated,
-            positive_label,
-            negative_label,
-            output_dir / 'propagated_mean_heatmaps.png',
-        )
-        plot_positive_negative_heatmaps(
-            propagated_quadratic,
-            positive_label,
-            negative_label,
-            output_dir / 'propagated_quadratic_mean_heatmaps.png',
-        )
-        plot_positive_negative_heatmaps(
-            propagated_cls_only,
-            positive_label,
-            negative_label,
-            output_dir / 'cls_only_mean_heatmaps.png',
-        )
-
+    
     by_method = {
         'Random': random_pred,
         'Average': average_pred,
