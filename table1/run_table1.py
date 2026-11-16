@@ -18,8 +18,6 @@ from pathlib import Path
 import numpy as np
 
 from plots import (
-    plot_label_zero_instances,
-    plot_positive_negative_heatmaps,
     plot_prediction_agreements,
     plot_prediction_disagreements,
 )
@@ -231,141 +229,131 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
-    args = parse_args()
-    start = time.time()
+def print_cls_patch_ablation_flip_rate(raw):
+    ablated_supporters = raw.copy()
+    thr = np.percentile(ablated_supporters[ablated_supporters > 0], 10)
+    print(f"Threshold: {thr}")
+    ablated_supporters[ablated_supporters >= thr] = 0
+    ablated_supporters_propagated = propagate(ablated_supporters)
 
-    config = read_json(HERE / args.config_file)
+    cls_patch_only_pred = np.select(
+        [
+            propagate(raw, cls_patch_only=True)[:, 0, -1] >= 0,
+            propagate(raw, cls_patch_only=True)[:, 0, -1] < 0,
+        ],
+        [1, -1],
+        default=0,
+    ).astype(np.int8)
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    ablated_supporters_pred = np.select(
+        [
+            ablated_supporters_propagated[:, 0, -1] >= 0,
+            ablated_supporters_propagated[:, 0, -1] < 0,
+        ],
+        [1, -1],
+        default=0,
+    ).astype(np.int8)
+
+    cls_patch_positives = cls_patch_only_pred[cls_patch_only_pred == 1]
+    ablated_supporters = ablated_supporters_pred[cls_patch_only_pred == 1]
+    flip_rate = 1 - sum(cls_patch_positives == ablated_supporters) / len(cls_patch_positives)
+    print(f"CLS patch only + ablated supporters flip rate: {flip_rate}")
+
+
+def write_predictions(output_dir, model_name, dataset_name, llm, predictions):
+    key = model_name.replace('-', '_') + '__' + dataset_name
+    sample_rows = [
+        {
+            'index': i,
+            'llm_prediction': int(llm[i]),
+            **{method: int(values[i]) for method, values in predictions.items()},
+        }
+        for i in range(len(llm))
+    ]
+    write_csv(output_dir / 'predictions' / (key + '.csv'), sample_rows)
+
+
+def consistency_rows(model_name, dataset_name, file, tokens, llm, predictions, config):
     rows = []
-    input_checks = []
+    for method, values in predictions.items():
+        num_consistent = int((values == llm).sum())
+        disagree = values != llm
+        disagree_llm_zero = int((disagree & (llm == 0)).sum())
+        disagree_llm_nonzero = int((disagree & (llm != 0)).sum())
+        n_samples = len(llm)
+        rows.append({
+            'model': model_name,
+            'dataset': dataset_name,
+            'method': method,
+            'n': n_samples,
+            'consistent': num_consistent,
+            'consistency_percent': float(percentage(num_consistent, len(llm))),
+            'disagree_llm_zero': disagree_llm_zero,
+            'disagree_llm_nonzero': disagree_llm_nonzero,
+            'tokens': tokens,
+            'layers': config['selected_layers'],
+            'random_seed': config['random_seed'] if method == 'Random' else '',
+            'input_file': file,
+            'disagree_pct_llm_0': float(percentage(disagree_llm_zero, n_samples)),
+            'disagree_pct_otherwise': float(percentage(disagree_llm_nonzero, n_samples)),
+        })
+    return rows
 
-    data_dir = args.data_dir / args.data_subdir
 
+def score_input(path, file, model_name, dataset_name, tokens, config, output_dir, plot):
+    raw, llm, answer_texts = load_input(path, config)
+    plot_output = output_dir if plot else None
+    vision_images = None
+    if plot_output is not None:
+        vision_images = load_vision_image_dataset(config)
+    predictions = predict_all(raw, config, plot_output)
+    print_cls_patch_ablation_flip_rate(raw)
+    if plot_output is not None:
+        plot_prediction_agreements(
+            raw, llm, predictions, answer_texts, config, plot_output, vision_images,
+        )
+        plot_prediction_disagreements(
+            raw, llm, predictions, answer_texts, config, plot_output, vision_images,
+        )
+    write_predictions(output_dir, model_name, dataset_name, llm, predictions)
+    print(
+        f'{model_name} / {dataset_name}: n={len(llm)}, '
+        f'tokens={tokens}, {len(config["methods"])} methods scored',
+        flush=True,
+    )
+    return consistency_rows(model_name, dataset_name, file, tokens, llm, predictions, config)
+
+
+def score_config(config, data_dir, output_dir, plot):
+    rows = []
+    inputs = []
     for model in config['models']:
         for dataset, file in zip(config['datasets'], model['files']):
             path = data_dir / file
             if not path.is_file():
                 raise FileNotFoundError(f'Missing Table 1 input: {path}')
-
-            raw, llm, answer_texts = load_input(path, config)
-            plot_output = args.output_dir if args.plot else None
-            vision_images = None
-            if plot_output is not None:
-                vision_images = load_vision_image_dataset(config)
-                plot_label_zero_instances(
-                    raw, llm, answer_texts, config, plot_output
-                )
-            predictions = predict_all(raw, config, plot_output)
-
-            ablated_supporters = raw.copy()
-            thr = np.percentile(ablated_supporters[ablated_supporters > 0], 10)
-            print(f"Threshold: {thr}")
-            ablated_supporters[ablated_supporters >= thr] = 0
-            ablated_supporters_propagated = propagate(ablated_supporters)
-
-            cls_patch_only_pred = np.select(
-                [
-                    propagate(raw, cls_patch_only=True)[:, 0, -1] >= 0,
-                    propagate(raw, cls_patch_only=True)[:, 0, -1] < 0,
-                ],
-                [1, -1],
-                default=0,
-            ).astype(np.int8)
-
-            ablated_supporters_pred = np.select(
-                [
-                    ablated_supporters_propagated[:, 0, -1] >= 0,
-                    ablated_supporters_propagated[:, 0, -1] < 0,
-                ],
-                [1, -1],
-                default=0,
-            ).astype(np.int8)
-
-            cls_patch_positives = cls_patch_only_pred[cls_patch_only_pred == 1]
-            ablated_supporters = ablated_supporters_pred[cls_patch_only_pred == 1]
-            flip_rate = 1 - sum(cls_patch_positives == ablated_supporters) / len(cls_patch_positives)
-            print(f"CLS patch only + ablated supporters flip rate: {flip_rate}")
-
-            if plot_output is not None:
-                plot_prediction_agreements(
-                    raw,
-                    llm,
-                    predictions,
-                    answer_texts,
-                    config,
-                    plot_output,
-                    vision_images,
-                )
-                plot_prediction_disagreements(
-                    raw,
-                    llm,
-                    predictions,
-                    answer_texts,
-                    config,
-                    plot_output,
-                    vision_images,
-                )
-
-            key = model['name'].replace('-', '_') + '__' + dataset['name']
-            sample_rows = []
-            for i in range(len(llm)):
-                sample_rows.append({
-                    'index': i,
-                    'llm_prediction': int(llm[i]),
-                    **{method: int(values[i]) for method, values in predictions.items()},
-                })
-            write_csv(args.output_dir / 'predictions' / (key + '.csv'), sample_rows)
-
-            for method, values in predictions.items():
-                num_consistent = int((values == llm).sum())
-                disagree = values != llm
-                disagree_llm_zero = int((disagree & (llm == 0)).sum())
-                disagree_llm_nonzero = int((disagree & (llm != 0)).sum())
-                n_samples = len(llm)
-
-                row_data = {
-                    'model': model['name'],
-                    'dataset': dataset['name'],
-                    'method': method,
-                    'n': n_samples,
-                    'consistent': num_consistent,
-                    'consistency_percent': float(percentage(num_consistent, len(llm))),
-                    'display_percent': display(
-                        percentage(num_consistent, len(llm)),
-                        config['decimal_places'],
-                    ),
-                    'disagree_llm_zero': disagree_llm_zero,
-                    'disagree_llm_nonzero': disagree_llm_nonzero,
-                    'tokens': dataset['tokens'],
-                    'layers': config['selected_layers'],
-                    'random_seed': config['random_seed'] if method == 'Random' else '',
-                    'input_file': file,
-                }
-                row_data['disagree_pct_llm_0'] = float(
-                    percentage(disagree_llm_zero, n_samples)
-                )
-                row_data['disagree_pct_otherwise'] = float(
-                    percentage(disagree_llm_nonzero, n_samples)
-                )
-                rows.append(row_data)
-
-            input_checks.append({
+            rows.extend(score_input(
+                path,
+                file,
+                model['name'],
+                dataset['name'],
+                dataset['tokens'],
+                config,
+                output_dir,
+                plot,
+            ))
+            inputs.append({
                 'model': model['name'],
                 'dataset': dataset['name'],
                 'file': file,
             })
-    print(
-        f'{model["name"]} / {dataset["name"]}: n={len(llm)}, '
-        f'tokens={dataset["tokens"]}, {len(config["methods"])} methods scored',
-        flush=True,
-    )
+    return rows, inputs
 
+
+def write_result_tables(output_dir, rows, config):
     table = make_table(rows, config)
-    write_csv(args.output_dir / 'table1.csv', table)
-    write_csv(args.output_dir / 'table1_full_precision.csv', rows)
-
+    write_csv(output_dir / 'table1.csv', table)
+    write_csv(output_dir / 'table1_full_precision.csv', rows)
     mean_rows = []
     for row in table:
         cells = [r for r in rows if r['model'] == row['model'] and r['method'] == row['method']]
@@ -376,28 +364,47 @@ def main():
             'mean_percent': float(mean),
             'display_mean': row['Avg'],
         })
-    write_csv(args.output_dir / 'averages.csv', mean_rows)
+    write_csv(output_dir / 'averages.csv', mean_rows)
+    return table
 
-    write_json(args.output_dir / 'config_used.json', config)
-    write_json(args.output_dir / 'environment.json', {
+
+def write_environment(output_dir):
+    write_json(output_dir / 'environment.json', {
         'python': sys.version,
         'platform': platform.platform(),
         'packages': {p: importlib.metadata.version(p) for p in ['numpy', 'scipy']},
     })
-    status = {
+
+
+def write_run_status(output_dir, config, rows, table, inputs, elapsed):
+    write_json(output_dir / 'run_status.json', {
         'protocol_version': config['protocol_version'],
         'models': len(config['models']),
         'datasets_per_model': len(config['datasets']),
         'samples_per_input': config['samples_per_dataset'],
-        'input_files': len(input_checks),
+        'input_files': len(inputs),
         'dataset_cells': len(rows),
         'row_averages': len(table),
         'random_seed': config['random_seed'],
         'mean_rounding': 'arithmetic mean of unrounded scores, then ROUND_HALF_UP',
-        'elapsed_seconds': time.time() - start,
-        'inputs': input_checks,
-    }
-    write_json(args.output_dir / 'run_status.json', status)
+        'elapsed_seconds': elapsed,
+        'inputs': inputs,
+    })
+
+
+def main():
+    args = parse_args()
+    start = time.time()
+    config = read_json(HERE / args.config_file)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+
+    rows, inputs = score_config(
+        config, args.data_dir / args.data_subdir, args.output_dir, args.plot,
+    )
+    table = write_result_tables(args.output_dir, rows, config)
+    write_json(args.output_dir / 'config_used.json', config)
+    write_environment(args.output_dir)
+    write_run_status(args.output_dir, config, rows, table, inputs, time.time() - start)
 
     print(
         f'Wrote {len(rows)} cells and {len(table)} averages.',
