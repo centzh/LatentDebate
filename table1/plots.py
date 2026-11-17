@@ -486,6 +486,63 @@ def plot_prediction_disagreements(
     )
 
 
+def plot_cls_patch_supporter_ablation(sweep: dict, output_dir: Path) -> None:
+    """Save flip rate and mean ablated CLS strength vs ablation threshold."""
+    import matplotlib.pyplot as plt
+
+    output_dir = Path(output_dir) / 'cls_patch_supporter_ablation'
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    above = sweep['ablate_above']
+    below = sweep['ablate_below']
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(
+        above['thresholds'],
+        above['flip_rates'],
+        'o-',
+        label='Ablate supporters > threshold',
+    )
+    ax.plot(
+        below['thresholds'],
+        below['flip_rates'],
+        's-',
+        label='Ablate supporters < threshold',
+    )
+    ax.set_xlabel('Ablation threshold')
+    ax.set_ylabel('Flip rate (CLS-patch-positive samples)')
+    ax.set_title('CLS patch only: prediction flip rate vs ablation threshold')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    flip_path = output_dir / 'flip_rate_vs_threshold.png'
+    fig.tight_layout()
+    plt.savefig(flip_path, dpi=200, bbox_inches='tight')
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(
+        above['thresholds'],
+        above['mean_final_strength_positives'],
+        'o-',
+        label='Ablate supporters > threshold',
+    )
+    ax.plot(
+        below['thresholds'],
+        below['mean_final_strength_positives'],
+        's-',
+        label='Ablate supporters < threshold',
+    )
+    ax.set_xlabel('Ablation threshold')
+    ax.set_ylabel('Mean ablated CLS final strength (positive preds)')
+    ax.set_title('CLS patch only: ablated final strength vs ablation threshold')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    strength_path = output_dir / 'ablated_final_strength_vs_threshold.png'
+    fig.tight_layout()
+    plt.savefig(strength_path, dpi=200, bbox_inches='tight')
+    plt.close(fig)
+
+
 def plot_prediction_agreements(
     raw: np.ndarray,
     llm: np.ndarray,

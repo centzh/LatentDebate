@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 
 from plots import (
+    plot_cls_patch_supporter_ablation,
     plot_prediction_agreements,
     plot_prediction_disagreements,
 )
@@ -229,35 +230,122 @@ def parse_args():
     return parser.parse_args()
 
 
-def print_cls_patch_ablation_flip_rate(raw):
-    ablated_supporters = raw.copy()
-    thr = np.percentile(ablated_supporters[ablated_supporters > 0], 10)
-    print(f"Threshold: {thr}")
-    ablated_supporters[ablated_supporters >= thr] = 0
-    ablated_supporters_propagated = propagate(ablated_supporters)
+def ablate_supporter_strengths(
+    raw: np.ndarray,
+    threshold: float,
+    *,
+    ablate_above: bool,
+) -> np.ndarray:
+    """Zero supporter strengths above or below a threshold (fresh copy each call)."""
+    ablated = raw.copy()
+    if ablate_above:
+        ablated[ablated > threshold] = 0
+    else:
+        ablated[ablated < threshold] = 0
+    return ablated
 
-    cls_patch_only_pred = np.select(
-        [
-            propagate(raw, cls_patch_only=True)[:, 0, -1] >= 0,
-            propagate(raw, cls_patch_only=True)[:, 0, -1] < 0,
-        ],
-        [1, -1],
-        default=0,
-    ).astype(np.int8)
 
-    ablated_supporters_pred = np.select(
-        [
-            ablated_supporters_propagated[:, 0, -1] >= 0,
-            ablated_supporters_propagated[:, 0, -1] < 0,
-        ],
-        [1, -1],
-        default=0,
-    ).astype(np.int8)
+def cls_patch_supporter_ablation_metrics(
+    raw: np.ndarray,
+    threshold: float,
+    *,
+    ablate_above: bool,
+    cls_patch_only_pred: np.ndarray,
+) -> tuple[float, np.ndarray]:
+    """Flip rate on CLS-patch-positive samples and ablated CLS final strengths."""
+    ablated_raw = ablate_supporter_strengths(raw, threshold, ablate_above=ablate_above)
+    propagated = propagate(ablated_raw)
+    ablated_pred = _sign_from_cls(propagated)
+    positive_mask = cls_patch_only_pred == 1
+    ablated_on_positives = ablated_pred[positive_mask]
+    n_pos = int(positive_mask.sum())
+    if n_pos == 0:
+        flip_rate = float('nan')
+    else:
+        flip_rate = 1.0 - float((ablated_on_positives == 1).sum()) / n_pos
+    return flip_rate, propagated[:, 0, -1].copy()
 
-    cls_patch_positives = cls_patch_only_pred[cls_patch_only_pred == 1]
-    ablated_supporters = ablated_supporters_pred[cls_patch_only_pred == 1]
-    flip_rate = 1 - sum(cls_patch_positives == ablated_supporters) / len(cls_patch_positives)
-    print(f"CLS patch only + ablated supporters flip rate: {flip_rate}")
+
+def sweep_cls_patch_supporter_ablation(
+    raw: np.ndarray,
+    cls_patch_only_pred: np.ndarray,
+    *,
+    n_thresholds: int = 10,
+) -> dict:
+    positive_mask = cls_patch_only_pred == 1
+
+    def _append(
+        bucket: dict,
+        threshold: float,
+        flip_rate: float,
+        final_strength: np.ndarray,
+    ) -> None:
+        bucket['thresholds'].append(float(threshold))
+        bucket['flip_rates'].append(flip_rate)
+        if positive_mask.any():
+            bucket['mean_final_strength_positives'].append(
+                float(final_strength[positive_mask].mean()),
+            )
+        else:
+            bucket['mean_final_strength_positives'].append(float('nan'))
+
+    sweep = {
+        'ablate_above': {
+            'thresholds': [],
+            'flip_rates': [],
+            'mean_final_strength_positives': [],
+        },
+        'ablate_below': {
+            'thresholds': [],
+            'flip_rates': [],
+            'mean_final_strength_positives': [],
+        },
+    }
+    for threshold in np.linspace(0, 1, n_thresholds):
+        flip_rate, final_strength = cls_patch_supporter_ablation_metrics(
+            raw,
+            float(threshold),
+            ablate_above=True,
+            cls_patch_only_pred=cls_patch_only_pred,
+        )
+        _append(sweep['ablate_above'], threshold, flip_rate, final_strength)
+    for threshold in np.linspace(0, -1, n_thresholds):
+        flip_rate, final_strength = cls_patch_supporter_ablation_metrics(
+            raw,
+            float(threshold),
+            ablate_above=False,
+            cls_patch_only_pred=cls_patch_only_pred,
+        )
+        _append(sweep['ablate_below'], threshold, flip_rate, final_strength)
+    return sweep
+
+
+def analyze_cls_patch_supporter_ablation(
+    raw: np.ndarray,
+    output_dir: Path | None = None,
+) -> dict:
+    cls_patch_only_strengths = propagate(raw, cls_patch_only=True)
+    cls_patch_only_pred = _sign_from_cls(cls_patch_only_strengths)
+    sweep = sweep_cls_patch_supporter_ablation(raw, cls_patch_only_pred)
+
+    for mode, label in (
+        ('ablate_above', 'ablate supporters > threshold'),
+        ('ablate_below', 'ablate supporters < threshold'),
+    ):
+        for threshold, flip_rate in zip(
+            sweep[mode]['thresholds'],
+            sweep[mode]['flip_rates'],
+            strict=True,
+        ):
+            print(
+                f'CLS patch only + {label}: threshold={threshold:.4f}, '
+                f'flip rate={flip_rate:.4f}',
+                flush=True,
+            )
+
+    if output_dir is not None:
+        plot_cls_patch_supporter_ablation(sweep, output_dir)
+    return sweep
 
 
 def write_predictions(output_dir, model_name, dataset_name, llm, predictions):
@@ -307,7 +395,7 @@ def score_input(path, file, model_name, dataset_name, tokens, config, output_dir
     if plot_output is not None:
         vision_images = load_vision_image_dataset(config)
     predictions = predict_all(raw, config, plot_output)
-    print_cls_patch_ablation_flip_rate(raw)
+    analyze_cls_patch_supporter_ablation(raw, output_dir)
     if plot_output is not None:
         plot_prediction_agreements(
             raw, llm, predictions, answer_texts, config, plot_output, vision_images,
