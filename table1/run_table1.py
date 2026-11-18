@@ -252,17 +252,22 @@ def cls_patch_supporter_ablation_metrics(
     ablate_above: bool,
     cls_patch_only_pred: np.ndarray,
 ) -> tuple[float, np.ndarray]:
-    """Flip rate on CLS-patch-positive samples and ablated CLS final strengths."""
+    """Flip rate on the ablated subset (positives or negatives) and CLS final strengths."""
     ablated_raw = ablate_supporter_strengths(raw, threshold, ablate_above=ablate_above)
     propagated = propagate(ablated_raw)
     ablated_pred = _sign_from_cls(propagated)
-    positive_mask = cls_patch_only_pred == 1
-    ablated_on_positives = ablated_pred[positive_mask]
-    n_pos = int(positive_mask.sum())
-    if n_pos == 0:
+    if ablate_above:
+        subset_mask = cls_patch_only_pred == 1
+        keep_label = np.int8(1)
+    else:
+        subset_mask = cls_patch_only_pred == -1
+        keep_label = np.int8(-1)
+    ablated_on_subset = ablated_pred[subset_mask]
+    n_subset = int(subset_mask.sum())
+    if n_subset == 0:
         flip_rate = float('nan')
     else:
-        flip_rate = 1.0 - float((ablated_on_positives == 1).sum()) / n_pos
+        flip_rate = 1.0 - float((ablated_on_subset == keep_label).sum()) / n_subset
     return flip_rate, propagated[:, 0, -1].copy()
 
 
@@ -273,21 +278,23 @@ def sweep_cls_patch_supporter_ablation(
     n_thresholds: int = 10,
 ) -> dict:
     positive_mask = cls_patch_only_pred == 1
+    negative_mask = cls_patch_only_pred == -1
 
     def _append(
         bucket: dict,
         threshold: float,
         flip_rate: float,
         final_strength: np.ndarray,
+        *,
+        strength_key: str,
+        subset_mask: np.ndarray,
     ) -> None:
         bucket['thresholds'].append(float(threshold))
         bucket['flip_rates'].append(flip_rate)
-        if positive_mask.any():
-            bucket['mean_final_strength_positives'].append(
-                float(final_strength[positive_mask].mean()),
-            )
+        if subset_mask.any():
+            bucket[strength_key].append(float(final_strength[subset_mask].mean()))
         else:
-            bucket['mean_final_strength_positives'].append(float('nan'))
+            bucket[strength_key].append(float('nan'))
 
     sweep = {
         'ablate_above': {
@@ -298,7 +305,7 @@ def sweep_cls_patch_supporter_ablation(
         'ablate_below': {
             'thresholds': [],
             'flip_rates': [],
-            'mean_final_strength_positives': [],
+            'mean_final_strength_negatives': [],
         },
     }
     for threshold in np.linspace(0, 1, n_thresholds):
@@ -308,7 +315,14 @@ def sweep_cls_patch_supporter_ablation(
             ablate_above=True,
             cls_patch_only_pred=cls_patch_only_pred,
         )
-        _append(sweep['ablate_above'], threshold, flip_rate, final_strength)
+        _append(
+            sweep['ablate_above'],
+            threshold,
+            flip_rate,
+            final_strength,
+            strength_key='mean_final_strength_positives',
+            subset_mask=positive_mask,
+        )
     for threshold in np.linspace(0, -1, n_thresholds):
         flip_rate, final_strength = cls_patch_supporter_ablation_metrics(
             raw,
@@ -316,32 +330,42 @@ def sweep_cls_patch_supporter_ablation(
             ablate_above=False,
             cls_patch_only_pred=cls_patch_only_pred,
         )
-        _append(sweep['ablate_below'], threshold, flip_rate, final_strength)
+        _append(
+            sweep['ablate_below'],
+            threshold,
+            flip_rate,
+            final_strength,
+            strength_key='mean_final_strength_negatives',
+            subset_mask=negative_mask,
+        )
     return sweep
 
 
 def analyze_cls_patch_supporter_ablation(
     raw: np.ndarray,
     output_dir: Path | None = None,
+    *,
+    quiet: bool = False,
 ) -> dict:
     cls_patch_only_strengths = propagate(raw, cls_patch_only=True)
     cls_patch_only_pred = _sign_from_cls(cls_patch_only_strengths)
     sweep = sweep_cls_patch_supporter_ablation(raw, cls_patch_only_pred)
 
-    for mode, label in (
-        ('ablate_above', 'ablate supporters > threshold'),
-        ('ablate_below', 'ablate supporters < threshold'),
-    ):
-        for threshold, flip_rate in zip(
-            sweep[mode]['thresholds'],
-            sweep[mode]['flip_rates'],
-            strict=True,
+    if not quiet:
+        for mode, label in (
+            ('ablate_above', 'ablate supporters > threshold'),
+            ('ablate_below', 'ablate attackers < threshold'),
         ):
-            print(
-                f'CLS patch only + {label}: threshold={threshold:.4f}, '
-                f'flip rate={flip_rate:.4f}',
-                flush=True,
-            )
+            for threshold, flip_rate in zip(
+                sweep[mode]['thresholds'],
+                sweep[mode]['flip_rates'],
+                strict=True,
+            ):
+                print(
+                    f'CLS patch only + {label}: threshold={threshold:.4f}, '
+                    f'flip rate={flip_rate:.4f}',
+                    flush=True,
+                )
 
     if output_dir is not None:
         plot_cls_patch_supporter_ablation(sweep, output_dir)

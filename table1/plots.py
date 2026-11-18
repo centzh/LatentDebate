@@ -8,7 +8,10 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from propagate import propagate
+try:
+    from propagate import propagate
+except ImportError:
+    from table1.propagate import propagate
 
 VISION_AGREEMENT_PLOT_MAX = 10
 _VIT_PATCH_GRID = 14
@@ -486,12 +489,125 @@ def plot_prediction_disagreements(
     )
 
 
+def _mean_ablated_strength(bucket: dict, *, attackers: bool) -> list:
+    if attackers:
+        return bucket.get(
+            'mean_final_strength_negatives',
+            bucket.get('mean_final_strength_positives', []),
+        )
+    return bucket['mean_final_strength_positives']
+
+
+def _plot_ablated_final_strength_lines(ax, sweep: dict, *, show_legend: bool) -> None:
+    above = sweep['ablate_above']
+    below = sweep['ablate_below']
+    ax.axhline(
+        0.0,
+        color='0.25',
+        linestyle='--',
+        linewidth=1.5,
+        zorder=0,
+        label='Zero strength' if show_legend else None,
+    )
+    ax.plot(
+        above['thresholds'],
+        _mean_ablated_strength(above, attackers=False),
+        'o-',
+        label='Ablate supporters > threshold',
+    )
+    ax.plot(
+        below['thresholds'],
+        _mean_ablated_strength(below, attackers=True),
+        's-',
+        label='Ablate attackers < threshold',
+    )
+    ax.set_xlabel('Ablation threshold')
+    ax.set_ylabel('Mean ablated CLS final strength')
+    ax.grid(True, alpha=0.3)
+    if show_legend:
+        ax.legend(fontsize=8)
+
+
+def _load_pair_sweep(repo_root: Path, dataset: str, pair: str) -> dict | None:
+    sweep_path = (
+        repo_root / 'vit_results' / dataset / pair / 'cls_patch_supporter_ablation' / 'sweep.json'
+    )
+    if sweep_path.is_file():
+        return json.loads(sweep_path.read_text(encoding='utf-8'))
+
+    config_path = repo_root / 'table1' / dataset / f'{pair}.json'
+    data_path = repo_root / 'data' / dataset / f'{pair}.jsonl'
+    if not config_path.is_file() or not data_path.is_file():
+        return None
+
+    import sys
+
+    table1_dir = repo_root / 'table1'
+    table1_dir_str = str(table1_dir)
+    if table1_dir_str not in sys.path:
+        sys.path.insert(0, table1_dir_str)
+    import run_table1  # noqa: WPS433
+
+    config = run_table1.read_json(config_path)
+    raw, _, _ = run_table1.load_input(data_path, config)
+    return run_table1.analyze_cls_patch_supporter_ablation(raw, output_dir=None, quiet=True)
+
+
+def plot_cls_patch_ablation_strength_grid(
+    repo_root: Path,
+    dataset: str,
+) -> Path | None:
+    """Combine per-pair ablated final strength curves for one vision dataset."""
+    import math
+
+    import matplotlib.pyplot as plt
+
+    repo_root = Path(repo_root)
+    dataset_dir = repo_root / 'vit_results' / dataset
+    pair_dirs = sorted(p for p in dataset_dir.iterdir() if p.is_dir())
+    pairs: list[tuple[str, dict]] = []
+    for pair_dir in pair_dirs:
+        sweep = _load_pair_sweep(repo_root, dataset, pair_dir.name)
+        if sweep is not None:
+            pairs.append((pair_dir.name, sweep))
+
+    if not pairs:
+        print(f'No ablation sweeps for {dataset}; skip combined strength figure.', flush=True)
+        return None
+
+    n = len(pairs)
+    ncols = min(3, n)
+    nrows = math.ceil(n / ncols)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(5.5 * ncols, 4 * nrows), squeeze=False)
+
+    for index, (pair_name, sweep) in enumerate(pairs):
+        row, col = divmod(index, ncols)
+        ax = axes[row][col]
+        _plot_ablated_final_strength_lines(ax, sweep, show_legend=(index == 0))
+        ax.set_title(pair_name)
+        ax.tick_params(labelsize=8)
+
+    for index in range(n, nrows * ncols):
+        row, col = divmod(index, ncols)
+        axes[row][col].axis('off')
+
+    fig.suptitle(f'{dataset}: ablated final strength vs threshold', fontsize=13)
+    fig.tight_layout()
+    out = dataset_dir / 'ablated_final_strength_all_pairs.png'
+    out.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out, dpi=200, bbox_inches='tight')
+    plt.close(fig)
+    print(f'Wrote {out.relative_to(repo_root)}', flush=True)
+    return out
+
+
 def plot_cls_patch_supporter_ablation(sweep: dict, output_dir: Path) -> None:
     """Save flip rate and mean ablated CLS strength vs ablation threshold."""
     import matplotlib.pyplot as plt
 
     output_dir = Path(output_dir) / 'cls_patch_supporter_ablation'
     output_dir.mkdir(parents=True, exist_ok=True)
+    _write_json(output_dir / 'sweep.json', sweep)
 
     above = sweep['ablate_above']
     below = sweep['ablate_below']
@@ -507,7 +623,7 @@ def plot_cls_patch_supporter_ablation(sweep: dict, output_dir: Path) -> None:
         below['thresholds'],
         below['flip_rates'],
         's-',
-        label='Ablate supporters < threshold',
+        label='Ablate attackers < threshold',
     )
     ax.set_xlabel('Ablation threshold')
     ax.set_ylabel('Flip rate (CLS-patch-positive samples)')
@@ -520,23 +636,8 @@ def plot_cls_patch_supporter_ablation(sweep: dict, output_dir: Path) -> None:
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(
-        above['thresholds'],
-        above['mean_final_strength_positives'],
-        'o-',
-        label='Ablate supporters > threshold',
-    )
-    ax.plot(
-        below['thresholds'],
-        below['mean_final_strength_positives'],
-        's-',
-        label='Ablate supporters < threshold',
-    )
-    ax.set_xlabel('Ablation threshold')
-    ax.set_ylabel('Mean ablated CLS final strength (positive preds)')
+    _plot_ablated_final_strength_lines(ax, sweep, show_legend=True)
     ax.set_title('CLS patch only: ablated final strength vs ablation threshold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
     strength_path = output_dir / 'ablated_final_strength_vs_threshold.png'
     fig.tight_layout()
     plt.savefig(strength_path, dpi=200, bbox_inches='tight')
