@@ -4,6 +4,9 @@ Run from the repository root:
 
     uv run run_vision_table1.py
     uv run run_vision_table1.py --dataset food101
+
+After all pair runs succeed, writes vit_results/<dataset>/table1.csv via collate_vision_table1
+and vit_results/<dataset>/ablated_final_strength_all_pairs.png.
 """
 from __future__ import annotations
 
@@ -11,6 +14,9 @@ import argparse
 import subprocess
 import sys
 from pathlib import Path
+
+from collate_vision_table1 import collate
+from table1.plots import plot_cls_patch_ablation_strength_grid
 
 ROOT = Path(__file__).resolve().parent
 DATASETS = ('cifar10', 'food101')
@@ -23,6 +29,16 @@ def parse_args() -> argparse.Namespace:
         choices=DATASETS,
         default=None,
         help='Run only this dataset (default: both cifar10 and food101)',
+    )
+    parser.add_argument(
+        '--skip-collate',
+        action='store_true',
+        help='Do not rebuild vit_results/<dataset>/table1.csv after scoring',
+    )
+    parser.add_argument(
+        '--skip-ablation-grid',
+        action='store_true',
+        help='Do not write vit_results/<dataset>/ablated_final_strength_all_pairs.png',
     )
     return parser.parse_args()
 
@@ -68,6 +84,14 @@ def main() -> None:
             print(f'  {config.parent.name}/{config.name} (exit {code})', flush=True)
         sys.exit(1)
     print(f'Finished {len(jobs)} configs.', flush=True)
+
+    if not args.skip_collate:
+        for dataset in datasets:
+            collate(dataset)
+
+    if not args.skip_ablation_grid:
+        for dataset in datasets:
+            plot_cls_patch_ablation_strength_grid(ROOT, dataset)
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DATASETS = ('cifar10', 'food101')
+DATASETS = ('cifar10', 'food101', 'imagenet100', 'oxford_flowers')
 
 
 def parse_args() -> argparse.Namespace:
