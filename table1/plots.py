@@ -523,6 +523,8 @@ def _plot_ablated_final_strength_lines(ax, sweep: dict, *, show_legend: bool) ->
     )
     ax.set_xlabel('Ablation threshold')
     ax.set_ylabel('Mean ablated CLS final strength')
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
     ax.grid(True, alpha=0.3)
     if show_legend:
         ax.legend(fontsize=8)
