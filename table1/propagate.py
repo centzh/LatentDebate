@@ -28,7 +28,7 @@ def propagate(initial, quadratic=False, cls_patch_only=False, cls_only=False):
                     if token == 0:
                         energy += final[:, token + 1:, layer].sum(axis=1)
 
-                elif token:
+                else:
                     # Linear topology: previous token on the same layer.
                     energy += final[:, token + 1, layer]
 
