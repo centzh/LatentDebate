@@ -75,8 +75,10 @@ def weigh_initial_strengths(
         
         attn_logits = q.permute(1, 0, 2) @ k.permute(1, 2, 0) * scale
         cls_patch_logits = attn_logits[:, 0, 1:].mean(dim=0)
-        patch_weights = torch.softmax(cls_patch_logits, dim=0)
+        # patch_weights = torch.softmax(cls_patch_logits, dim=0)
+        patch_weights = cls_patch_logits
         patch_weights = (patch_weights - patch_weights.min()) / (patch_weights.max() - patch_weights.min())
+        patch_weights = torch.where(patch_weights > patch_weights.mean(), 1.0, 0.0)
         weight_rows.append(patch_weights)
 
     weights = torch.stack(weight_rows, dim=0)
@@ -168,6 +170,7 @@ def main():
             pair_logits = interpreted_activations[..., [positive_label, negative_label]]
             pair_probs = torch.softmax(pair_logits, dim=-1)
             initial_strengths = pair_probs[..., 0]
+            initial_strengths = 2*(initial_strengths - 0.5)
 
             if weight_by_cls_attention:
                 initial_strengths = weigh_initial_strengths(

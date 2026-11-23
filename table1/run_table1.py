@@ -21,11 +21,42 @@ from plots import (
     plot_cls_patch_supporter_ablation,
     plot_prediction_agreements,
     plot_prediction_disagreements,
+    plot_vit_ground_truth_mismatches,
 )
 from propagate import propagate
 
 HERE = Path(__file__).resolve().parent
 _VISION_DATASET_CACHE: dict[tuple, object] = {}
+_LABEL_FEATURE_CACHE: dict[tuple, object] = {}
+
+
+def dataset_label_feature(config: dict):
+    """HF Features ClassLabel for mapping JSONL integer ``label`` to class names."""
+    vd = config.get('vision_dataset')
+    if not vd or not vd.get('hub_id'):
+        return None
+    hub_id = vd['hub_id']
+    split = vd.get('split', 'test')
+    cache_key = (hub_id, split)
+    if cache_key in _LABEL_FEATURE_CACHE:
+        return _LABEL_FEATURE_CACHE[cache_key]
+    from datasets import load_dataset
+
+    full_dataset = load_dataset(hub_id, split=split)
+    _LABEL_FEATURE_CACHE[cache_key] = full_dataset.features['label']
+    return _LABEL_FEATURE_CACHE[cache_key]
+
+
+def ground_truth_name_from_record(record: dict, config: dict) -> str | None:
+    label_feature = dataset_label_feature(config)
+    if label_feature is None:
+        return None
+    raw_label = record.get('label')
+    if raw_label is None:
+        return None
+    if isinstance(raw_label, str):
+        return raw_label
+    return label_feature.int2str(int(raw_label))
 
 
 def load_vision_image_dataset(config: dict):
@@ -108,21 +139,32 @@ def load_input(path, config):
     raw = []
     answers = []
     answer_texts = []
+    ground_truth = []
+    ground_truth_texts = []
 
     for record in records:
         query = record['result']['query']
         p = np.asarray(query['query_probs'], dtype=np.float64)
         # Stored layout is (layers, tokens); scoring uses (tokens, layers).
-        selected = 2 * (p.T - 0.5)
+        selected = p.T
 
         answer_raw = record['result']['answer']['answer']
         raw.append(selected)
         answers.append(map_answer_to_label(answer_raw, config))
         answer_texts.append(answer_raw.strip())
 
+        gt_name = ground_truth_name_from_record(record, config)
+        if gt_name is None:
+            ground_truth_texts.append('')
+            ground_truth.append(np.int8(0))
+        else:
+            ground_truth_texts.append(gt_name)
+            ground_truth.append(map_answer_to_label(gt_name, config))
+
     raw = np.asarray(raw, dtype=np.float64)
     answers = np.asarray(answers, dtype=np.int8)
-    return raw, answers, answer_texts
+    ground_truth = np.asarray(ground_truth, dtype=np.int8)
+    return raw, answers, answer_texts, ground_truth, ground_truth_texts
 
 
 def _sign_from_cls(matrix: np.ndarray) -> np.ndarray:
@@ -225,7 +267,26 @@ def parse_args():
         '--plot',
         type=str_to_bool,
         default=False,
-        help='Write vision diagnostic heatmaps (mean, label-zero, agreements, disagreements)',
+        help='Write vision diagnostic heatmaps (agreements, disagreements, per method)',
+    )
+    parser.add_argument(
+        '--plot-method',
+        type=str,
+        default=None,
+        metavar='METHOD',
+        help=(
+            'Only plot agreement/disagreement figures for this method '
+            '(exact name from config "methods"). Implies plotting is enabled.'
+        ),
+    )
+    parser.add_argument(
+        '--plot-vit-gt-mismatch',
+        type=str_to_bool,
+        default=False,
+        help=(
+            'Plot instances where ViT head answer (JSONL result.answer) disagrees with '
+            'dataset ground truth (JSONL label). Requires vision_dataset in config.'
+        ),
     )
     return parser.parse_args()
 
@@ -412,21 +473,77 @@ def consistency_rows(model_name, dataset_name, file, tokens, llm, predictions, c
     return rows
 
 
-def score_input(path, file, model_name, dataset_name, tokens, config, output_dir, plot):
-    raw, llm, answer_texts = load_input(path, config)
-    plot_output = output_dir if plot else None
+def _predictions_for_plots(
+    predictions: dict[str, np.ndarray],
+    plot_method: str | None,
+) -> dict[str, np.ndarray]:
+    if plot_method is None:
+        return predictions
+    if plot_method not in predictions:
+        known = ', '.join(predictions)
+        raise ValueError(f'Unknown --plot-method {plot_method!r}. Known methods: {known}')
+    return {plot_method: predictions[plot_method]}
+
+
+def score_input(
+    path,
+    file,
+    model_name,
+    dataset_name,
+    tokens,
+    config,
+    output_dir,
+    plot,
+    *,
+    plot_method: str | None = None,
+    plot_vit_gt_mismatch: bool = False,
+):
+    raw, llm, answer_texts, ground_truth, ground_truth_texts = load_input(path, config)
+    plot_comparisons = plot or plot_method is not None or plot_vit_gt_mismatch
+    plot_output = output_dir if plot_comparisons else None
     vision_images = None
     if plot_output is not None:
         vision_images = load_vision_image_dataset(config)
     predictions = predict_all(raw, config, plot_output)
     analyze_cls_patch_supporter_ablation(raw, output_dir)
     if plot_output is not None:
-        plot_prediction_agreements(
-            raw, llm, predictions, answer_texts, config, plot_output, vision_images,
-        )
-        plot_prediction_disagreements(
-            raw, llm, predictions, answer_texts, config, plot_output, vision_images,
-        )
+        plot_predictions = _predictions_for_plots(predictions, plot_method)
+        if plot or plot_method is not None:
+            plot_prediction_agreements(
+                raw,
+                llm,
+                plot_predictions,
+                answer_texts,
+                config,
+                plot_output,
+                vision_images,
+            )
+            plot_prediction_disagreements(
+                raw,
+                llm,
+                plot_predictions,
+                answer_texts,
+                config,
+                plot_output,
+                vision_images,
+            )
+        if plot_vit_gt_mismatch:
+            if dataset_label_feature(config) is None:
+                raise ValueError(
+                    '--plot-vit-gt-mismatch requires vision_dataset in config '
+                    'to resolve JSONL label integers to class names',
+                )
+            plot_vit_ground_truth_mismatches(
+                raw,
+                llm,
+                ground_truth,
+                ground_truth_texts,
+                plot_predictions,
+                answer_texts,
+                config,
+                plot_output,
+                vision_images,
+            )
     write_predictions(output_dir, model_name, dataset_name, llm, predictions)
     print(
         f'{model_name} / {dataset_name}: n={len(llm)}, '
@@ -436,7 +553,15 @@ def score_input(path, file, model_name, dataset_name, tokens, config, output_dir
     return consistency_rows(model_name, dataset_name, file, tokens, llm, predictions, config)
 
 
-def score_config(config, data_dir, output_dir, plot):
+def score_config(
+    config,
+    data_dir,
+    output_dir,
+    plot,
+    *,
+    plot_method: str | None = None,
+    plot_vit_gt_mismatch: bool = False,
+):
     rows = []
     inputs = []
     for model in config['models']:
@@ -453,6 +578,8 @@ def score_config(config, data_dir, output_dir, plot):
                 config,
                 output_dir,
                 plot,
+                plot_method=plot_method,
+                plot_vit_gt_mismatch=plot_vit_gt_mismatch,
             ))
             inputs.append({
                 'model': model['name'],
@@ -510,8 +637,18 @@ def main():
     config = read_json(HERE / args.config_file)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
+    plot_method = args.plot_method
+    if plot_method is not None and plot_method not in config['methods']:
+        known = ', '.join(config['methods'])
+        raise ValueError(f'Unknown --plot-method {plot_method!r}. Config methods: {known}')
+
     rows, inputs = score_config(
-        config, args.data_dir / args.data_subdir, args.output_dir, args.plot,
+        config,
+        args.data_dir / args.data_subdir,
+        args.output_dir,
+        args.plot,
+        plot_method=plot_method,
+        plot_vit_gt_mismatch=args.plot_vit_gt_mismatch,
     )
     table = write_result_tables(args.output_dir, rows, config)
     write_json(args.output_dir / 'config_used.json', config)

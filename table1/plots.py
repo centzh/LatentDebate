@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
@@ -18,11 +19,26 @@ _VIT_PATCH_GRID = 14
 _SKIP_BASELINE_METHODS = frozenset({'random', 'average', 'majority voting'})
 
 
+def _json_sanitize(value):
+    """Replace non-finite floats with null so sweep.json stays strict JSON."""
+    if isinstance(value, dict):
+        return {key: _json_sanitize(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_json_sanitize(item) for item in value]
+    if isinstance(value, (float, np.floating)):
+        number = float(value)
+        if math.isnan(number) or math.isinf(number):
+            return None
+        return number
+    return value
+
+
 def _write_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n',
+        json.dumps(_json_sanitize(value), ensure_ascii=False, indent=2, allow_nan=False)
+        + '\n',
         encoding='utf-8',
     )
 
@@ -315,6 +331,8 @@ def _plot_method_vs_vit_comparison(
     vision_images,
     out_path: Path,
     suptitle: str,
+    ground_truth_name: str | None = None,
+    ground_truth_label: int | None = None,
 ) -> None:
     import matplotlib.pyplot as plt
 
@@ -337,7 +355,13 @@ def _plot_method_vs_vit_comparison(
         vmax=vmax,
         aspect='auto',
     )
-    axes[1].set_title(f'ViT: {answer_class} ({llm_label})')
+    if ground_truth_name:
+        axes[1].set_title(
+            f'ViT pred: {answer_class} ({llm_label})\n'
+            f'GT label: {ground_truth_name} ({ground_truth_label})',
+        )
+    else:
+        axes[1].set_title(f'ViT: {answer_class} ({llm_label})')
     axes[1].set_xlabel('Token')
     axes[1].set_ylabel('Layer')
     axes[1].invert_yaxis()
@@ -455,6 +479,106 @@ def _plot_prediction_comparisons(
     _write_json(root / 'summary.json', {
         'agreement' if agree else 'disagreement': True,
         'max_examples': max_examples,
+        'methods_plotted': sorted(predictions.keys()),
+        'methods': {
+            method: {'count': len(items), 'instances': items}
+            for method, items in summary.items()
+        },
+    })
+    return summary
+
+
+def plot_vit_ground_truth_mismatches(
+    raw: np.ndarray,
+    vit_labels: np.ndarray,
+    ground_truth: np.ndarray,
+    ground_truth_texts: list[str],
+    predictions: dict[str, np.ndarray],
+    answer_texts: list[str],
+    config: dict,
+    output_dir: Path,
+    vision_images=None,
+    *,
+    max_examples: int | None = None,
+) -> dict[str, list[dict]]:
+    """Figures where ViT classifier head answer != dataset ground truth (JSONL label)."""
+    mismatch_idx = np.flatnonzero(vit_labels != ground_truth)
+    if mismatch_idx.size == 0:
+        summary = {method: [] for method in predictions if method.lower() not in _SKIP_BASELINE_METHODS}
+        root = Path(output_dir) / 'vit_gt_mismatches'
+        root.mkdir(parents=True, exist_ok=True)
+        _write_json(root / 'summary.json', {
+            'vit_vs_ground_truth_mismatch': True,
+            'count': 0,
+            'methods': summary,
+        })
+        return summary
+
+    root = Path(output_dir) / 'vit_gt_mismatches'
+    root.mkdir(parents=True, exist_ok=True)
+    summary: dict[str, list[dict]] = {}
+    if vision_images is not None and len(vision_images) != len(raw):
+        raise ValueError(
+            f'Vision image count ({len(vision_images)}) != JSONL rows ({len(raw)}); '
+            're-extract jsonl or fix vision_dataset in config',
+        )
+
+    plot_idx = (
+        _subsample_indices(mismatch_idx, max_examples)
+        if max_examples is not None and mismatch_idx.size > max_examples
+        else mismatch_idx
+    )
+
+    for method, values in tqdm(predictions.items(), desc='Plot ViT≠GT mismatches', unit='method'):
+        if method.strip().lower() in _SKIP_BASELINE_METHODS:
+            continue
+        safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
+        tensor = matrix_for_method(method, raw)
+        written: list[dict] = []
+
+        for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
+            vit_name = answer_texts[idx]
+            gt_name = ground_truth_texts[idx]
+            vit_ref = int(vit_labels[idx])
+            gt_ref = int(ground_truth[idx])
+            pred_name = label_to_class_name(int(values[idx]), config)
+            safe_vit = re.sub(r'[^\w\-.]+', '_', vit_name.lower()).strip('_') or 'unknown'
+            safe_gt = re.sub(r'[^\w\-.]+', '_', gt_name.lower()).strip('_') or 'unknown'
+            out_path = root / safe_method / f'instance_{idx:05d}_vit_{safe_vit}_gt_{safe_gt}.png'
+            _plot_method_vs_vit_comparison(
+                int(idx),
+                method=method,
+                method_tensor=tensor,
+                raw=raw,
+                llm_label=vit_ref,
+                method_label=int(values[idx]),
+                answer_class=vit_name,
+                pred_name=pred_name,
+                vision_images=vision_images,
+                out_path=out_path,
+                suptitle=(
+                    f'Instance {idx} — ViT head ≠ dataset ground truth '
+                    f'(pred {vit_name} vs GT {gt_name})'
+                ),
+                ground_truth_name=gt_name,
+                ground_truth_label=gt_ref,
+            )
+            written.append({
+                'index': int(idx),
+                'vit_answer_class': vit_name,
+                'vit_label': vit_ref,
+                'ground_truth_class': gt_name,
+                'ground_truth_label': gt_ref,
+                'method_label': int(values[idx]),
+                'path': str(out_path),
+            })
+        summary[method] = written
+
+    _write_json(root / 'summary.json', {
+        'vit_vs_ground_truth_mismatch': True,
+        'max_examples': max_examples,
+        'total_mismatches': int(mismatch_idx.size),
+        'methods_plotted': sorted(predictions.keys()),
         'methods': {
             method: {'count': len(items), 'instances': items}
             for method, items in summary.items()
@@ -551,7 +675,7 @@ def _load_pair_sweep(repo_root: Path, dataset: str, pair: str) -> dict | None:
     import run_table1  # noqa: WPS433
 
     config = run_table1.read_json(config_path)
-    raw, _, _ = run_table1.load_input(data_path, config)
+    raw, _, _, _, _ = run_table1.load_input(data_path, config)
     return run_table1.analyze_cls_patch_supporter_ablation(raw, output_dir=None, quiet=True)
 
 
