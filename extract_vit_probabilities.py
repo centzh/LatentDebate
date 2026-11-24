@@ -84,13 +84,13 @@ def _reshape_for_heads(tensor: torch.Tensor, num_heads: int, head_dim: int) -> t
     return tensor.view(seq_len, num_heads, head_dim)
 
 
-def weigh_initial_strengths(
+def get_weights(
     model: AutoModelForImageClassification,
     initial_strengths: torch.Tensor,
     hidden_states: tuple[torch.Tensor, ...],
 ) -> torch.Tensor:
     """
-    Scale token-layer strengths using CLS→patch attention.
+    Retrieve weights for token-layer strengths using CLS→patch attention.
 
     Pre-softmax logits are computed per head; softmax is over patch keys only (CLS excluded).
     Head weights are averaged; embedding row uses all ones.
@@ -132,7 +132,7 @@ def weigh_initial_strengths(
             f'Attention weight shape {tuple(weights.shape)} does not match '
             f'initial_strengths {tuple(initial_strengths.shape)}'
         )
-    return initial_strengths * weights
+    return weights
 
 
 def parse_args():
@@ -203,12 +203,12 @@ def main():
             initial_strengths = 2*(initial_strengths - 0.5)
 
             if weight_by_cls_attention:
-                initial_strengths = weigh_initial_strengths(
+                weights = get_weights(
                     model,
                     initial_strengths,
                     hidden_states,
                 )
-
+               
             data = {
                 "label": label,
                 "result": {
@@ -221,6 +221,8 @@ def main():
                     },
                 },
             }
+            if weight_by_cls_attention:
+                data["weights"] = weights.detach().cpu().tolist()
             f.write(json.dumps(data) + "\n")
 
     logger.info("Completed writing initial strengths to %s", output_path.resolve())

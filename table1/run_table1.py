@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 
 from plots import (
+    VISION_PLOT_MAX_EXAMPLES,
     plot_cls_patch_supporter_ablation,
     plot_prediction_agreements,
     plot_prediction_disagreements,
@@ -137,16 +138,29 @@ def load_input(path, config):
         raise ValueError(f'{path.name}: expected {config['samples_per_dataset']} records, found {len(records)}')
 
     raw = []
+    weights = []
     answers = []
     answer_texts = []
     ground_truth = []
     ground_truth_texts = []
+    saw_weights = False
 
     for record in records:
         query = record['result']['query']
         p = np.asarray(query['query_probs'], dtype=np.float64)
         # Stored layout is (layers, tokens); scoring uses (tokens, layers).
         selected = p.T
+
+        if 'weights' in record:
+            saw_weights = True
+            weight = np.asarray(record['weights'], dtype=np.float64).T
+            if weight.shape != selected.shape:
+                raise ValueError(
+                    f'{path.name}: weight shape {weight.shape} != strengths {selected.shape}'
+                )
+            weights.append(weight)
+        elif saw_weights:
+            raise ValueError(f'{path.name}: some records are missing weights')
 
         answer_raw = record['result']['answer']['answer']
         raw.append(selected)
@@ -164,7 +178,8 @@ def load_input(path, config):
     raw = np.asarray(raw, dtype=np.float64)
     answers = np.asarray(answers, dtype=np.int8)
     ground_truth = np.asarray(ground_truth, dtype=np.int8)
-    return raw, answers, answer_texts, ground_truth, ground_truth_texts
+    weight_matrix = np.asarray(weights, dtype=np.float64) if weights else None
+    return raw, answers, answer_texts, ground_truth, ground_truth_texts, weight_matrix
 
 
 def _sign_from_cls(matrix: np.ndarray) -> np.ndarray:
@@ -173,39 +188,43 @@ def _sign_from_cls(matrix: np.ndarray) -> np.ndarray:
     return np.select([cls >= 0, cls < 0], [1, -1], default=0).astype(np.int8)
 
 
-def predict_all(raw, config, output_dir: Path | None = None):
+def predict_all(raw, config, output_dir: Path | None = None, weights=None):
     rng = random.Random(config['random_seed'])
-    n_tokens, n_layers = raw.shape[1], raw.shape[2]
-    majority = (raw >= 0).sum(axis=(1, 2)) >= n_tokens * n_layers / 2
+    if weights is not None:
+        inputs = raw * weights
+    else:
+        inputs = raw
+    
+    n_tokens, n_layers = inputs.shape[1], inputs.shape[2]
+    majority = (inputs >= 0).sum(axis=(1, 2)) >= n_tokens * n_layers / 2
 
     random_pred = np.asarray(
-        [1 if rng.choice(sample.ravel().tolist()) >= 0 else -1 for sample in raw],
+        [1 if rng.choice(sample.ravel().tolist()) >= 0 else -1 for sample in inputs],
         dtype=np.int8,
     )
-    average_pred = np.where(raw.mean(axis=(1, 2)) >= 0, 1, -1).astype(np.int8)
+    average_pred = np.where(inputs.mean(axis=(1, 2)) >= 0, 1, -1).astype(np.int8)
     majority_pred = np.where(majority, 1, -1).astype(np.int8)
 
-    propagated = propagate(raw)
-    propagated_quadratic = propagate(raw, quadratic=True)
-    propagated_cls_patch = propagate(raw, cls_patch_only=True)
-    propagated_cls_only = propagate(raw, cls_only=True)
-    propagated_weighted = propagate(raw, weighted=True)
+    latent_debate = propagate(inputs)
+    quadratic = propagate(inputs, quadratic=True)
+    cls_patch_only = propagate(inputs, cls_patch_only=True)
+    cls_only = propagate(inputs, cls_only=True)
+    weighted = propagate(inputs, weighted=True)
 
-    latent_debate = _sign_from_cls(propagated)
-    cls_patch_only_pred = _sign_from_cls(propagated_cls_patch)
-    cls_only_pred = _sign_from_cls(propagated_cls_only)
-    weighted_pred = _sign_from_cls(propagated_weighted)
-    # Raw is the unpropagated CLS token. Propagation changes a lot of these labels.
-    unweighted = _sign_from_cls(raw)
-    quadratic = _sign_from_cls(propagated_quadratic)
-    
+    unweighted_pred = _sign_from_cls(raw)
+    latent_debate_pred = _sign_from_cls(latent_debate)
+    quadratic_pred = _sign_from_cls(quadratic)
+    cls_patch_only_pred = _sign_from_cls(cls_patch_only)
+    cls_only_pred = _sign_from_cls(cls_only)
+    weighted_pred = _sign_from_cls(weighted)
+
     by_method = {
         'Random': random_pred,
         'Average': average_pred,
         'Majority Voting': majority_pred,
-        'Raw': unweighted,
-        'Latent Debate -- w/o token weight': latent_debate,
-        'Quadratic': quadratic,
+        'Raw': unweighted_pred,
+        'Latent Debate -- w/o token weight': latent_debate_pred,
+        'Quadratic': quadratic_pred,
         'CLS Patch only': cls_patch_only_pred,
         'CLS only': cls_only_pred,
         'Weighted': weighted_pred,
@@ -289,6 +308,16 @@ def parse_args():
         help=(
             'Plot instances where ViT head answer (JSONL result.answer) disagrees with '
             'dataset ground truth (JSONL label). Requires vision_dataset in config.'
+        ),
+    )
+    parser.add_argument(
+        '--plot-max-examples',
+        type=int,
+        default=VISION_PLOT_MAX_EXAMPLES,
+        metavar='N',
+        help=(
+            'Max instance figures per method (agreements, disagreements, vit_gt_mismatches). '
+            'Use 0 for no limit.'
         ),
     )
     return parser.parse_args()
@@ -500,15 +529,16 @@ def score_input(
     *,
     plot_method: str | None = None,
     plot_vit_gt_mismatch: bool = False,
+    plot_max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
 ):
-    raw, llm, answer_texts, ground_truth, ground_truth_texts = load_input(path, config)
+    raw, llm, answer_texts, ground_truth, ground_truth_texts, weights = load_input(path, config)
     plot_comparisons = plot or plot_method is not None or plot_vit_gt_mismatch
     plot_output = output_dir if plot_comparisons else None
     vision_images = None
     if plot_output is not None:
         vision_images = load_vision_image_dataset(config)
-    predictions = predict_all(raw, config, plot_output)
-    analyze_cls_patch_supporter_ablation(raw, output_dir)
+    predictions = predict_all(raw, config, plot_output, weights)
+    analyze_cls_patch_supporter_ablation(raw, output_dir, quiet=True)
     if plot_output is not None:
         plot_predictions = _predictions_for_plots(predictions, plot_method)
         if plot or plot_method is not None:
@@ -520,6 +550,8 @@ def score_input(
                 config,
                 plot_output,
                 vision_images,
+                max_examples=plot_max_examples,
+                weights=weights,
             )
             plot_prediction_disagreements(
                 raw,
@@ -529,6 +561,8 @@ def score_input(
                 config,
                 plot_output,
                 vision_images,
+                max_examples=plot_max_examples,
+                weights=weights,
             )
         if plot_vit_gt_mismatch:
             if dataset_label_feature(config) is None:
@@ -546,6 +580,8 @@ def score_input(
                 config,
                 plot_output,
                 vision_images,
+                max_examples=plot_max_examples,
+                weights=weights,
             )
     write_predictions(output_dir, model_name, dataset_name, llm, predictions)
     print(
@@ -564,6 +600,7 @@ def score_config(
     *,
     plot_method: str | None = None,
     plot_vit_gt_mismatch: bool = False,
+    plot_max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
 ):
     rows = []
     inputs = []
@@ -583,6 +620,7 @@ def score_config(
                 plot,
                 plot_method=plot_method,
                 plot_vit_gt_mismatch=plot_vit_gt_mismatch,
+                plot_max_examples=plot_max_examples,
             ))
             inputs.append({
                 'model': model['name'],
@@ -645,6 +683,10 @@ def main():
         known = ', '.join(config['methods'])
         raise ValueError(f'Unknown --plot-method {plot_method!r}. Config methods: {known}')
 
+    plot_max_examples = args.plot_max_examples
+    if plot_max_examples is not None and plot_max_examples <= 0:
+        plot_max_examples = None
+
     rows, inputs = score_config(
         config,
         args.data_dir / args.data_subdir,
@@ -652,6 +694,7 @@ def main():
         args.plot,
         plot_method=plot_method,
         plot_vit_gt_mismatch=args.plot_vit_gt_mismatch,
+        plot_max_examples=plot_max_examples,
     )
     table = write_result_tables(args.output_dir, rows, config)
     write_json(args.output_dir / 'config_used.json', config)
