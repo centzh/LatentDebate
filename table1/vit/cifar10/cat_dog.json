@@ -18,15 +18,21 @@
     "Latent Debate -- w/o token weight",
     "Quadratic",
     "CLS Patch only",
-    "CLS only"
+    "CLS only",
+    "Weighted"
   ],
   "datasets": [
-    {"name": "imagenet_1k", "tokens": 6}
+    {
+      "name": "imagenet_1k",
+      "tokens": 6
+    }
   ],
   "models": [
     {
       "name": "google/vit-base-patch16-224",
-      "files": ["cat_dog.jsonl"]
+      "files": [
+        "cat_dog.jsonl"
+      ]
     }
   ]
 }

@@ -26,7 +26,8 @@
     "Latent Debate -- w/o token weight",
     "Quadratic",
     "CLS Patch only",
-    "CLS only"
+    "CLS only",
+    "Weighted"
   ],
   "datasets": [
     {"name": "food101", "tokens": 6}

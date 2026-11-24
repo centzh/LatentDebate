@@ -26,15 +26,21 @@
     "Latent Debate -- w/o token weight",
     "Quadratic",
     "CLS Patch only",
-    "CLS only"
+    "CLS only",
+    "Weighted"
   ],
   "datasets": [
-    {"name": "food101", "tokens": 6}
+    {
+      "name": "food101",
+      "tokens": 6
+    }
   ],
   "models": [
     {
       "name": "google/vit-base-patch16-224",
-      "files": ["cheesecake_chocolate_cake.jsonl"]
+      "files": [
+        "cheesecake_chocolate_cake.jsonl"
+      ]
     }
   ]
 }
