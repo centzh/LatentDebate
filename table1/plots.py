@@ -14,7 +14,8 @@ try:
 except ImportError:
     from table1.propagate import propagate
 
-VISION_AGREEMENT_PLOT_MAX = 10
+VISION_PLOT_MAX_EXAMPLES = 10
+VISION_AGREEMENT_PLOT_MAX = VISION_PLOT_MAX_EXAMPLES  # backwards-compatible alias
 _VIT_PATCH_GRID = 14
 _SKIP_BASELINE_METHODS = frozenset({'random', 'average', 'majority voting'})
 
@@ -303,7 +304,7 @@ def _subsample_indices(indices: np.ndarray, max_count: int) -> np.ndarray:
     return indices[positions]
 
 
-def matrix_for_method(method: str, raw: np.ndarray) -> np.ndarray:
+def matrix_for_method(method: str, raw: np.ndarray, weights: np.ndarray | None = None) -> np.ndarray:
     name = method.lower()
     if 'quadratic' in name:
         return propagate(raw, quadratic=True)
@@ -314,7 +315,8 @@ def matrix_for_method(method: str, raw: np.ndarray) -> np.ndarray:
     if name == 'raw' or 'unweighted' in name:
         return raw
     if name == 'weighted':
-        return propagate(raw, weighted=True)
+        weighted_input = raw if weights is None else raw * weights
+        return propagate(weighted_input, weighted=True)
     if 'latent' in name or 'debate' in name:
         return propagate(raw)
     return raw
@@ -414,6 +416,7 @@ def _plot_prediction_comparisons(
     root_name: str,
     progress_desc: str,
     suptitle: str,
+    weights: np.ndarray | None = None,
 ) -> dict[str, list[dict]]:
     root = Path(output_dir) / root_name
     root.mkdir(parents=True, exist_ok=True)
@@ -442,9 +445,11 @@ def _plot_prediction_comparisons(
             if plot_idx.size == 0:
                 summary[method] = []
                 continue
+            if max_examples is not None and plot_idx.size > max_examples:
+                plot_idx = _subsample_indices(plot_idx, max_examples)
 
         safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
-        tensor = matrix_for_method(method, raw)
+        tensor = matrix_for_method(method, raw, weights)
         written: list[dict] = []
 
         for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
@@ -501,7 +506,8 @@ def plot_vit_ground_truth_mismatches(
     output_dir: Path,
     vision_images=None,
     *,
-    max_examples: int | None = None,
+    max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
+    weights: np.ndarray | None = None,
 ) -> dict[str, list[dict]]:
     """Figures where ViT classifier head answer != dataset ground truth (JSONL label)."""
     mismatch_idx = np.flatnonzero(vit_labels != ground_truth)
@@ -535,7 +541,7 @@ def plot_vit_ground_truth_mismatches(
         if method.strip().lower() in _SKIP_BASELINE_METHODS:
             continue
         safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
-        tensor = matrix_for_method(method, raw)
+        tensor = matrix_for_method(method, raw, weights)
         written: list[dict] = []
 
         for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
@@ -597,6 +603,8 @@ def plot_prediction_disagreements(
     config: dict,
     output_dir: Path,
     vision_images=None,
+    max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
+    weights: np.ndarray | None = None,
 ) -> dict[str, list[dict]]:
     """One figure per disagreement: input image, ViT (raw) heatmap, method heatmap."""
     return _plot_prediction_comparisons(
@@ -608,10 +616,11 @@ def plot_prediction_disagreements(
         output_dir,
         vision_images,
         agree=False,
-        max_examples=None,
+        max_examples=max_examples,
         root_name='prediction_disagreements',
         progress_desc='Plot prediction disagreements',
         suptitle='prediction disagreement',
+        weights=weights,
     )
 
 
@@ -677,7 +686,7 @@ def _load_pair_sweep(repo_root: Path, dataset: str, pair: str) -> dict | None:
     import run_table1  # noqa: WPS433
 
     config = run_table1.read_json(config_path)
-    raw, _, _, _, _ = run_table1.load_input(data_path, config)
+    raw, _, _, _, _, _ = run_table1.load_input(data_path, config)
     return run_table1.analyze_cls_patch_supporter_ablation(raw, output_dir=None, quiet=True)
 
 
@@ -780,7 +789,8 @@ def plot_prediction_agreements(
     config: dict,
     output_dir: Path,
     vision_images=None,
-    max_examples: int = VISION_AGREEMENT_PLOT_MAX,
+    max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
+    weights: np.ndarray | None = None,
 ) -> dict[str, list[dict]]:
     """Sample figures where ViT and method predictions match (same layout as disagreements)."""
     return _plot_prediction_comparisons(
@@ -796,4 +806,5 @@ def plot_prediction_agreements(
         root_name='prediction_agreements',
         progress_desc='Plot prediction agreements',
         suptitle='prediction agreement',
+        weights=weights,
     )
