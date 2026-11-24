@@ -7,6 +7,7 @@ its computed results against the bundled full-precision references.
 
 ## Contents
 
+- `VISION_TABLE1.md`: ViT/Food-101/CIFAR-10 vision Table 1 (extract, score, collate, plots).
 - `table1/`: Table 1.
 - `table2/`: Table 2 and the SelfCheckGPT/Semantic Entropy GPU implementations.
 - `table3_table4/`: Tables 3 and 4.

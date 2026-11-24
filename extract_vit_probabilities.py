@@ -4,7 +4,40 @@ import argparse
 import json
 import logging
 import math
+import os
+import warnings
 from pathlib import Path
+
+os.environ.setdefault("HF_HUB_VERBOSITY", "error")
+os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+os.environ.setdefault("DATASETS_VERBOSITY", "error")
+
+_QUIET_LOGGERS = (
+    "httpx",
+    "httpx2",
+    "httpcore",
+    "huggingface_hub",
+    "datasets",
+    "transformers",
+    "urllib3",
+    "filelock",
+    "torch",
+    "torch.distributed",
+    "torch.distributed.elastic",
+    "torch.distributed.elastic.multiprocessing.redirects",
+)
+
+
+def _quiet_library_logs() -> None:
+    warnings.filterwarnings(
+        "ignore",
+        message="NOTE: Redirects are currently not supported",
+    )
+    for name in _QUIET_LOGGERS:
+        logging.getLogger(name).setLevel(logging.ERROR)
+
+
+_quiet_library_logs()
 
 import numpy as np
 import torch
@@ -12,9 +45,13 @@ import yaml
 from datasets import load_dataset
 from tqdm import tqdm
 from transformers import AutoImageProcessor, AutoModelForImageClassification
+from transformers.utils import logging as transformers_logging
 
 from huggingface_hub import login
-login()
+from huggingface_hub.utils import disable_progress_bars
+
+transformers_logging.set_verbosity_error()
+disable_progress_bars()
 
 HERE = Path(__file__).resolve().parent
 
@@ -112,9 +149,10 @@ def parse_args():
 def main():
     args = parse_args()
     cfg = load_config(args.config)
-
     logging.basicConfig(level=logging.INFO)
+    _quiet_library_logs()
     logger = logging.getLogger(__name__)
+    login()
 
     hub_id = cfg["dataset"]["hub_id"]
     split = cfg["dataset"]["split"]
@@ -122,12 +160,6 @@ def main():
 
     full_dataset = load_dataset(hub_id, split=split)
     dataset = select_dataset(full_dataset, include_classes)
-    logger.info(
-        "Loaded %s split=%s (%s instances after filter)",
-        hub_id,
-        split,
-        len(dataset),
-    )
 
     positive_class = cfg["strength"]["positive_class"]
     negative_class = cfg["strength"]["negative_class"]
@@ -147,9 +179,7 @@ def main():
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with output_path.open("w", encoding="utf-8") as f:
-        for image_number, instance in enumerate(tqdm(dataset, desc="Calculating initial strengths")):
-            logger.info("Processing image %s/%s", image_number, len(dataset))
-
+        for instance in tqdm(dataset, desc="Calculating initial strengths"):
             image_path = instance.get("img") or instance.get("image")
             label = instance.get("label")
 
