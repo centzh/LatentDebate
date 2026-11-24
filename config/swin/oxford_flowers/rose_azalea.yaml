@@ -1,0 +1,26 @@
+# Usage: uv run extract_vit_probabilities.py --config config/oxford_flowers/rose_azalea.yaml
+# Pair chosen with random.seed(42) from VGG Oxford 102 category names.
+
+dataset:
+  hub_id: Voxel51/OxfordFlowers102
+  split: test
+  include_classes:
+    - rose
+    - azalea
+
+model:
+  pretrained: benvened/vit-base-oxford-flowers
+  device_map: cpu
+
+strength:
+  positive_class: rose
+  negative_class: azalea
+  weight_by_cls_attention: false
+
+output:
+  path: data/oxford_flowers/rose_azalea.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false

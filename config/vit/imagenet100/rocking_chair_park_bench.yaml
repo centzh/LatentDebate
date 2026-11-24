@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/imagenet100/rocking_chair_park_bench.yaml
+
+dataset:
+  hub_id: clane9/imagenet-100
+  split: validation
+  include_classes:
+    - "rocking chair, rocker"
+    - park bench
+
+model:
+  pretrained: google/vit-base-patch16-224
+  device_map: cpu
+
+strength:
+  positive_class: "rocking chair, rocker"
+  negative_class: park bench
+  weight_by_cls_attention: false
+
+output:
+  path: data/imagenet100/rocking_chair_park_bench.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false

@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/imagenet100/hard_disc_modem.yaml
+
+dataset:
+  hub_id: clane9/imagenet-100
+  split: validation
+  include_classes:
+    - "hard disc, hard disk, fixed disk"
+    - modem
+
+model:
+  pretrained: google/vit-base-patch16-224
+  device_map: cpu
+
+strength:
+  positive_class: "hard disc, hard disk, fixed disk"
+  negative_class: modem
+  weight_by_cls_attention: false
+
+output:
+  path: data/imagenet100/hard_disc_modem.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false

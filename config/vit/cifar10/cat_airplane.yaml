@@ -1,11 +1,11 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog_weighted.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_airplane.yaml
 
 dataset:
   hub_id: uoft-cs/cifar10
   split: test
   include_classes:
     - cat
-    - dog
+    - airplane
 
 model:
   pretrained: nateraw/vit-base-patch16-224-cifar10
@@ -13,11 +13,11 @@ model:
 
 strength:
   positive_class: cat
-  negative_class: dog
-  weight_by_cls_attention: true
+  negative_class: airplane
+  weight_by_cls_attention: false
 
 output:
-  path: data/cifar10/cat_dog_weighted.jsonl
+  path: data/cifar10/cat_airplane.jsonl
 
 runtime:
   log_level: INFO

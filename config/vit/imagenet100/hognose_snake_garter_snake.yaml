@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/imagenet100/hognose_snake_garter_snake.yaml
+
+dataset:
+  hub_id: clane9/imagenet-100
+  split: validation
+  include_classes:
+    - "hognose snake, puff adder, sand viper"
+    - "garter snake, grass snake"
+
+model:
+  pretrained: google/vit-base-patch16-224
+  device_map: cpu
+
+strength:
+  positive_class: "hognose snake, puff adder, sand viper"
+  negative_class: "garter snake, grass snake"
+  weight_by_cls_attention: false
+
+output:
+  path: data/imagenet100/hognose_snake_garter_snake.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false

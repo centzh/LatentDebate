@@ -1,0 +1,25 @@
+# Usage: uv run extract_vit_probabilities.py --config config/food101/dumplings_gyoza_weighted.yaml
+
+dataset:
+  hub_id: ethz/Food101
+  split: validation
+  include_classes:
+    - dumplings
+    - gyoza
+
+model:
+  pretrained: nateraw/vit-base-food101
+  device_map: cpu
+
+strength:
+  positive_class: dumplings
+  negative_class: gyoza
+  weight_by_cls_attention: true
+
+output:
+  path: data/food101/dumplings_gyoza_weighted.jsonl
+
+runtime:
+  log_level: INFO
+  tqdm_desc: Calculating initial strengths
+  log_every_image: false
