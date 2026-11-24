@@ -3,7 +3,7 @@ google/vit-base-patch16-224,food101,Random,500,299,59.8,20,181,6,12,0,sushi_sash
 google/vit-base-patch16-224,food101,Average,500,439,87.8,20,41,6,12,,sushi_sashimi.jsonl,4.0,8.2
 google/vit-base-patch16-224,food101,Majority Voting,500,430,86.0,20,50,6,12,,sushi_sashimi.jsonl,4.0,10.0
 google/vit-base-patch16-224,food101,Raw,500,480,96.0,20,0,6,12,,sushi_sashimi.jsonl,4.0,0.0
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,467,93.4,20,13,6,12,,sushi_sashimi.jsonl,4.0,2.6
+google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,458,91.6,20,22,6,12,,sushi_sashimi.jsonl,4.0,4.4
 google/vit-base-patch16-224,food101,Quadratic,500,458,91.6,20,22,6,12,,sushi_sashimi.jsonl,4.0,4.4
 google/vit-base-patch16-224,food101,CLS Patch only,500,463,92.6,20,17,6,12,,sushi_sashimi.jsonl,4.0,3.4
 google/vit-base-patch16-224,food101,CLS only,500,467,93.4,20,13,6,12,,sushi_sashimi.jsonl,4.0,2.6

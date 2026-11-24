@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/imagenet100/ski_mask_gasmask.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/vit/imagenet100/ski_mask_gasmask.yaml
 
 dataset:
   hub_id: clane9/imagenet-100
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/imagenet100/ski_mask_gasmask.jsonl
+  path: data/vit/imagenet100/ski_mask_gasmask.jsonl
 
 runtime:
   log_level: INFO

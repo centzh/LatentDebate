@@ -1,0 +1,94 @@
+{
+  "agreement": true,
+  "max_examples": 10,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00000_dumplings.png"
+        },
+        {
+          "index": 31,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00031_dumplings.png"
+        },
+        {
+          "index": 62,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00062_dumplings.png"
+        },
+        {
+          "index": 90,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00090_dumplings.png"
+        },
+        {
+          "index": 118,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00118_dumplings.png"
+        },
+        {
+          "index": 146,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00146_dumplings.png"
+        },
+        {
+          "index": 175,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00175_dumplings.png"
+        },
+        {
+          "index": 203,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00203_dumplings.png"
+        },
+        {
+          "index": 235,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00235_dumplings.png"
+        },
+        {
+          "index": 462,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00462_dumplings.png"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "agreement": true,
+  "max_examples": 10,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00000_cat.png"
+        },
+        {
+          "index": 220,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00220_dog.png"
+        },
+        {
+          "index": 440,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00440_cat.png"
+        },
+        {
+          "index": 665,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00665_cat.png"
+        },
+        {
+          "index": 887,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00887_cat.png"
+        },
+        {
+          "index": 1109,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_01109_cat.png"
+        },
+        {
+          "index": 1330,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_01330_cat.png"
+        },
+        {
+          "index": 1555,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_01555_dog.png"
+        },
+        {
+          "index": 1775,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_01775_dog.png"
+        },
+        {
+          "index": 1999,
+          "answer_class": "dog",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_01999_dog.png"
+        }
+      ]
+    }
+  }
+}

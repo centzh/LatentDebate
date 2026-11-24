@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/food101/dumplings_gyoza.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/vit/food101/dumplings_gyoza.yaml
 
 dataset:
   hub_id: ethz/Food101
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/food101/dumplings_gyoza.jsonl
+  path: data/vit/food101/dumplings_gyoza.jsonl
 
 runtime:
   log_level: INFO

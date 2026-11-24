@@ -1,0 +1,654 @@
+{
+  "vit_vs_ground_truth_mismatch": true,
+  "max_examples": null,
+  "total_mismatches": 71,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 71,
+      "instances": [
+        {
+          "index": 1,
+          "vit_answer_class": "clam_chowder",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00001_vit_clam_chowder_gt_dumplings.png"
+        },
+        {
+          "index": 6,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00006_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 12,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00012_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 22,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00022_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 23,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00023_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 32,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00032_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 35,
+          "vit_answer_class": "gnocchi",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00035_vit_gnocchi_gt_dumplings.png"
+        },
+        {
+          "index": 40,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00040_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 46,
+          "vit_answer_class": "takoyaki",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00046_vit_takoyaki_gt_dumplings.png"
+        },
+        {
+          "index": 48,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00048_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 68,
+          "vit_answer_class": "takoyaki",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00068_vit_takoyaki_gt_dumplings.png"
+        },
+        {
+          "index": 87,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00087_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 101,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00101_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 113,
+          "vit_answer_class": "hummus",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00113_vit_hummus_gt_dumplings.png"
+        },
+        {
+          "index": 132,
+          "vit_answer_class": "cup_cakes",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00132_vit_cup_cakes_gt_dumplings.png"
+        },
+        {
+          "index": 151,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00151_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 160,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00160_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 170,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00170_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 182,
+          "vit_answer_class": "gnocchi",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00182_vit_gnocchi_gt_dumplings.png"
+        },
+        {
+          "index": 199,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00199_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 209,
+          "vit_answer_class": "cheese_plate",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00209_vit_cheese_plate_gt_dumplings.png"
+        },
+        {
+          "index": 211,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00211_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 212,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00212_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 231,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00231_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 232,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00232_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 234,
+          "vit_answer_class": "takoyaki",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00234_vit_takoyaki_gt_dumplings.png"
+        },
+        {
+          "index": 236,
+          "vit_answer_class": "escargots",
+          "vit_label": 0,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00236_vit_escargots_gt_dumplings.png"
+        },
+        {
+          "index": 247,
+          "vit_answer_class": "gyoza",
+          "vit_label": -1,
+          "ground_truth_class": "dumplings",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00247_vit_gyoza_gt_dumplings.png"
+        },
+        {
+          "index": 254,
+          "vit_answer_class": "garlic_bread",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00254_vit_garlic_bread_gt_gyoza.png"
+        },
+        {
+          "index": 258,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00258_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 263,
+          "vit_answer_class": "sushi",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00263_vit_sushi_gt_gyoza.png"
+        },
+        {
+          "index": 264,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00264_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 266,
+          "vit_answer_class": "churros",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00266_vit_churros_gt_gyoza.png"
+        },
+        {
+          "index": 289,
+          "vit_answer_class": "garlic_bread",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00289_vit_garlic_bread_gt_gyoza.png"
+        },
+        {
+          "index": 293,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00293_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 294,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00294_vit_samosa_gt_gyoza.png"
+        },
+        {
+          "index": 299,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00299_vit_samosa_gt_gyoza.png"
+        },
+        {
+          "index": 304,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00304_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 306,
+          "vit_answer_class": "escargots",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00306_vit_escargots_gt_gyoza.png"
+        },
+        {
+          "index": 319,
+          "vit_answer_class": "chicken_wings",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00319_vit_chicken_wings_gt_gyoza.png"
+        },
+        {
+          "index": 328,
+          "vit_answer_class": "grilled_salmon",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00328_vit_grilled_salmon_gt_gyoza.png"
+        },
+        {
+          "index": 337,
+          "vit_answer_class": "pulled_pork_sandwich",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00337_vit_pulled_pork_sandwich_gt_gyoza.png"
+        },
+        {
+          "index": 338,
+          "vit_answer_class": "hummus",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00338_vit_hummus_gt_gyoza.png"
+        },
+        {
+          "index": 342,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00342_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 344,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00344_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 354,
+          "vit_answer_class": "spring_rolls",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00354_vit_spring_rolls_gt_gyoza.png"
+        },
+        {
+          "index": 359,
+          "vit_answer_class": "pad_thai",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00359_vit_pad_thai_gt_gyoza.png"
+        },
+        {
+          "index": 360,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00360_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 361,
+          "vit_answer_class": "chicken_wings",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00361_vit_chicken_wings_gt_gyoza.png"
+        },
+        {
+          "index": 363,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00363_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 372,
+          "vit_answer_class": "prime_rib",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00372_vit_prime_rib_gt_gyoza.png"
+        },
+        {
+          "index": 373,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00373_vit_samosa_gt_gyoza.png"
+        },
+        {
+          "index": 376,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00376_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 392,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00392_vit_samosa_gt_gyoza.png"
+        },
+        {
+          "index": 399,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00399_vit_chicken_quesadilla_gt_gyoza.png"
+        },
+        {
+          "index": 403,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00403_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 406,
+          "vit_answer_class": "spring_rolls",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00406_vit_spring_rolls_gt_gyoza.png"
+        },
+        {
+          "index": 407,
+          "vit_answer_class": "french_toast",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00407_vit_french_toast_gt_gyoza.png"
+        },
+        {
+          "index": 410,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00410_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 417,
+          "vit_answer_class": "spring_rolls",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00417_vit_spring_rolls_gt_gyoza.png"
+        },
+        {
+          "index": 420,
+          "vit_answer_class": "garlic_bread",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00420_vit_garlic_bread_gt_gyoza.png"
+        },
+        {
+          "index": 421,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00421_vit_chicken_quesadilla_gt_gyoza.png"
+        },
+        {
+          "index": 432,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00432_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 436,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00436_vit_samosa_gt_gyoza.png"
+        },
+        {
+          "index": 437,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00437_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 445,
+          "vit_answer_class": "peking_duck",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00445_vit_peking_duck_gt_gyoza.png"
+        },
+        {
+          "index": 460,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00460_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 462,
+          "vit_answer_class": "dumplings",
+          "vit_label": 1,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": 1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00462_vit_dumplings_gt_gyoza.png"
+        },
+        {
+          "index": 469,
+          "vit_answer_class": "sushi",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00469_vit_sushi_gt_gyoza.png"
+        },
+        {
+          "index": 480,
+          "vit_answer_class": "french_onion_soup",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00480_vit_french_onion_soup_gt_gyoza.png"
+        },
+        {
+          "index": 485,
+          "vit_answer_class": "samosa",
+          "vit_label": 0,
+          "ground_truth_class": "gyoza",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/dumplings_gyoza_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00485_vit_samosa_gt_gyoza.png"
+        }
+      ]
+    }
+  }
+}

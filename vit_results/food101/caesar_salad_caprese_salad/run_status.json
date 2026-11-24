@@ -8,7 +8,7 @@
   "row_averages": 8,
   "random_seed": 0,
   "mean_rounding": "arithmetic mean of unrounded scores, then ROUND_HALF_UP",
-  "elapsed_seconds": 1.4264819622039795,
+  "elapsed_seconds": 0.9822490215301514,
   "inputs": [
     {
       "model": "google/vit-base-patch16-224",

@@ -1,0 +1,94 @@
+{
+  "agreement": true,
+  "max_examples": 10,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "tacos",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00000_tacos.png"
+        },
+        {
+          "index": 57,
+          "answer_class": "tacos",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00057_tacos.png"
+        },
+        {
+          "index": 113,
+          "answer_class": "tacos",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00113_tacos.png"
+        },
+        {
+          "index": 168,
+          "answer_class": "tacos",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00168_tacos.png"
+        },
+        {
+          "index": 223,
+          "answer_class": "tacos",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00223_tacos.png"
+        },
+        {
+          "index": 278,
+          "answer_class": "sushi",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00278_sushi.png"
+        },
+        {
+          "index": 334,
+          "answer_class": "sushi",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00334_sushi.png"
+        },
+        {
+          "index": 390,
+          "answer_class": "sushi",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00390_sushi.png"
+        },
+        {
+          "index": 444,
+          "answer_class": "sushi",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00444_sushi.png"
+        },
+        {
+          "index": 499,
+          "answer_class": "sushi",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00499_sushi.png"
+        }
+      ]
+    }
+  }
+}

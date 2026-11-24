@@ -1,9 +1,9 @@
-method,airplane_ship,automobile_truck,cat_airplane,cat_dog,deer_horse
-Random,65.9,63.6,66.2,57.0,61.4
-Average,92.4,97.9,96.5,80.9,94.7
-Majority Voting,80.8,82.7,96.5,79.8,84.4
-Raw,99.2,99.9,97.1,99.0,99.2
-Latent Debate -- w/o token weight,99.1,99.6,97.0,93.9,99.1
-Quadratic,99.2,99.6,97.1,97.2,99.2
-CLS Patch only,99.2,99.7,97.0,97.6,99.1
-CLS only,99.1,99.6,97.0,93.9,99.1
+method,Avg,airplane_ship,automobile_truck,cat_airplane,cat_dog,deer_horse
+Random,63.6,67.0,64.0,66.3,59.2,61.4
+Average,92.9,93.5,98.8,96.5,80.6,95.2
+Majority Voting,88.3,87.6,92.1,96.0,78.0,87.7
+Raw,98.9,99.2,99.9,97.1,99.0,99.2
+Latent Debate -- w/o token weight,98.9,99.2,99.9,97.1,99.0,99.2
+Quadratic,98.5,99.2,99.6,97.1,97.2,99.2
+CLS Patch only,98.5,99.2,99.7,97.0,97.6,99.1
+CLS only,97.8,99.1,99.7,97.0,93.9,99.1

@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/deer_horse.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/swin/cifar10/deer_horse.yaml
 
 dataset:
   hub_id: uoft-cs/cifar10
@@ -8,7 +8,7 @@ dataset:
     - horse
 
 model:
-  pretrained: nateraw/vit-base-patch16-224-cifar10
+  pretrained: clr4takeoff/swin-small-cifar10
   device_map: cpu
 
 strength:
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/cifar10/deer_horse.jsonl
+  path: data/swin/cifar10/deer_horse.jsonl
 
 runtime:
   log_level: INFO

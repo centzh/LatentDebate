@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/automobile_truck.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/swin/cifar10/automobile_truck.yaml
 
 dataset:
   hub_id: uoft-cs/cifar10
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/cifar10/automobile_truck.jsonl
+  path: data/swin/cifar10/automobile_truck.jsonl
 
 runtime:
   log_level: INFO

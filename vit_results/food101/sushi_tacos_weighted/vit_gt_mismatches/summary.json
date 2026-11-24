@@ -1,0 +1,465 @@
+{
+  "vit_vs_ground_truth_mismatch": true,
+  "max_examples": null,
+  "total_mismatches": 50,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 50,
+      "instances": [
+        {
+          "index": 19,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00019_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 22,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00022_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 31,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00031_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 34,
+          "vit_answer_class": "beef_carpaccio",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00034_vit_beef_carpaccio_gt_tacos.png"
+        },
+        {
+          "index": 38,
+          "vit_answer_class": "caesar_salad",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00038_vit_caesar_salad_gt_tacos.png"
+        },
+        {
+          "index": 39,
+          "vit_answer_class": "pancakes",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00039_vit_pancakes_gt_tacos.png"
+        },
+        {
+          "index": 54,
+          "vit_answer_class": "takoyaki",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00054_vit_takoyaki_gt_tacos.png"
+        },
+        {
+          "index": 63,
+          "vit_answer_class": "crab_cakes",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00063_vit_crab_cakes_gt_tacos.png"
+        },
+        {
+          "index": 71,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00071_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 83,
+          "vit_answer_class": "falafel",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00083_vit_falafel_gt_tacos.png"
+        },
+        {
+          "index": 87,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00087_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 102,
+          "vit_answer_class": "beef_carpaccio",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00102_vit_beef_carpaccio_gt_tacos.png"
+        },
+        {
+          "index": 112,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00112_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 118,
+          "vit_answer_class": "shrimp_and_grits",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00118_vit_shrimp_and_grits_gt_tacos.png"
+        },
+        {
+          "index": 130,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00130_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 154,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00154_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 159,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00159_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 162,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00162_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 174,
+          "vit_answer_class": "spring_rolls",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00174_vit_spring_rolls_gt_tacos.png"
+        },
+        {
+          "index": 176,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00176_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 185,
+          "vit_answer_class": "breakfast_burrito",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00185_vit_breakfast_burrito_gt_tacos.png"
+        },
+        {
+          "index": 191,
+          "vit_answer_class": "fish_and_chips",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00191_vit_fish_and_chips_gt_tacos.png"
+        },
+        {
+          "index": 206,
+          "vit_answer_class": "chicken_quesadilla",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00206_vit_chicken_quesadilla_gt_tacos.png"
+        },
+        {
+          "index": 227,
+          "vit_answer_class": "nachos",
+          "vit_label": 0,
+          "ground_truth_class": "tacos",
+          "ground_truth_label": -1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00227_vit_nachos_gt_tacos.png"
+        },
+        {
+          "index": 254,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00254_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 259,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00259_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 262,
+          "vit_answer_class": "greek_salad",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00262_vit_greek_salad_gt_sushi.png"
+        },
+        {
+          "index": 265,
+          "vit_answer_class": "ceviche",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00265_vit_ceviche_gt_sushi.png"
+        },
+        {
+          "index": 285,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00285_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 287,
+          "vit_answer_class": "tacos",
+          "vit_label": -1,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00287_vit_tacos_gt_sushi.png"
+        },
+        {
+          "index": 294,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00294_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 317,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00317_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 320,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00320_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 325,
+          "vit_answer_class": "ceviche",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00325_vit_ceviche_gt_sushi.png"
+        },
+        {
+          "index": 332,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00332_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 343,
+          "vit_answer_class": "chocolate_cake",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00343_vit_chocolate_cake_gt_sushi.png"
+        },
+        {
+          "index": 350,
+          "vit_answer_class": "ceviche",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00350_vit_ceviche_gt_sushi.png"
+        },
+        {
+          "index": 352,
+          "vit_answer_class": "peking_duck",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00352_vit_peking_duck_gt_sushi.png"
+        },
+        {
+          "index": 368,
+          "vit_answer_class": "grilled_salmon",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00368_vit_grilled_salmon_gt_sushi.png"
+        },
+        {
+          "index": 378,
+          "vit_answer_class": "garlic_bread",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00378_vit_garlic_bread_gt_sushi.png"
+        },
+        {
+          "index": 382,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00382_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 391,
+          "vit_answer_class": "deviled_eggs",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00391_vit_deviled_eggs_gt_sushi.png"
+        },
+        {
+          "index": 402,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00402_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 406,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00406_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 438,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00438_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 446,
+          "vit_answer_class": "panna_cotta",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00446_vit_panna_cotta_gt_sushi.png"
+        },
+        {
+          "index": 449,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00449_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 475,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00475_vit_sashimi_gt_sushi.png"
+        },
+        {
+          "index": 481,
+          "vit_answer_class": "waffles",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": -1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00481_vit_waffles_gt_sushi.png"
+        },
+        {
+          "index": 490,
+          "vit_answer_class": "sashimi",
+          "vit_label": 0,
+          "ground_truth_class": "sushi",
+          "ground_truth_label": 1,
+          "method_label": 1,
+          "path": "vit_results/food101/sushi_tacos_weighted/vit_gt_mismatches/CLS_Patch_only/instance_00490_vit_sashimi_gt_sushi.png"
+        }
+      ]
+    }
+  }
+}

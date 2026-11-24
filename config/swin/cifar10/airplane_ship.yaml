@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/airplane_ship.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/swin/cifar10/airplane_ship.yaml
 
 dataset:
   hub_id: uoft-cs/cifar10

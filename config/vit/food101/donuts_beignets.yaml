@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/food101/donuts_beignets.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/vit/food101/donuts_beignets.yaml
 
 dataset:
   hub_id: ethz/Food101
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/food101/donuts_beignets.jsonl
+  path: data/vit/food101/donuts_beignets.jsonl
 
 runtime:
   log_level: INFO

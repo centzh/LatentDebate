@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/cifar10/cat_dog.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/vit/cifar10/cat_dog.yaml
 
 dataset:
   hub_id: uoft-cs/cifar10
@@ -17,7 +17,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/cifar10/cat_dog.jsonl
+  path: data/vit/cifar10/cat_dog.jsonl
 
 runtime:
   log_level: INFO

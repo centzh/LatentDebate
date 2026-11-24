@@ -1,0 +1,94 @@
+{
+  "agreement": true,
+  "max_examples": 10,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 10,
+      "instances": [
+        {
+          "index": 0,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00000_dumplings.png"
+        },
+        {
+          "index": 53,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00053_dumplings.png"
+        },
+        {
+          "index": 105,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00105_dumplings.png"
+        },
+        {
+          "index": 158,
+          "answer_class": "dumplings",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": 1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00158_dumplings.png"
+        },
+        {
+          "index": 212,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00212_gyoza.png"
+        },
+        {
+          "index": 267,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00267_gyoza.png"
+        },
+        {
+          "index": 325,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00325_gyoza.png"
+        },
+        {
+          "index": 385,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00385_gyoza.png"
+        },
+        {
+          "index": 444,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00444_gyoza.png"
+        },
+        {
+          "index": 499,
+          "answer_class": "gyoza",
+          "llm_label": -1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/food101/dumpllings_gyoza/prediction_agreements/reference_nonzero/CLS_Patch_only/instance_00499_gyoza.png"
+        }
+      ]
+    }
+  }
+}

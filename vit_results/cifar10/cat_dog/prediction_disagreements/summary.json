@@ -1,0 +1,398 @@
+{
+  "disagreement": true,
+  "max_examples": null,
+  "methods_plotted": [
+    "CLS Patch only"
+  ],
+  "methods": {
+    "CLS Patch only": {
+      "count": 48,
+      "instances": [
+        {
+          "index": 53,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00053_cat.png"
+        },
+        {
+          "index": 91,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00091_cat.png"
+        },
+        {
+          "index": 165,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00165_cat.png"
+        },
+        {
+          "index": 219,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00219_cat.png"
+        },
+        {
+          "index": 225,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00225_cat.png"
+        },
+        {
+          "index": 259,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00259_cat.png"
+        },
+        {
+          "index": 277,
+          "answer_class": "horse",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_00277_horse.png"
+        },
+        {
+          "index": 470,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_00470_frog.png"
+        },
+        {
+          "index": 506,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00506_cat.png"
+        },
+        {
+          "index": 540,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00540_cat.png"
+        },
+        {
+          "index": 588,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00588_cat.png"
+        },
+        {
+          "index": 607,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_00607_frog.png"
+        },
+        {
+          "index": 630,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00630_cat.png"
+        },
+        {
+          "index": 651,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00651_cat.png"
+        },
+        {
+          "index": 658,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00658_cat.png"
+        },
+        {
+          "index": 729,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00729_cat.png"
+        },
+        {
+          "index": 743,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00743_cat.png"
+        },
+        {
+          "index": 796,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00796_cat.png"
+        },
+        {
+          "index": 860,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00860_cat.png"
+        },
+        {
+          "index": 867,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00867_cat.png"
+        },
+        {
+          "index": 928,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00928_cat.png"
+        },
+        {
+          "index": 974,
+          "answer_class": "horse",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_00974_horse.png"
+        },
+        {
+          "index": 975,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_00975_deer.png"
+        },
+        {
+          "index": 994,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_00994_cat.png"
+        },
+        {
+          "index": 1071,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01071_frog.png"
+        },
+        {
+          "index": 1086,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01086_frog.png"
+        },
+        {
+          "index": 1123,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01123_deer.png"
+        },
+        {
+          "index": 1180,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01180_cat.png"
+        },
+        {
+          "index": 1261,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01261_deer.png"
+        },
+        {
+          "index": 1329,
+          "answer_class": "deer",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01329_deer.png"
+        },
+        {
+          "index": 1356,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01356_cat.png"
+        },
+        {
+          "index": 1362,
+          "answer_class": "truck",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01362_truck.png"
+        },
+        {
+          "index": 1365,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01365_cat.png"
+        },
+        {
+          "index": 1372,
+          "answer_class": "automobile",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01372_automobile.png"
+        },
+        {
+          "index": 1398,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01398_cat.png"
+        },
+        {
+          "index": 1450,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01450_frog.png"
+        },
+        {
+          "index": 1520,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01520_ship.png"
+        },
+        {
+          "index": 1526,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01526_cat.png"
+        },
+        {
+          "index": 1645,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01645_cat.png"
+        },
+        {
+          "index": 1677,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01677_cat.png"
+        },
+        {
+          "index": 1721,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01721_cat.png"
+        },
+        {
+          "index": 1803,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01803_frog.png"
+        },
+        {
+          "index": 1862,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01862_cat.png"
+        },
+        {
+          "index": 1865,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01865_cat.png"
+        },
+        {
+          "index": 1964,
+          "answer_class": "ship",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01964_ship.png"
+        },
+        {
+          "index": 1966,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01966_cat.png"
+        },
+        {
+          "index": 1981,
+          "answer_class": "frog",
+          "llm_label": 0,
+          "llm_bucket": "reference_zero",
+          "method_label": 1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_zero/CLS_Patch_only/instance_01981_frog.png"
+        },
+        {
+          "index": 1990,
+          "answer_class": "cat",
+          "llm_label": 1,
+          "llm_bucket": "reference_nonzero",
+          "method_label": -1,
+          "path": "vit_results/cifar10/cat_dog/prediction_disagreements/reference_nonzero/CLS_Patch_only/instance_01990_cat.png"
+        }
+      ]
+    }
+  }
+}

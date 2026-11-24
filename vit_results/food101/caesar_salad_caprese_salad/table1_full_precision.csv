@@ -3,7 +3,7 @@ google/vit-base-patch16-224,food101,Random,500,302,60.4,46,152,6,12,0,caesar_sal
 google/vit-base-patch16-224,food101,Average,500,452,90.4,46,2,6,12,,caesar_salad_caprese_salad.jsonl,9.2,0.4
 google/vit-base-patch16-224,food101,Majority Voting,500,445,89.0,46,9,6,12,,caesar_salad_caprese_salad.jsonl,9.2,1.8
 google/vit-base-patch16-224,food101,Raw,500,454,90.8,46,0,6,12,,caesar_salad_caprese_salad.jsonl,9.2,0.0
-google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,356,71.2,46,98,6,12,,caesar_salad_caprese_salad.jsonl,9.2,19.6
+google/vit-base-patch16-224,food101,Latent Debate -- w/o token weight,500,453,90.6,46,1,6,12,,caesar_salad_caprese_salad.jsonl,9.2,0.2
 google/vit-base-patch16-224,food101,Quadratic,500,453,90.6,46,1,6,12,,caesar_salad_caprese_salad.jsonl,9.2,0.2
 google/vit-base-patch16-224,food101,CLS Patch only,500,454,90.8,46,0,6,12,,caesar_salad_caprese_salad.jsonl,9.2,0.0
 google/vit-base-patch16-224,food101,CLS only,500,356,71.2,46,98,6,12,,caesar_salad_caprese_salad.jsonl,9.2,19.6

@@ -1,4 +1,4 @@
-# Usage: uv run extract_vit_probabilities.py --config config/oxford_flowers/hard_leaved_pocket_orchid_monkshood.yaml
+# Usage: uv run extract_vit_probabilities.py --config config/vit/oxford_flowers/hard_leaved_pocket_orchid_monkshood.yaml
 # Pair chosen with random.seed(42) from VGG Oxford 102 category names.
 
 dataset:
@@ -18,7 +18,7 @@ strength:
   weight_by_cls_attention: false
 
 output:
-  path: data/oxford_flowers/hard_leaved_pocket_orchid_monkshood.jsonl
+  path: data/vit/oxford_flowers/hard_leaved_pocket_orchid_monkshood.jsonl
 
 runtime:
   log_level: INFO

@@ -6,3 +6,6 @@ Cat_250/
 Dog_250/
 *.png
 *.tex
+*.csv
+*.jsonl
+*.yaml
