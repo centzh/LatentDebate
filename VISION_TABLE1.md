@@ -42,6 +42,26 @@ uv run vision.py run food101 --weighted   # extract, then score every weighted p
 
 `cifar10` works the same way as `food101`.
 
+## Plots
+
+Each figure has the image in the left column. The rows are raw strengths, the tensor that method consumes, and that method's output. At most 10 instances per method. Agreements, disagreements, and ViT-versus-ground-truth mismatches are all written.
+
+```bash
+uv run vision.py plot food101 caesar_salad_caprese_salad
+uv run vision.py plot food101 caesar_salad_caprese_salad --weighted
+uv run vision.py plot food101
+uv run vision.py plot food101 --weighted
+```
+
+`--compare` draws raw, the unweighted output, and the weighted output on one figure. It needs both JSONL files.
+
+```bash
+uv run vision.py plot food101 caesar_salad_caprese_salad --compare
+uv run vision.py plot food101 --compare
+```
+
+Compared figures go in `vit_results/<dataset>/<pair>_compared/`.
+
 ## Files
 
 | Step | Path |

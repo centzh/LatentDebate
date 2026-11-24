@@ -3,6 +3,9 @@
 extract writes the JSONL. score runs Table 1 from that JSONL.
 run does both: extract, then score.
 
+plot writes agreement, disagreement, and ViT-vs-ground-truth figures.
+Add --compare to draw unweighted and weighted outputs on the same figure.
+
 One pair (no plots):
 
     uv run vision.py extract food101 dumplings_gyoza
@@ -54,6 +57,12 @@ def parse_args() -> argparse.Namespace:
     commands.add_parser('extract', parents=[common], help='write JSONL strengths only')
     commands.add_parser('score', parents=[common], help='score Table 1 from existing JSONL')
     commands.add_parser('run', parents=[common], help='extract probabilities, then score Table 1')
+    plot = commands.add_parser('plot', parents=[common], help='plot agreements, disagreements, and mismatches')
+    plot.add_argument(
+        '--compare',
+        action='store_true',
+        help='one figure with raw, unweighted output, and weighted output',
+    )
     return parser.parse_args()
 
 
@@ -116,8 +125,73 @@ def score_one(dataset: str, stem: str) -> None:
     ])
 
 
+def table1_api():
+    import sys
+
+    table1_dir = str(ROOT / 'table1')
+    if table1_dir not in sys.path:
+        sys.path.insert(0, table1_dir)
+    import plots
+    import run_table1
+    return run_table1, plots
+
+
+def plot_stem(dataset: str, stem: str, *, compare: bool) -> None:
+    run_table1, plots = table1_api()
+    config = run_table1.read_json(ROOT / 'table1' / 'vit' / dataset / f'{stem}.json')
+    raw, llm, answer_texts, ground_truth, ground_truth_texts, weights = run_table1.load_input(
+        ROOT / 'data' / 'vit' / dataset / f'{stem}.jsonl',
+        config,
+    )
+    if compare:
+        weighted_config = run_table1.read_json(
+            ROOT / 'table1' / 'vit' / dataset / f'{stem}_weighted.json'
+        )
+        _, _, _, _, _, weights = run_table1.load_input(
+            ROOT / 'data' / 'vit' / dataset / f'{stem}_weighted.jsonl',
+            weighted_config,
+        )
+        if weights is None:
+            raise SystemExit(
+                f'{stem}_weighted.jsonl has no weights. Re-extract with --weighted first.'
+            )
+        if weights.shape != raw.shape:
+            raise SystemExit(
+                f'Weight shape {weights.shape} does not match strengths {raw.shape} for {stem}'
+            )
+        predictions = run_table1.predict_all(raw, config, None, None)
+        output_dir = ROOT / 'vit_results' / dataset / f'{stem}_compared'
+    else:
+        predictions = run_table1.predict_all(raw, config, None, weights)
+        output_dir = ROOT / 'vit_results' / dataset / stem
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    images = run_table1.load_vision_image_dataset(config)
+    print(f'Plotting {output_dir.relative_to(ROOT)}', flush=True)
+    plots.plot_prediction_agreements(
+        raw, llm, predictions, answer_texts, config, output_dir, images,
+        weights=weights, compare=compare,
+    )
+    plots.plot_prediction_disagreements(
+        raw, llm, predictions, answer_texts, config, output_dir, images,
+        weights=weights, compare=compare,
+    )
+    plots.plot_vit_ground_truth_mismatches(
+        raw, llm, ground_truth, ground_truth_texts, predictions, answer_texts,
+        config, output_dir, images, weights=weights, compare=compare,
+    )
+
+
 def main() -> None:
     args = parse_args()
+    if args.command == 'plot':
+        if getattr(args, 'compare', False) and args.weighted:
+            raise SystemExit('Use plot --compare or plot --weighted, not both.')
+        stems = selected_stems(args.dataset, args.pair, False if args.compare else args.weighted)
+        for stem in stems:
+            plot_stem(args.dataset, stem, compare=args.compare)
+        return
+
     stems = selected_stems(args.dataset, args.pair, args.weighted)
 
     if args.command in ('extract', 'run'):

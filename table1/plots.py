@@ -146,37 +146,45 @@ def _upsample_patch_grid(patch: np.ndarray, height: int, width: int) -> np.ndarr
 
 def _plot_instance_spatial_heatmaps(
     idx: int,
-    raw: np.ndarray,
-    method_tensor: np.ndarray,
-    method: str,
+    rows: list[tuple[str, np.ndarray]],
     vision_images,
     out_path: Path,
     suptitle: str,
     *,
     patch_grid: int = 14,
 ) -> None:
-    """14×14 patch overlays on the instance image: ViT raw row + method row × 12 layers."""
+    """Image column, then one 14×14 patch overlay per layer for each activation row."""
     import matplotlib.pyplot as plt
 
-    n_tokens, n_layers = raw.shape[1], raw.shape[2]
+    n_tokens, n_layers = rows[0][1].shape[1], rows[0][1].shape[2]
     n_patches = patch_grid * patch_grid
     if n_tokens != n_patches + 1:
         return
 
-    sample_raw = raw[idx]
-    sample_method = method_tensor[idx]
     ref_image = _vision_row_to_array(vision_images[idx]) if vision_images is not None else None
     patch_indices = np.arange(1, n_patches + 1)
-    rows = [('ViT (raw)', sample_raw), (method, sample_method)]
-
     vmin, vmax = -1.0, 1.0
-    fig, axes = plt.subplots(2, n_layers, figsize=(2.4 * n_layers, 5.5), squeeze=False)
+    fig, axes = plt.subplots(
+        len(rows),
+        n_layers + 1,
+        figsize=(2.1 * (n_layers + 1), 2.5 * len(rows)),
+        squeeze=False,
+    )
     mappable = None
 
     for row_i, (row_title, tensor) in enumerate(rows):
+        image_ax = axes[row_i, 0]
+        if ref_image is not None:
+            image_ax.imshow(ref_image, aspect='equal')
+        else:
+            image_ax.text(0.5, 0.5, f'Instance {idx}', ha='center', va='center')
+        image_ax.set_title(row_title, fontsize=10)
+        image_ax.axis('off')
+
+        sample = tensor[idx]
         for layer in range(n_layers):
-            ax = axes[row_i, layer]
-            patch_map = tensor[patch_indices, layer].reshape(patch_grid, patch_grid)
+            ax = axes[row_i, layer + 1]
+            patch_map = sample[patch_indices, layer].reshape(patch_grid, patch_grid)
             if ref_image is not None:
                 h, w = ref_image.shape[:2]
                 ax.imshow(ref_image, aspect='equal')
@@ -197,12 +205,11 @@ def _plot_instance_spatial_heatmaps(
                     vmax=vmax,
                     aspect='equal',
                 )
-            ax.set_title(f'L{layer}', fontsize=9)
+            ax.set_title(f'L{layer}' if row_i == 0 else '', fontsize=9)
             ax.axis('off')
-        axes[row_i, 0].set_ylabel(row_title, fontsize=10, rotation=90, labelpad=32)
 
     if mappable is not None:
-        add_strength_colorbar(fig, mappable, right=0.92, bottom=0.12, height=0.72, layout_top=0.92)
+        add_strength_colorbar(fig, mappable, right=0.92, bottom=0.08, height=0.78, layout_top=0.94)
 
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -304,30 +311,66 @@ def _subsample_indices(indices: np.ndarray, max_count: int) -> np.ndarray:
     return indices[positions]
 
 
-def matrix_for_method(method: str, raw: np.ndarray, weights: np.ndarray | None = None) -> np.ndarray:
+def _output_for_method(method: str, strengths: np.ndarray) -> np.ndarray:
+    """Propagated token-layer tensor for one method. ``strengths`` is already masked or not."""
     name = method.lower()
     if 'quadratic' in name:
-        return propagate(raw, quadratic=True)
+        return propagate(strengths, quadratic=True)
     if 'patch only' in name and 'cls' in name:
-        return propagate(raw, cls_patch_only=True)
+        return propagate(strengths, cls_patch_only=True)
     if 'cls only' in name:
-        return propagate(raw, cls_only=True)
-    if name == 'raw' or 'unweighted' in name:
-        return raw
+        return propagate(strengths, cls_only=True)
     if name == 'weighted':
-        weighted_input = raw if weights is None else raw * weights
-        return propagate(weighted_input, weighted=True)
+        return propagate(strengths, weighted=True)
     if 'latent' in name or 'debate' in name:
-        return propagate(raw)
-    return raw
+        return propagate(strengths)
+    return strengths
+
+
+def activation_rows(
+    method: str,
+    raw: np.ndarray,
+    weights: np.ndarray | None = None,
+    *,
+    compare: bool = False,
+) -> list[tuple[str, np.ndarray]]:
+    """Rows drawn on every diagnostic figure.
+
+    Single run: raw strengths, the tensor the method actually consumes, then its output.
+    Compare run: raw strengths, unweighted output, weighted output.
+    """
+    if compare:
+        if weights is None:
+            raise ValueError('A compare plot needs attention weights')
+        return [
+            ('Raw', raw),
+            ('Unweighted output', _output_for_method(method, raw)),
+            ('Weighted output', _output_for_method(method, raw * weights)),
+        ]
+    if method.strip().lower() == 'raw' or 'unweighted' in method.lower():
+        return [
+            ('Raw', raw),
+            ('Input', raw),
+            ('Output', raw),
+        ]
+    inputs = raw if weights is None else raw * weights
+    return [
+        ('Raw', raw),
+        ('Input', inputs),
+        ('Output', _output_for_method(method, inputs)),
+    ]
+
+
+def matrix_for_method(method: str, raw: np.ndarray, weights: np.ndarray | None = None) -> np.ndarray:
+    rows = activation_rows(method, raw, weights)
+    return rows[-1][1]
 
 
 def _plot_method_vs_vit_comparison(
     idx: int,
     *,
     method: str,
-    method_tensor: np.ndarray,
-    raw: np.ndarray,
+    rows: list[tuple[str, np.ndarray]],
     llm_label: int,
     method_label: int,
     answer_class: str,
@@ -341,61 +384,55 @@ def _plot_method_vs_vit_comparison(
     import matplotlib.pyplot as plt
 
     vmin, vmax = -1, 1
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    fig, axes = plt.subplots(len(rows), 2, figsize=(14, 3.6 * len(rows)), squeeze=False)
+    last_im = None
+    for row_i, (row_title, tensor) in enumerate(rows):
+        image_ax = axes[row_i, 0]
+        if vision_images is not None:
+            image = vision_images[idx]
+            image_ax.imshow(np.asarray(image.get('img') or image.get('image')))
+        else:
+            image_ax.text(0.5, 0.5, f'Instance {idx}\n(no image)', ha='center', va='center')
+        image_ax.set_title(row_title)
+        image_ax.axis('off')
 
-    if vision_images is not None:
-        row = vision_images[idx]
-        img = row.get('img') or row.get('image')
-        axes[0].imshow(np.asarray(img))
-    else:
-        axes[0].text(0.5, 0.5, f'Instance {idx}\n(no image)', ha='center', va='center')
-    axes[0].set_title('Input image')
-    axes[0].axis('off')
-
-    axes[1].imshow(
-        raw[idx].T,
-        cmap='coolwarm',
-        vmin=vmin,
-        vmax=vmax,
-        aspect='auto',
-    )
-    if ground_truth_name:
-        axes[1].set_title(
-            f'ViT pred: {answer_class} ({llm_label})\n'
-            f'GT label: {ground_truth_name} ({ground_truth_label})',
+        last_im = axes[row_i, 1].imshow(
+            tensor[idx].T,
+            cmap='coolwarm',
+            vmin=vmin,
+            vmax=vmax,
+            aspect='auto',
         )
-    else:
-        axes[1].set_title(f'ViT: {answer_class} ({llm_label})')
-    axes[1].set_xlabel('Token')
-    axes[1].set_ylabel('Layer')
-    axes[1].invert_yaxis()
-
-    method_im = axes[2].imshow(
-        method_tensor[idx].T,
-        cmap='coolwarm',
-        vmin=vmin,
-        vmax=vmax,
-        aspect='auto',
-    )
-    axes[2].set_title(f'{method}: {pred_name} ({method_label})')
-    axes[2].set_xlabel('Token')
-    axes[2].set_ylabel('Layer')
-    axes[2].invert_yaxis()
+        detail = ''
+        if row_i == 0:
+            if ground_truth_name:
+                detail = (
+                    f'\nViT {answer_class} ({llm_label}), '
+                    f'GT {ground_truth_name} ({ground_truth_label})'
+                )
+            else:
+                detail = f'\nViT {answer_class} ({llm_label})'
+        if row_i == len(rows) - 1:
+            detail = f'{detail}\n{method}: {pred_name} ({method_label})'.strip()
+        axes[row_i, 1].set_title(f'{row_title}{detail}')
+        axes[row_i, 1].set_xlabel('Token')
+        axes[row_i, 1].set_ylabel('Layer')
+        axes[row_i, 1].invert_yaxis()
 
     fig.suptitle(suptitle, fontsize=11)
-    add_strength_colorbar(fig, method_im, bottom=0.18, height=0.65, layout_top=0.90)
+    if last_im is not None:
+        add_strength_colorbar(fig, last_im, bottom=0.08, height=0.8, layout_top=0.94)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(out_path, dpi=200, bbox_inches='tight')
     plt.close(fig)
 
-    if vision_images is not None and raw.shape[1] == _VIT_PATCH_GRID * _VIT_PATCH_GRID + 1:
+    raw_tensor = rows[0][1]
+    if vision_images is not None and raw_tensor.shape[1] == _VIT_PATCH_GRID * _VIT_PATCH_GRID + 1:
         spatial_path = out_path.with_name(f'{out_path.stem}_spatial{out_path.suffix}')
         _plot_instance_spatial_heatmaps(
             idx,
-            raw,
-            method_tensor,
-            method,
+            rows,
             vision_images,
             spatial_path,
             suptitle,
@@ -417,6 +454,7 @@ def _plot_prediction_comparisons(
     progress_desc: str,
     suptitle: str,
     weights: np.ndarray | None = None,
+    compare: bool = False,
 ) -> dict[str, list[dict]]:
     root = Path(output_dir) / root_name
     root.mkdir(parents=True, exist_ok=True)
@@ -449,7 +487,7 @@ def _plot_prediction_comparisons(
                 plot_idx = _subsample_indices(plot_idx, max_examples)
 
         safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
-        tensor = matrix_for_method(method, raw, weights)
+        rows = activation_rows(method, raw, weights, compare=compare)
         written: list[dict] = []
 
         for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
@@ -462,8 +500,7 @@ def _plot_prediction_comparisons(
             _plot_method_vs_vit_comparison(
                 int(idx),
                 method=method,
-                method_tensor=tensor,
-                raw=raw,
+                rows=rows,
                 llm_label=llm_ref,
                 method_label=int(values[idx]),
                 answer_class=answer_class,
@@ -508,6 +545,7 @@ def plot_vit_ground_truth_mismatches(
     *,
     max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
     weights: np.ndarray | None = None,
+    compare: bool = False,
 ) -> dict[str, list[dict]]:
     """Figures where ViT classifier head answer != dataset ground truth (JSONL label)."""
     mismatch_idx = np.flatnonzero(vit_labels != ground_truth)
@@ -541,7 +579,7 @@ def plot_vit_ground_truth_mismatches(
         if method.strip().lower() in _SKIP_BASELINE_METHODS:
             continue
         safe_method = re.sub(r'[^\w\-.]+', '_', method).strip('_')
-        tensor = matrix_for_method(method, raw, weights)
+        rows = activation_rows(method, raw, weights, compare=compare)
         written: list[dict] = []
 
         for idx in tqdm(plot_idx, desc=f'  {method}', unit='img', leave=False):
@@ -556,8 +594,7 @@ def plot_vit_ground_truth_mismatches(
             _plot_method_vs_vit_comparison(
                 int(idx),
                 method=method,
-                method_tensor=tensor,
-                raw=raw,
+                rows=rows,
                 llm_label=vit_ref,
                 method_label=int(values[idx]),
                 answer_class=vit_name,
@@ -605,6 +642,7 @@ def plot_prediction_disagreements(
     vision_images=None,
     max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
     weights: np.ndarray | None = None,
+    compare: bool = False,
 ) -> dict[str, list[dict]]:
     """One figure per disagreement: input image, ViT (raw) heatmap, method heatmap."""
     return _plot_prediction_comparisons(
@@ -621,6 +659,7 @@ def plot_prediction_disagreements(
         progress_desc='Plot prediction disagreements',
         suptitle='prediction disagreement',
         weights=weights,
+        compare=compare,
     )
 
 
@@ -791,6 +830,7 @@ def plot_prediction_agreements(
     vision_images=None,
     max_examples: int | None = VISION_PLOT_MAX_EXAMPLES,
     weights: np.ndarray | None = None,
+    compare: bool = False,
 ) -> dict[str, list[dict]]:
     """Sample figures where ViT and method predictions match (same layout as disagreements)."""
     return _plot_prediction_comparisons(
@@ -807,4 +847,5 @@ def plot_prediction_agreements(
         progress_desc='Plot prediction agreements',
         suptitle='prediction agreement',
         weights=weights,
+        compare=compare,
     )
