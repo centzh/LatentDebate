@@ -313,6 +313,8 @@ def matrix_for_method(method: str, raw: np.ndarray) -> np.ndarray:
         return propagate(raw, cls_only=True)
     if name == 'raw' or 'unweighted' in name:
         return raw
+    if name == 'weighted':
+        return propagate(raw, weighted=True)
     if 'latent' in name or 'debate' in name:
         return propagate(raw)
     return raw

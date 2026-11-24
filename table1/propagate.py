@@ -4,7 +4,7 @@ from __future__ import annotations
 import numpy as np
 
 
-def propagate(initial, quadratic=False, cls_patch_only=False, cls_only=False):
+def propagate(initial, quadratic=False, cls_patch_only=False, cls_only=False, weighted=False):
     """Original topology or within-layer quadratic topology, probability semantics."""
     num_records, tokens, layers = initial.shape
     final = np.zeros_like(initial)
@@ -18,6 +18,17 @@ def propagate(initial, quadratic=False, cls_patch_only=False, cls_only=False):
                     energy += final[:, token, layer - 1]
                     influence = 1 - np.tanh(np.abs(energy))
                     final[:, token, layer] = np.tanh(energy) + influence * initial[:, token, layer]
+
+            elif weighted:
+                near_zero = np.abs(initial[:, token, layer]) < 0.01
+                energy += final[:, :, layer].sum(axis=1)
+                influence = 1 - np.tanh(np.abs(energy))
+                propagated = np.tanh(energy) + influence * initial[:, token, layer]
+                final[:, token, layer] = np.where(
+                    near_zero,
+                    initial[:, token, layer],
+                    propagated,
+                )
 
             else:
                 if quadratic:

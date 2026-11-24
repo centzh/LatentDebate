@@ -189,10 +189,12 @@ def predict_all(raw, config, output_dir: Path | None = None):
     propagated_quadratic = propagate(raw, quadratic=True)
     propagated_cls_patch = propagate(raw, cls_patch_only=True)
     propagated_cls_only = propagate(raw, cls_only=True)
+    propagated_weighted = propagate(raw, weighted=True)
 
     latent_debate = _sign_from_cls(propagated)
     cls_patch_only_pred = _sign_from_cls(propagated_cls_patch)
     cls_only_pred = _sign_from_cls(propagated_cls_only)
+    weighted_pred = _sign_from_cls(propagated_weighted)
     # Raw is the unpropagated CLS token. Propagation changes a lot of these labels.
     unweighted = _sign_from_cls(raw)
     quadratic = _sign_from_cls(propagated_quadratic)
@@ -206,6 +208,7 @@ def predict_all(raw, config, output_dir: Path | None = None):
         'Quadratic': quadratic,
         'CLS Patch only': cls_patch_only_pred,
         'CLS only': cls_only_pred,
+        'Weighted': weighted_pred,
     }
 
     unknown = [m for m in config['methods'] if m not in by_method]
