@@ -1,8 +1,9 @@
 """Stack per-pair Table 1 scores into one CSV per dataset.
 
-Unweighted pairs and ``*_weighted`` pairs are separate halves. Each half has
-its own average. ``table1.csv`` is absolute agreement with the ViT head.
-``table1_average.csv`` is 100 * method / Raw on that column.
+Columns are the unweighted average, the weighted average, then each class
+pair with its unweighted column beside its weighted column. Each average is
+computed inside its own half. ``table1.csv`` is absolute agreement with the
+ViT head. ``table1_average.csv`` is 100 * method / Raw on that column.
 
     uv run collate_vision_table1.py
     uv run collate_vision_table1.py --dataset food101
@@ -46,6 +47,21 @@ def split_halves(names: list[str]) -> tuple[list[str], list[str]]:
     return unweighted, weighted
 
 
+def pair_columns(unweighted: list[str], weighted: list[str]) -> list[str]:
+    """Each class, unweighted column then weighted column."""
+    unweighted_set = set(unweighted)
+    weighted_set = set(weighted)
+    stems = sorted({*unweighted, *(name.removesuffix('_weighted') for name in weighted)})
+    columns: list[str] = []
+    for stem in stems:
+        if stem in unweighted_set:
+            columns.append(stem)
+        weighted_name = f'{stem}_weighted'
+        if weighted_name in weighted_set:
+            columns.append(weighted_name)
+    return columns
+
+
 def format_half_avg(values: list[float], places: int) -> str:
     if not values:
         return ''
@@ -59,8 +75,8 @@ def write_tables(
     order: list[str],
     by_method: dict[str, dict[str, str]],
 ) -> None:
-    columns = [*unweighted, *weighted]
-    fieldnames = ['method', 'avg_unweighted', *unweighted, 'avg_weighted', *weighted]
+    columns = pair_columns(unweighted, weighted)
+    fieldnames = ['method', 'avg_unweighted', 'avg_weighted', *columns]
 
     absolute = RESULTS / dataset / 'table1.csv'
     with absolute.open('w', encoding='utf-8', newline='') as f:

@@ -152,6 +152,7 @@ def _plot_instance_spatial_heatmaps(
     suptitle: str,
     *,
     patch_grid: int = 14,
+    layer_names: list[str] | None = None,
 ) -> None:
     """Image column, then one 14×14 patch overlay per layer for each activation row."""
     import matplotlib.pyplot as plt
@@ -205,7 +206,10 @@ def _plot_instance_spatial_heatmaps(
                     vmax=vmax,
                     aspect='equal',
                 )
-            ax.set_title(f'L{layer}' if row_i == 0 else '', fontsize=9)
+            if row_i == 0:
+                ax.set_title(layer_names[layer] if layer_names else f'L{layer}', fontsize=9)
+            else:
+                ax.set_title('', fontsize=9)
             ax.axis('off')
 
     if mappable is not None:
@@ -336,8 +340,9 @@ def activation_rows(
 ) -> list[tuple[str, np.ndarray]]:
     """Rows drawn on every diagnostic figure.
 
-    Single run: raw strengths, the tensor the method actually consumes, then its output.
-    Compare run: raw strengths, unweighted output, weighted output.
+    Unweighted run: raw strengths, the tensor the method consumes, then its output.
+    Weighted run: raw strengths, raw times the attention weights, then that tensor after propagation.
+    Compare run: raw strengths, the unweighted output, and the weighted output.
     """
     if compare:
         if weights is None:
@@ -347,17 +352,23 @@ def activation_rows(
             ('Unweighted output', _output_for_method(method, raw)),
             ('Weighted output', _output_for_method(method, raw * weights)),
         ]
+    if weights is not None:
+        masked = raw * weights
+        return [
+            ('Raw', raw),
+            ('raw*weights', masked),
+            ('Weighted output', _output_for_method(method, masked)),
+        ]
     if method.strip().lower() == 'raw' or 'unweighted' in method.lower():
         return [
             ('Raw', raw),
             ('Input', raw),
             ('Output', raw),
         ]
-    inputs = raw if weights is None else raw * weights
     return [
         ('Raw', raw),
-        ('Input', inputs),
-        ('Output', _output_for_method(method, inputs)),
+        ('Input', raw),
+        ('Output', _output_for_method(method, raw)),
     ]
 
 

@@ -4,7 +4,8 @@ extract writes the JSONL. score runs Table 1 from that JSONL.
 run does both: extract, then score.
 
 plot writes agreement, disagreement, and ViT-vs-ground-truth figures.
-Add --compare to draw unweighted and weighted outputs on the same figure.
+Add --compare to draw raw, the unweighted output, and the weighted output.
+A --weighted plot draws raw, raw*weights, and the weighted output.
 
 One pair (no plots):
 
@@ -61,7 +62,7 @@ def parse_args() -> argparse.Namespace:
     plot.add_argument(
         '--compare',
         action='store_true',
-        help='one figure with raw, unweighted output, and weighted output',
+        help='raw, unweighted output, and weighted output on one figure',
     )
     return parser.parse_args()
 

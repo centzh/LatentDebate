@@ -6,7 +6,7 @@ Commands run from the repository root. Table 1 does not write plots.
 
 `--weighted` selects the attention-weighted config (`dumplings_gyoza_weighted`). Omit it for the plain config.
 
-`score` and `run` refresh `vit_results/<dataset>/table1.csv` and `table1_average.csv`. Each file has an unweighted half (`avg_unweighted`, then those pairs) and a weighted half (`avg_weighted`, then those pairs). Averages are computed inside each half only. `table1.csv` is agreement with the ViT head. `table1_average.csv` is that number as a percent of Raw on the same column.
+`score` and `run` refresh `vit_results/<dataset>/table1.csv` and `table1_average.csv`. Columns are `avg_unweighted`, `avg_weighted`, then each class pair with its unweighted column beside its weighted column. Each average is computed inside its own half. `table1.csv` is agreement with the ViT head. `table1_average.csv` is that number as a percent of Raw on the same column.
 
 ## One class pair
 
@@ -44,7 +44,7 @@ uv run vision.py run food101 --weighted   # extract, then score every weighted p
 
 ## Plots
 
-Each figure has the image in the left column. The rows are raw strengths, the tensor that method consumes, and that method's output. At most 10 instances per method. Agreements, disagreements, and ViT-versus-ground-truth mismatches are all written.
+Each figure has the image in the left column. An unweighted plot shows raw strengths, the tensor that method consumes, and that method's output. A weighted plot shows raw, raw times the attention weights, and that masked tensor after propagation. At most 10 instances per method. Agreements, disagreements, and ViT-versus-ground-truth mismatches are all written.
 
 ```bash
 uv run vision.py plot food101 caesar_salad_caprese_salad
